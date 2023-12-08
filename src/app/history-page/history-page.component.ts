@@ -48,7 +48,7 @@ export class HistoryPageComponent {
       quoteNo: 100,
       quoteDate: '2023-01-01',
       quoteValidDate: '2023-01-10',
-      customerId: 12323,
+      customerId: 11111,
       userId: 201,
       totalAmount: 500.00,
       paymentType: 'Credit Card',
@@ -58,7 +58,17 @@ export class HistoryPageComponent {
       quoteNo: 200,
       quoteDate: '2023-01-02',
       quoteValidDate: '2023-01-12',
-      customerId: 22323,
+      customerId: 33333,
+      userId: 202,
+      totalAmount: 750.50,
+      paymentType: 'Cash',
+      paymentStatus: 'Paid'
+    },
+    {
+      quoteNo: 300,
+      quoteDate: '2023-01-02',
+      quoteValidDate: '2023-01-12',
+      customerId: 55555,
       userId: 202,
       totalAmount: 750.50,
       paymentType: 'Cash',
@@ -69,19 +79,21 @@ export class HistoryPageComponent {
   quotationListItem: QuotationListItem[] = [
     { quoteNo:100,categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
     { quoteNo:200,categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
-   
+
+    { quoteNo:200,categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+
   ];
 
   mockupCustomers: Customer[] = [
-    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
-    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
+    { customer_id: 11111, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
+    { customer_id: 22222, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
     { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
-    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
-    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
-    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
-    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
-    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
-    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
+    { customer_id: 44444, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
+    { customer_id: 55555, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
+    { customer_id: 66666, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
+    { customer_id: 77777, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
+    { customer_id: 88888, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
+    { customer_id: 99999, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
   ];
 
   constructor(private snackBar: MatSnackBar) { 
@@ -106,8 +118,9 @@ export class HistoryPageComponent {
     }
     this.searchQuery = '';
   }
-  selectedCustomer: Customer[] = [];
-  selectedQuotation: QuotationListItem[] = [];
+  selectedCustomer: Customer[] = [
+   
+  ];
   selectedQuotationList: QuotationList[] = [];
   searchCustomer() {
     // Filter customers based on searchQuery
@@ -117,25 +130,47 @@ export class HistoryPageComponent {
     );
 
 
-    // Display snackbar
-    this.openSnackBar();
+    
   }
 
   searchQuotation(id: number) {
     // Filter quotations based on searchQuery
-    this.selectedQuotationList = this.quotationList.filter(
-      (quotation) =>
-        quotation.customerId === id
-    );
-    // Display snackbar
-    this.openSnackBar();
+    console.log('Quotation List:', this.quotationList);
+
+    this.selectedQuotationList = this.quotationList.filter(quotationList => quotationList.customerId === id);
+    console.log('Selected Quotation List:', this.selectedQuotationList);
+
+    console.log('searchQuotation called with customerId:', id);
   }
 
-  // Modify the viewQuote method
-  viewQuote(customer: Customer) {
-    // Implement logic for viewing quote
-    this.openSnackBar();
+  showQuotationListItemBoolean: number = 0;
+
+
+  selectedQuotation: QuotationListItem[] =[
+
+  ];
+  searchQuotationListItem(no : number) {
+    console.log('Quotation List Items:', this.quotationListItem);
+
+    // Filter quotation list items based on the selected customer ID
+    this.selectedQuotation = this.quotationListItem.filter(quotationListItem => quotationListItem.quoteNo === no);
+  
+    console.log('Selected Quotation Item:', this.selectedQuotation);
+     this.showQuotationListItemBoolean = 1;
+     console.log('searchQuotationListItem called with quotationId:', no,'boolean',this.showQuotationListItemBoolean);
   }
+  showCustomerDetails(){
+    this.showQuotationListItemBoolean = 0;
+  }
+
+
+
+  addCustomer(){
+        // Display snackbar
+        this.openSnackBar();
+  }
+  // Modify the viewQuote method
+
 
   empty() {}
 

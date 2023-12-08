@@ -3,42 +3,43 @@
 <app-layout></app-layout>
 <div class="content">
   <div>
-  <div class="search-bar">
-    <div class="search-input">
-      <input type="text" [(ngModel)]="searchQuery" placeholder="Search for customer name...."
-        (keyup.enter)="searchCustomer()" />
-      <button class="button button-submit" (click)="searchCustomer()">Search</button>
+    <div class="search-bar">
+      <div class="search-input">
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Search for customer name...."
+          (keyup.enter)="searchCustomer()" />
+        <button class="button button-submit" (click)="searchCustomer()">Search</button>
+      </div>
+    </div>
+    <div>
+    </div>
+    <div class="header-row">
+      <span class="span1">Customer ID</span>
+      <span class="span2">Name</span>
+      <span class="span3">Phone</span>
+      <span class="span4">Email</span>
+      <button class="button button-add" (click)="openSnackBar()">Add new customer</button>
+
+    </div>
+    <div class="customer-table-container">
+
+      <table class="customer-table">
+        <tbody>
+          <tr *ngFor="let customer of selectedCustomer; let i = index" class="customer-item">
+            <td>{{ customer.customer_id }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.email }}</td>
+            <td>
+              <button class="button button-view" (click)="searchQuotation(selectedCustomer[i].customer_id)">View
+                quote</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
     </div>
   </div>
-  <div>
-  </div>
-  <div class="header-row">
-    <span class="span1">Customer ID</span>
-    <span class="span2">Name</span>
-    <span class="span3">Phone</span>
-    <span class="span4">Email</span>
-    <button class="button button-add" (click)="openSnackBar()">Add new customer</button>
-
-  </div>
-  <div class="customer-table-container">
-
-    <table class="customer-table">
-      <tbody>
-        <tr *ngFor="let customer of selectedCustomer; let i = index" class="customer-item">
-          <td>{{ customer.customer_id }}</td>
-          <td>{{ customer.name }}</td>
-          <td>{{ customer.phone }}</td>
-          <td>{{ customer.email }}</td>
-          <td>
-            <button class="button button-view" (click)="searchQuotation(customer.customer_id)">View quote</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-
-  </div>
-</div>
 
   <!-- Include the content of the detail-sidebar directly -->
   <div class="sidebar-history">
@@ -48,81 +49,117 @@
       </div>
       <hr width="93%;" color="#d9d9d9" size="1">
 
-      <div *ngIf="selectedCustomer.length === 0">
+      <div *ngIf="selectedCustomer.length === 0 && showQuotationListItemBoolean !== 1 ">
         <p>No customer selected</p>
       </div>
-      <div *ngIf="selectedCustomer.length > 0">  
-      <div class="customer-details">
-        <div class="customer-id">
-          <p>Current customer ID: {{mockupCustomers[0].customer_id}}</p>
-          <div class="customer-name">
-            <p>Customer Name: {{mockupCustomers[0].name}}</p>
+      <div *ngIf="selectedCustomer.length > 0">
+        <div class="customer-details">
+          <div class="customer-id">
+            <p>Current customer ID: [{{mockupCustomers[0].customer_id}}]</p>
+            <div class="customer-name">
+              
+              <p><button *ngIf="showQuotationListItemBoolean === 1 " class="button button-return" (click)="showCustomerDetails()">&#8617;</button>Customer Name: {{mockupCustomers[0].name}}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="selectedQuotationList.length === 0">
-        <p>No quotations selected</p>
-      </div>
-      <div *ngIf="selectedQuotationList.length > 0"> 
-      <div>
-        <h4>Pending Quotations</h4>
-      </div>
-      <div>
-        <table class="quotation-table-pending">
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Quote No.</th>
-              <th>Created Date</th>
-              <th>Valid Date</th>
-              <th>View</th>
-            </tr>
-          </thead>
-          <div class="divider"></div>
-          <tbody class="quotation-table-item">
-            <tr *ngFor="let item of quotationList; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td class="partName">{{ item.quoteNo }}</td>
-              <td>{{item.quoteDate}}</td>
-              <td>{{item.quoteValidDate}}</td>
-              <td><button class="button button-view-side" (click)="empty()">View quote</button>
-              </tr>
-          </tbody>
-        </table>
-      
-    
-        <h4>Completed Quotations</h4>
-        <br><br>
-      </div>
-      <div>
-        <table class="quotation-table-completed">
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Quote No.</th>
-              <th>Created Date</th>
-              <th>Valid Date</th>
-              <th>View</th>
+        <div *ngIf="selectedQuotationList.length === 0 ">
+          <p>No quotations selected</p>
+        </div>
+        <div *ngIf="selectedQuotationList.length > 0 &&  showQuotationListItemBoolean !== 1">
+          <div>
+            <h4>Pending Quotations</h4>
+          </div>
+          <div>
+            <table class="quotation-table-pending">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Quote No.</th>
+                  <th>Created Date</th>
+                  <th>Valid Date</th>
+                  <th>View</th>
+                </tr>
+              </thead>
+              <div class="divider"></div>
+              <tbody class="quotation-table-item">
+                <tr *ngFor="let item of selectedQuotationList; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td class="partName">{{ item.quoteNo }}</td>
+                  <td>{{item.quoteDate}}</td>
+                  <td>{{item.quoteValidDate}}</td>
+                  <td><button class="button button-view-side" (click)="empty()">View quote</button>
+                </tr>
+              </tbody>
+            </table>
 
-            </tr>
-          </thead>
-          <div class="divider"></div>
-          <tbody class="quotation-table-item">
-            <tr *ngFor="let item of quotationList; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td class="partName">{{ item.quoteNo }}</td>
-              <td>{{item.quoteDate}}</td>
-              <td>{{item.quoteValidDate}}</td>
-              <td><button class="button button-view-side" (click)="empty()">View quote</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+
+            <h4>Completed Quotations</h4>
+            
+          </div>
+          <div>
+            <table class="quotation-table-completed">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Quote No.</th>
+                  <th>Created Date</th>
+                  <th>Valid Date</th>
+                  <th>View</th>
+
+                </tr>
+              </thead>
+              <div class="divider"></div>
+              <tbody class="quotation-table-item">
+                <tr *ngFor="let item of selectedQuotationList; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td class="partName">{{ item.quoteNo }}</td>
+                  <td>{{item.quoteDate}}</td>
+                  <td>{{item.quoteValidDate}}</td>
+                  <td><button class="button button-view-side" (click)="searchQuotationListItem(item.quoteNo)">View
+                      quote</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+          
+
+        </div>
+        <div *ngIf="showQuotationListItemBoolean === 1">
+          <div>
+            <table class="quotation-table-detail">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Part Name</th>
+                  <th>Part ID</th>
+                  <th>Unit Price (RM)</th>
+                </tr>
+              </thead>
+              <div class="divider"></div>
+              <tbody class="quotation-table-item">
+                <tr *ngFor="let item of quotationList; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td class="partName"></td>
+                  <td>[Part ID]</td>
+                  <td>[Unit Price]</td>
+                  <td>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+    
+
+
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div id="snackbar">Success!</div>
+  <div id="snackbar">Success!</div>
