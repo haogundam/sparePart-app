@@ -15,22 +15,72 @@
     <span class="span3">Email</span>
     <span class="span4">Date</span>
   </div>
-  <div class="search-result">
-  <table class="customer-table">
-    <tbody>
-      <tr *ngFor="let customer of mockupCustomers; let i = index" class="customer-item">
-        <td>{{ customer.customer_id }}</td>
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.email }}</td>
-        <td>{{ customer.phone }}</td>
-        <td>
-          <button class="button button-view" (keyup.enter)="openSnackBar()" (click)="openSnackBar()">View quote</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="customer-table-container">
+    <table class="customer-table">
+      <tbody>
+        <tr *ngFor="let customer of mockupCustomers; let i = index" class="customer-item">
+          <td>{{ customer.customer_id }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>
+            <button class="button button-view" (keyup.enter)="openSnackBar()" (click)="openSnackBar()">View quote</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  
 
+  <!-- Include the content of the detail-sidebar directly -->
+  <div class="sidebar-history">
+    <div class="container">
+      <div class="title">
+        <span>Details</span>
+      </div>
+      <hr width="93%;" color="#d9d9d9" size="1">
+
+      <div class="customer-details">
+        <div class="customer-id">
+          <p>Current customer ID: {{mockupCustomers[0].customer_id}}</p>
+          <div class="customer-name">
+            <p>Customer Name: {{mockupCustomers[0].name}}</p>
+          </div>
+        </div>
+
+        <div class="quotation-info">
+          <p class="quotation-id">[Quotation ID]</p>
+          <p class="date">[Date]</p>
+        </div>
+      </div>
+
+      <div>
+        <table class="quotation-table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Part Name</th>
+              <th>Part ID</th>
+              <th>Unit Price (RM)</th>
+            </tr>
+          </thead>
+          <div class="divider"></div>
+          <tbody class="quotation-table-item">
+            <tr *ngFor="let item of quotationList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td class="partName">{{ item.partName }}</td>
+              <td>[Part ID]</td>
+              <td>[Unit Price]</td>
+              <td>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+  
+    </div>
+  </div>
 </div>
+
 <div id="snackbar">Success!</div>
-<app-detail-sidebar class="sidebar-history"></app-detail-sidebar>

@@ -75,9 +75,13 @@
   margin-left: 12px;
 }
 
+.sidebar-item:hover {
+  background-color: #e5e7eb;
+}
+
 .user-info {
   margin-top: auto;
-  background-color: #697986;
+  background-color: #b0b7bc;
   width: 90%;
   padding: 12px;
   display: flex;
@@ -97,9 +101,9 @@
   margin-bottom: 4px;
 }
 
-.user-info .logout-label {
+.logout-label {
   font-family: 'Plus Jakarta Sans';
-  color: #e3fc964d;
+  color: #b33c3c;
   font-size: 24px;
   font-weight: 500;
 }

@@ -27,4 +27,8 @@ export class LayoutComponent {
   onHistory() {
     this.router.navigate(['/history']);
   }
+
+  empty(){
+    
+  }
 }
