@@ -58,7 +58,7 @@
             <p>Current customer ID: [{{selectedCustomer[onclickCustomer].customer_id}}]</p>
             <div class="customer-name">
               
-              <p><button *ngIf="showQuotationListItemBoolean === 1 " class="button button-return" (click)="showCustomerDetails()">&#8617;</button>Customer Name: {{mockupCustomers[0].name}}</p>
+              <p><button *ngIf="showQuotationListItemBoolean === 1 " class="button button-return" (click)="showCustomerDetails()">&#8617;</button>Customer Name: {{selectedCustomer[onclickCustomer].name}}</p>
             </div>
           </div>
         </div>
