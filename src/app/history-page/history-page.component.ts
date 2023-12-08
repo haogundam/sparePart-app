@@ -133,13 +133,15 @@ export class HistoryPageComponent {
     
   }
 
-  searchQuotation(id: number) {
+  onclickCustomer: number = 0;
+  searchQuotation(id: number,index: number) {
     // Filter quotations based on searchQuery
     console.log('Quotation List:', this.quotationList);
 
     this.selectedQuotationList = this.quotationList.filter(quotationList => quotationList.customerId === id);
     console.log('Selected Quotation List:', this.selectedQuotationList);
 
+    this.onclickCustomer = index;
     console.log('searchQuotation called with customerId:', id);
   }
 

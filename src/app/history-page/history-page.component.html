@@ -30,7 +30,7 @@
             <td>{{ customer.phone }}</td>
             <td>{{ customer.email }}</td>
             <td>
-              <button class="button button-view" (click)="searchQuotation(selectedCustomer[i].customer_id)">View
+              <button class="button button-view" (click)="searchQuotation(customer.customer_id,i)">View
                 quote</button>
             </td>
           </tr>
@@ -55,7 +55,7 @@
       <div *ngIf="selectedCustomer.length > 0">
         <div class="customer-details">
           <div class="customer-id">
-            <p>Current customer ID: [{{mockupCustomers[0].customer_id}}]</p>
+            <p>Current customer ID: [{{selectedCustomer[onclickCustomer].customer_id}}]</p>
             <div class="customer-name">
               
               <p><button *ngIf="showQuotationListItemBoolean === 1 " class="button button-return" (click)="showCustomerDetails()">&#8617;</button>Customer Name: {{mockupCustomers[0].name}}</p>
