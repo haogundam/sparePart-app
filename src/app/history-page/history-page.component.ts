@@ -8,6 +8,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 interface QuotationListItem {
   // Define the properties of a quotation list item
+  quoteNo: number;
   categoryName: string;
   partName: string;
   quantityLeft: number;
@@ -16,6 +17,17 @@ interface QuotationListItem {
   createDate:string;
   validDate:string;
 }
+interface QuotationList {
+  quoteNo: number;
+  quoteDate: string; // Assuming a string for simplicity, you can use Date type if needed
+  quoteValidDate: string;
+  customerId: number;
+  userId: number;
+  totalAmount: number;
+  paymentType: string;
+  paymentStatus: string;
+}
+
 interface Customer {
   customer_id: number;
   name: string;
@@ -31,15 +43,33 @@ interface Customer {
 })
  
 export class HistoryPageComponent {
-  quotationList: QuotationListItem[] = [
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
-    // Add more items as needed
+  quotationList: QuotationList[] = [
+    {
+      quoteNo: 100,
+      quoteDate: '2023-01-01',
+      quoteValidDate: '2023-01-10',
+      customerId: 12323,
+      userId: 201,
+      totalAmount: 500.00,
+      paymentType: 'Credit Card',
+      paymentStatus: 'Pending'
+    },
+    {
+      quoteNo: 200,
+      quoteDate: '2023-01-02',
+      quoteValidDate: '2023-01-12',
+      customerId: 22323,
+      userId: 202,
+      totalAmount: 750.50,
+      paymentType: 'Cash',
+      paymentStatus: 'Paid'
+    },
+    // Add more sample quotations as needed
+  ];
+  quotationListItem: QuotationListItem[] = [
+    { quoteNo:100,categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+    { quoteNo:200,categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+   
   ];
 
   mockupCustomers: Customer[] = [
@@ -78,20 +108,42 @@ export class HistoryPageComponent {
   }
   selectedCustomer: Customer[] = [];
   selectedQuotation: QuotationListItem[] = [];
+  selectedQuotationList: QuotationList[] = [];
+  searchCustomer() {
+    // Filter customers based on searchQuery
+    this.selectedCustomer = this.mockupCustomers.filter(
+      (customer) =>
+        customer.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
 
-  search() {
+
+    // Display snackbar
     this.openSnackBar();
   }
-  
-  
+
+  searchQuotation(id: number) {
+    // Filter quotations based on searchQuery
+    this.selectedQuotationList = this.quotationList.filter(
+      (quotation) =>
+        quotation.customerId === id
+    );
+    // Display snackbar
+    this.openSnackBar();
+  }
+
   // Modify the viewQuote method
   viewQuote(customer: Customer) {
+    // Implement logic for viewing quote
     this.openSnackBar();
+  }
 
-  }
-  empty(){
-  }
+  empty() {}
+
   searchQuery: any;
   selectedQuantity: any;
+  
+  // Modify the viewQuote method
 
+  
+ 
 }
