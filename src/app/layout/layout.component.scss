@@ -1,0 +1,114 @@
+/* layout.component.scss */
+
+/* Common Styles */
+.primary-bg {
+  background-color: #2894fc; /* Replace with your primary color */
+}
+
+/* Header Styles */
+.app-header {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #2894fc;
+}
+
+.app-title {
+  font-family: 'Outfit';
+  color: #fff;
+  font-size: 22px;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  height: 91vh;
+  width: 10%;
+  max-width: 300px;
+  background-color: #63a6e4;
+  box-shadow: 1px 0 0 #e5e7eb;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  position: fixed; /* Fixed position on the left side */
+}
+
+.company-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.company-info .icon {
+  color: #6f61ef;
+  font-size: 32px;
+  margin-right: 12px;
+}
+
+.company-info .company-name {
+  font-family: 'Outfit';
+  color: #15161e;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.sidebar-item {
+  width: 100%;
+  background-color: #f1f4f8;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  height: 5%;
+}
+
+
+.sidebar-item .item-label {
+  font-family: 'Plus Jakarta Sans';
+  color: #15161e;
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 12px;
+}
+
+.user-info {
+  margin-top: auto;
+  background-color: #697986;
+  width: 90%;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.user-info .user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info .user-email {
+  font-family: 'Plus Jakarta Sans';
+  color: black;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.user-info .logout-label {
+  font-family: 'Plus Jakarta Sans';
+  color: #e3fc964d;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+/* Content Styles */
+.content {
+  margin-left: 255px; /* Adjust based on sidebar width */
+  flex-grow: 1;
+  overflow-y: hidden;
+  padding: 20px;
+}
+

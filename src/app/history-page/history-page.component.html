@@ -1,0 +1,36 @@
+<!-- history-page.component.html -->
+
+<app-layout></app-layout>
+<div class="content">
+  <div class="search-bar">
+    <div class="search-input">
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Search for customer id...." (keyup.enter)="openSnackBar()" />
+      <button class="button button-submit" (click)="openSnackBar()">Search</button>
+    </div>
+  </div>
+
+  <div class="header-row">
+    <span class="span1">Customer ID</span>
+    <span class="span2">Quote ID</span>
+    <span class="span3">Email</span>
+    <span class="span4">Date</span>
+  </div>
+  <div class="search-result">
+  <table class="customer-table">
+    <tbody>
+      <tr *ngFor="let customer of mockupCustomers; let i = index" class="customer-item">
+        <td>{{ customer.customer_id }}</td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>
+          <button class="button button-view" (keyup.enter)="openSnackBar()" (click)="openSnackBar()">View quote</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+</div>
+<div id="snackbar">Success!</div>
+<app-detail-sidebar class="sidebar-history"></app-detail-sidebar>

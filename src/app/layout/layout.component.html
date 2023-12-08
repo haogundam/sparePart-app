@@ -1,0 +1,36 @@
+<!-- layout.component.html-->
+
+<header class="app-header">
+  <div class="app-title">
+    <span>Quotation History</span>
+  </div>
+</header>
+
+<div class="sidebar">
+  <div class="company-info">
+
+    <span class="company-name">Company Name</span>
+  </div>
+
+  <div class="sidebar-item">
+
+    <span class="item-label">Quoting Items</span>
+  </div>
+
+  <div class="sidebar-item">
+
+    <span class="item-label"  (click)="onHistory()">History</span>
+  </div>
+
+  <div class="sidebar-item">
+
+    <span class="item-label">PlaceHolder</span>
+  </div>
+
+  <div class="user-info">
+    <div class="user-details">
+      <span class="user-email">admin&#64;gmail.com</span>
+      <button class="logout-label" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>
