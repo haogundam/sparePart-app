@@ -10,14 +10,14 @@
     font-size: 30px;
     font-family: 'Manrope';
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
     text-align: center;
   }
 
   .divider {
     height: 1px;
     background-color: #e5e7eb;
-    margin-bottom: 16px;
+    margin-bottom: 5px;
     width: 100%;
   }
 
@@ -41,7 +41,9 @@
   .content {
     display: flex;
     flex-direction: column;
-    text-align: left; /* Adjusted alignment */
+    text-align: left;
+    /* Adjusted alignment */
+
   }
 
   .text {
@@ -56,56 +58,94 @@
   .details {
     margin-left: 8px;
   }
-
-  .quotation-table {
+  .quotation-table-pending{
+    height: 80%;
+    max-height: 200px;
+  }
+  .quotation-table-completed{
+    height: 100%;
+    max-height: 250px;
+  }
+  .quotation-table-pending,
+  .quotation-table-completed {
     display: block;
-
-    height:100%;
-    max-height: 500px;
     width: 100%;
-    max-width: 100%;  
+    max-width: 100%;
     overflow: auto;
+  
     th {
       background-color: rgb(183, 183, 183);
       position: sticky;
       top: 0;
+      padding: 5px; /* Adjusted padding */
+      white-space: nowrap;
     }
+  
     td {
-      padding:5px
+      padding: 5px;
+      white-space: nowrap;
+    }
+  
+    .button-view-side {
+      width: auto;
+      height: 20px;
+      background-color: #52abfc;
+      color: white;
+      font-size: 8px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
   }
-  .quotation-table .partName{
-    width: 50%;
+  
+  .quotation-table-pending .partName,
+  .quotation-table-completed .partName {
+    width: 30%;
+  }
+  .quotation-table-pending th:nth-child(1),
+  .quotation-table-completed th:nth-child(1){
+    padding-left: 5px;
+
   }
  
+  .quotation-table-pending td:nth-child(1),
+  .quotation-table-completed td:nth-child(1) {
+    /* Styles for the first th/td */
+    padding: auto;
+  }
   
-.quotation-table th:nth-child(1) {
-  /* Styles for the first th */
-  padding-left: 3px;
-}
-
-.quotation-table th:nth-child(2) {
-  /* Styles for the second th */
-  padding-left: 10px;
-  padding-right: 150px;
-}
-.quotation-table th:nth-child(3) {
-  /* Styles for the first th */
-  padding-left: 10px;
-  padding-right: 25px
-}
-
-.quotation-table th:nth-child(4 ) {
-  /* Styles for the second th */
-  padding-left: 5px;
-  padding-right: 10px;
-}
-
+  .quotation-table-pending th:nth-child(2),
+  .quotation-table-completed th:nth-child(2),
+  .quotation-table-pending td:nth-child(2),
+  .quotation-table-completed td:nth-child(2) {
+    /* Styles for the second th/td */
+    padding-left: 10px;
+    padding-right: 150px;
+  }
+  
+  .quotation-table-pending th:nth-child(3),
+  .quotation-table-completed th:nth-child(3),
+  .quotation-table-pending td:nth-child(3),
+  .quotation-table-completed td:nth-child(3) {
+    /* Styles for the third th/td */
+    padding-left: 10px;
+    padding-right: 25px;
+  }
+  
+  .quotation-table-pending th:nth-child(4),
+  .quotation-table-completed th:nth-child(4),
+  .quotation-table-pending td:nth-child(4),
+  .quotation-table-completed td:nth-child(4) {
+    /* Styles for the fourth th/td */
+    padding-left: 5px;
+    padding-right: 10px;
+  }
   .text pre,
   .text span {
     margin-right: 10px;
     font-family: 'Manrope';
     font-size: 16px;
+    margin-bottom: 3px;
     white-space: nowrap;
   }
 
@@ -123,12 +163,13 @@
   .customer-details {
     display: flex;
     flex-direction: column;
-    padding-top: 1px;
+    padding-top: 0px;
   }
 
   .customer-id {
-    font-size: 28px;
+    font-size: 22px;
     text-align: center;
+    margin-bottom: 0;
   }
 
   .customer-name {
@@ -149,12 +190,29 @@
   }
 
   .header-row {
-    width: 100%; /* Adjusted width */
+    width: 100%;
+    /* Adjusted width */
     height: 50px;
     background-color: rgba(133, 173, 229, 0.783);
     display: flex;
     align-items: flex-end;
     padding-bottom: 5px;
+
+    .button-add {
+      width: auto;
+      font-size: 14px;
+      padding: 8px;
+      border-radius: 8px;
+      border-color: rgb(112, 187, 0);
+      background-color: rgb(121, 202, 0);
+      color: #ffffff;
+    }
+
+    .button-add:hover {
+      background-color: rgb(71, 118, 0);
+      color: #ffffff;
+      cursor: pointer;
+    }
   }
 
   .header-row pre,
@@ -184,7 +242,7 @@
     align-items: center;
     padding: 10px;
     position: fixed;
-    bottom: 40px;
+    bottom: 0px;
   }
 
   .total-price {
@@ -215,29 +273,33 @@
     flex-direction: column;
     margin-left: 12%;
     margin-right: 5%;
-    height: 90vh; /* Use full viewport height */
+    height: 90vh;
+    /* Use full viewport height */
   }
-  
+
   .search-bar {
-    width: 63%; /* Adjusted width to take full width */
+    width: 63%;
+    /* Adjusted width to take full width */
     background-color: #ffffff;
     padding: 16px;
     display: flex;
     flex-direction: column;
-    margin-bottom: 16px; /* Added margin to separate from the content */
+    margin-bottom: 16px;
+    /* Added margin to separate from the content */
   }
-  
+
   .search-input {
     display: flex;
-  
+
     input {
-      flex: 1; /* Take remaining width */
+      flex: 1;
+      /* Take remaining width */
       padding: 8px;
       border: 2px solid #52abfc;
       border-radius: 8px;
       margin-right: 10px;
     }
-  
+
     button {
       height: 40px;
       padding: 0 24px;
@@ -248,18 +310,22 @@
       margin-top: 10px;
       width: auto;
     }
-  
+
     .button-submit:hover {
       background-color: #102f4c;
       cursor: pointer;
     }
   }
-  
+
   .search-result {
-    flex: 1; /* Take remaining height */
-    overflow-y: auto; /* Changed to auto for better usability */
-    margin-bottom: 16px; /* Added margin to separate from the content */
+    flex: 1;
+    /* Take remaining height */
+    overflow-y: auto;
+    /* Changed to auto for better usability */
+    margin-bottom: 16px;
+    /* Added margin to separate from the content */
   }
+
   .item-actions {
     .button-view:hover {
       background-color: #102f4c;
@@ -283,39 +349,47 @@
     }
 
     .span1 {
-      margin-right: 36px;
+      margin-right: 44px;
     }
 
     .span2 {
-      margin-right: 110px;
+      margin-right: 160px;
     }
 
     .span3 {
-      margin-right: 280px;
+      margin-right: 160px;
+    }
+
+    .span4 {
+      margin-right: 170px;
     }
   }
+
   .customer-table-container {
-    height: 100%; /* Set a fixed height for the container */
-    overflow-y: auto; /* Enable vertical scrollbar when content overflows */
-    width: 66%; 
+    height: 100%;
+    /* Set a fixed height for the container */
+    overflow-y: auto;
+    /* Enable vertical scrollbar when content overflows */
+    width: 66%;
 
   }
-  
+
   .customer-table {
-    width: 100%; 
+    width: 100%;
     border-collapse: collapse;
   }
-  
+
   .customer-item {
     background-color: #f1f4f8;
   }
-  
+
   .customer-item td {
     padding: 8px;
     padding-left: 25px;
-    border: 1px solid #ddd; /* Add borders between cells */
+    border: 1px solid #ddd;
+    /* Add borders between cells */
   }
-  
+
   .button-view {
     padding: 8px;
     background-color: #52abfc;
@@ -326,11 +400,11 @@
     font-size: 15px;
     width: auto;
   }
-  
+
   .button-view:hover {
     background-color: #06325c;
   }
-  
+
 
   .item-actions {
     display: flex;
@@ -365,51 +439,95 @@
     top: 0;
     position: fixed;
     margin-top: 45px;
-    margin-left: auto; /* Added margin-left auto to center the sidebar */
-    margin-right: auto; /* Added margin-right auto to center the sidebar */
+    margin-left: auto;
+    /* Added margin-left auto to center the sidebar */
+    margin-right: auto;
+    /* Added margin-right auto to center the sidebar */
   }
 
   /* The snackbar - position it at the bottom and in the middle of the screen */
   #snackbar {
-    visibility: hidden; /* Hidden by default. Visible on click */
-    min-width: 250px; /* Set a default minimum width */
-    margin-left: -125px; /* Divide value of min-width by 2 */
-    background-color: #333; /* Black background color */
-    color: #fff; /* White text color */
-    text-align: center; /* Centered text */
-    border-radius: 2px; /* Rounded borders */
-    padding: 16px; /* Padding */
-    position: fixed; /* Sit on top of the screen */
-    z-index: 1; /* Add a z-index if needed */
-    left: 50%; /* Center the snackbar */
-    bottom: 30px; /* 30px from the bottom */
+    visibility: hidden;
+    /* Hidden by default. Visible on click */
+    min-width: 250px;
+    /* Set a default minimum width */
+    margin-left: -125px;
+    /* Divide value of min-width by 2 */
+    background-color: #333;
+    /* Black background color */
+    color: #fff;
+    /* White text color */
+    text-align: center;
+    /* Centered text */
+    border-radius: 2px;
+    /* Rounded borders */
+    padding: 16px;
+    /* Padding */
+    position: fixed;
+    /* Sit on top of the screen */
+    z-index: 1;
+    /* Add a z-index if needed */
+    left: 50%;
+    /* Center the snackbar */
+    bottom: 30px;
+    /* 30px from the bottom */
   }
 
   /* Show the snackbar when clicking on a button (class added with JavaScript) */
   #snackbar.show {
-    visibility: visible; /* Show the snackbar */
+    visibility: visible;
+    /* Show the snackbar */
     /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
     However, delay the fade out process for 2.5 seconds */
     -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
     animation: fadein 0.5s, fadeout 0.5s 2.5s;
   }
+
   /* Animations to fade the snackbar in and out */
   @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
+    from {
+      bottom: 0;
+      opacity: 0;
+    }
+
+    to {
+      bottom: 30px;
+      opacity: 1;
+    }
   }
 
   @keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
+    from {
+      bottom: 0;
+      opacity: 0;
+    }
+
+    to {
+      bottom: 30px;
+      opacity: 1;
+    }
   }
 
   @-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+    from {
+      bottom: 30px;
+      opacity: 1;
+    }
+
+    to {
+      bottom: 0;
+      opacity: 0;
+    }
   }
 
   @keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+    from {
+      bottom: 30px;
+      opacity: 1;
+    }
+
+    to {
+      bottom: 0;
+      opacity: 0;
+    }
   }

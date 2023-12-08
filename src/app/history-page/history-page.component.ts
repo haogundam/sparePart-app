@@ -13,6 +13,8 @@ interface QuotationListItem {
   quantityLeft: number;
   price: number;
   warehouse: string;
+  createDate:string;
+  validDate:string;
 }
 interface Customer {
   customer_id: number;
@@ -30,44 +32,26 @@ interface Customer {
  
 export class HistoryPageComponent {
   quotationList: QuotationListItem[] = [
-    { categoryName: 'Category 1', partName: 'Michenllin Fire Tyre', quantityLeft: 10, price: 50, warehouse: 'Warehouse A' },
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 1', partName: 'Michenllin Fire Tyre', quantityLeft: 10, price: 50, warehouse: 'Warehouse A' },
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 1', partName: 'Michenllin Fire Tyre 11222333332222', quantityLeft: 10, price: 50, warehouse: 'Warehouse A' },
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 1', partName: 'Michenllin Fire Tyre', quantityLeft: 10, price: 50, warehouse: 'Warehouse A' },
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 1', partName: 'Michenllin Fire Tyre', quantityLeft: 10, price: 50, warehouse: 'Warehouse A' },
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' }, 
-    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' }, 
+    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+    { categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
     // Add more items as needed
   ];
 
   mockupCustomers: Customer[] = [
-    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '123-456-7890' },
-    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '987-654-3210' },
-    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '555-123-4567' },
-    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '123-456-7890' },
-    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '987-654-3210' },
-    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '555-123-4567' },
-    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '123-456-7890' },
-    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '987-654-3210' },
-    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '555-123-4567' },
-    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '123-456-7890' },
-    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '987-654-3210' },
-    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '555-123-4567' },
-    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '123-456-7890' },
-    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '987-654-3210' },
-    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '555-123-4567' },
-    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '123-456-7890' },
-    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '987-654-3210' },
-    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '555-123-4567' },
-    // Add more customers as needed
+    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
+    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
+    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
+    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
+    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
+    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
+    { customer_id: 12323, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
+    { customer_id: 22323, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
+    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
   ];
 
   constructor(private snackBar: MatSnackBar) { 
@@ -92,11 +76,20 @@ export class HistoryPageComponent {
     }
     this.searchQuery = '';
   }
-
+  selectedCustomer: Customer[] = [];
+  selectedQuotation: QuotationListItem[] = [];
 
   search() {
-    throw new Error('Method not implemented.');
+    this.openSnackBar();
+  }
+  
+  
+  // Modify the viewQuote method
+  viewQuote(customer: Customer) {
+    this.openSnackBar();
 
+  }
+  empty(){
   }
   searchQuery: any;
   selectedQuantity: any;
