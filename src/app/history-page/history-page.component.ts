@@ -1,4 +1,4 @@
-import { Component,Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { DetailSidebarComponent } from '../detail-sidebar/detail-sidebar.component';
 import { LayoutComponent } from '../layout/layout.component';
 import { FormsModule } from '@angular/forms';
@@ -6,34 +6,13 @@ import { CommonModule } from '@angular/common';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
-interface QuotationListItem {
-  // Define the properties of a quotation list item
-  quoteNo: number;
-  categoryName: string;
-  partName: string;
-  quantityLeft: number;
-  price: number;
-  warehouse: string;
-  createDate:string;
-  validDate:string;
-}
-interface QuotationList {
-  quoteNo: number;
-  quoteDate: string; // Assuming a string for simplicity, you can use Date type if needed
-  quoteValidDate: string;
-  customerId: number;
-  userId: number;
-  totalAmount: number;
-  paymentType: string;
-  paymentStatus: string;
-}
-
-interface Customer {
-  customer_id: number;
-  name: string;
-  email: string;
-  phone: string;
-}
+import { ApiService } from '../services/api.service';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Customer } from '../models/customer.model';
+import { QuotationListResponse } from '../models/quotation.model';
 @Component({
   selector: 'app-history-page',
   standalone: true,
@@ -41,76 +20,134 @@ interface Customer {
   templateUrl: './history-page.component.html',
   styleUrl: './history-page.component.scss'
 })
- 
-export class HistoryPageComponent {
-  quotationList: QuotationList[] = [
-    {
-      quoteNo: 100,
-      quoteDate: '2023-01-01',
-      quoteValidDate: '2023-01-10',
-      customerId: 11111,
-      userId: 201,
-      totalAmount: 500.00,
-      paymentType: 'Credit Card',
-      paymentStatus: 'Pending'
-    },
-    {
-      quoteNo: 200,
-      quoteDate: '2023-01-02',
-      quoteValidDate: '2023-01-12',
-      customerId: 33333,
-      userId: 202,
-      totalAmount: 750.50,
-      paymentType: 'Cash',
-      paymentStatus: 'Paid'
-    },
-    {
-      quoteNo: 300,
-      quoteDate: '2023-01-02',
-      quoteValidDate: '2023-01-12',
-      customerId: 55555,
-      userId: 202,
-      totalAmount: 750.50,
-      paymentType: 'Cash',
-      paymentStatus: 'Paid'
-    },
-    // Add more sample quotations as needed
-  ];
-  quotationListItem: QuotationListItem[] = [
-    { quoteNo:100,categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
-    { quoteNo:200,categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+export class HistoryPageComponent implements OnInit {
+selectedQuotationListByCustomerId: any;
+selectedQuotationList: any;
 
-    { quoteNo:200,categoryName: 'Category 2', partName: 'Impressi ', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' ,createDate:'2020-12-12',validDate:'2020-12-12'}, 
+  selectedCustomer: Customer[] = [];
+  // selectedQuotationList: QuoteList[] = [];
+  // selectedQuotationListByCustomerId: QuotationListResponse[] = [];
+  onclickCustomer: number = 0;
+  showQuotationListItemBoolean: number = 0;
+  // selectedQuotationPart: QuotationPart[] = [];
+  searchQuery: string = '';
+  selectedQuantity: any;
+  customerListObservable: Observable<any> = of([]);
+  constructor(private snackBar: MatSnackBar, private apiService: ApiService) {
+  
+   }
 
-  ];
-
-  mockupCustomers: Customer[] = [
-    { customer_id: 11111, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
-    { customer_id: 22222, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
-    { customer_id: 33333, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
-    { customer_id: 44444, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
-    { customer_id: 55555, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
-    { customer_id: 66666, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
-    { customer_id: 77777, name: 'John Doe', email: 'john.doe@example.com', phone: '012-345 6789' },
-    { customer_id: 88888, name: 'Jane Smith', email: 'jane.smith@example.com', phone: '012-345 6789' },
-    { customer_id: 99999, name: 'Bob Johnson', email: 'bob.johnson@example.com', phone: '012-345 6789' },
-  ];
-
-  constructor(private snackBar: MatSnackBar) { 
+  ngOnInit(): void {
+    // Call your API service method here
+    this.apiService.fetchAllCustomerListByPage(1).subscribe(
+      (customers: Customer[]) => {
+        this.selectedCustomer = customers;
+        console.log('Customers:', this.selectedCustomer);
+      },
+      (error) => {
+        console.error('Error fetching customers:', error);
+      }
+    );
   }
-  addToQuote(_t18: any) {
-    throw new Error('Method not implemented.');
+
+
+  filteredCustomers: Customer[] = [];
+  searchCustomer(customerName: string) {
+    //filter customers based on searchQuery
+    this.resetShowQuotationState(); 
+    this.apiService.searchCustomerByName(customerName).subscribe(
+      (customers: Customer[]) => {
+        this.selectedCustomer = customers;
+        console.log('Customers:', this.selectedCustomer);
+      },
+      (error) => {
+        console.error('Error fetching customers:', error);
+      }
+    );
   }
+
+  searchQuotation(customerName: string, index: number): void {
+    this.resetShowQuotationState();
+    this.onclickCustomer = index;
+    this.showQuotationListItemBoolean = 1;
+    this.apiService.getQuotationListsByCustomerId(index, 1).subscribe(
+      (apiResponse: QuotationListResponse[]) => {
+        
+        this.selectedQuotationListByCustomerId = apiResponse.map((item) => ({
+          CustomerId: item.CustomerId,
+          CustomerName: item.CustomerName,
+          PendingQuotationList: item.PendingQuotationList,
+          PaidQuotationList: item.PaidQuotationList,
+        }));
+        this.onclickCustomer = index;
+        this.showQuotationListItemBoolean = 1;
+        console.log('Quotation List:', this.selectedQuotationListByCustomerId);
+      },
+      (error) => {
+        console.error('Error fetching quotation lists:', error);
+      }
+    );
+  }
+
+  itemsPerPage: number = 10; // Number of items per page
+  currentPage: number = 1; // Current page
+  totalPages: number =2;  
+
+
+
+  // Function to handle page navigation
+  goToPage(direction: 'prev' | 'next'): void {
+    if (direction === 'prev' && this.currentPage > 1) {
+      this.currentPage--;
+      
+    } else if (direction === 'next' && this.currentPage < this.totalPages) {
+      this.currentPage++;
+    
+    }
+    this.apiService.fetchAllCustomerListByPage(this.currentPage).subscribe(
+      (customers: Customer[]) => {
+        this.selectedCustomer = customers;
+        console.log('Customers:', this.selectedCustomer);
+      },
+      (error) => {
+        console.error('Error fetching customers:', error);
+      }
+    );
+  }
+
+  // Function to handle input change and navigate to the specified page
+  goToPageInput(): void {
+    if (this.currentPage < 1) {
+      this.currentPage = 1;
+    } else if (this.currentPage > this.totalPages) {
+      this.currentPage = this.totalPages;
+    }
+    this.apiService.fetchAllCustomerListByPage(this.currentPage).subscribe(
+      (customers: Customer[]) => {
+        this.selectedCustomer = customers;
+        console.log('Customers:', this.selectedCustomer);
+      },
+      (error) => {
+        console.error('Error fetching customers:', error);
+      }
+    );
+  }
+
+  resetShowQuotationState() {
+    // Reset the boolean state to 0
+    this.showQuotationListItemBoolean = 0;
+  }
+
 
   openSnackBar() {
     const x = document.getElementById("snackbar");
 
-    if (x) {
+    if (x) {  
       // Add the "show" class to DIV
       x.className = "show";
 
       // After 3 seconds, remove the show class from DIV
-      setTimeout(function() {
+      setTimeout(() => {
         if (x) {
           x.className = x.className.replace("show", "");
         }
@@ -118,69 +155,28 @@ export class HistoryPageComponent {
     }
     this.searchQuery = '';
   }
-  selectedCustomer: Customer[] = [
-   
-  ];
-  selectedQuotationList: QuotationList[] = [];
-  searchCustomer() {
-    // Filter customers based on searchQuery
-    this.selectedCustomer = this.mockupCustomers.filter(
-      (customer) =>
-        customer.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
 
-
-    
+  addToQuote(_t18: any) {
+    throw new Error('Method not implemented.');
   }
 
-  onclickCustomer: number = 0;
-  searchQuotation(id: number,index: number) {
-    // Filter quotations based on searchQuery
-    console.log('Quotation List:', this.quotationList);
+  empty() { }
 
-    this.selectedQuotationList = this.quotationList.filter(quotationList => quotationList.customerId === id);
-    console.log('Selected Quotation List:', this.selectedQuotationList);
 
-    this.onclickCustomer = index;
-    console.log('searchQuotation called with customerId:', id);
+
+  addCustomer() {
+    // Display snackbar
+    this.openSnackBar();
   }
 
-  showQuotationListItemBoolean: number = 0;
-
-
-  selectedQuotation: QuotationListItem[] =[
-
-  ];
-  searchQuotationListItem(no : number) {
-    console.log('Quotation List Items:', this.quotationListItem);
-
-    // Filter quotation list items based on the selected customer ID
-    this.selectedQuotation = this.quotationListItem.filter(quotationListItem => quotationListItem.quoteNo === no);
-  
-    console.log('Selected Quotation Item:', this.selectedQuotation);
-     this.showQuotationListItemBoolean = 1;
-     console.log('searchQuotationListItem called with quotationId:', no,'boolean',this.showQuotationListItemBoolean);
-  }
-  showCustomerDetails(){
-    this.showQuotationListItemBoolean = 0;
+  quotationList: any;
+  searchQuotationListItem(arg0: number) {
+    throw new Error('Method not implemented.');
   }
 
-
-
-  addCustomer(){
-        // Display snackbar
-        this.openSnackBar();
+  showCustomerDetails() {
+    throw new Error('Method not implemented.');
   }
-  // Modify the viewQuote method
 
-
-  empty() {}
-
-  searchQuery: any;
-  selectedQuantity: any;
-  
-  // Modify the viewQuote method
-
-  
- 
+  // .
 }

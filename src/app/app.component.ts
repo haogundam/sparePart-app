@@ -17,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterOutlet,MatIconModule,DetailSidebarComponent, LoginComponent, HistoryPageComponent,LayoutComponent,HttpClientModule],
-  providers: [ApiService],
+  providers: [ApiService,HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

@@ -23,7 +23,8 @@
 
 /* Sidebar Styles */
 .sidebar {
-  height: 91vh;
+  max-height: 91vh;
+  height: 100%;
   width: 10%;
   max-width: 300px;
   background-color: #63a6e4;

@@ -1,29 +1,41 @@
 // api.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
+import { Customer } from '../models/customer.model';
+import { QuotationListResponse } from '../models/quotation.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'https://api.example.com';
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'https://localhost:7153/api/customers/';
 
-  // Example API call method
-  getData(): Observable<any> {
-    const url = `${this.apiUrl}/data`;
-    return this.http.get(url);
+  constructor(private http: HttpClient) { }
+  private quotationByCustomerId = `/quotations/?name=hao&pageNumber=1`
+  fetchAllCustomerListByPage(pageNumber: number) : Observable<Customer[]>{
+    const url = `https://localhost:7153/api/customers/?name=&pageNumber=${pageNumber}`;
+    return this.http.get<Customer[]>(url);
+
+  }
+ 
+  searchCustomerByName(customerName: string): Observable<Customer[]> {
+    const url = `https://localhost:7153/api/customers/?name=${customerName}&pageNumber=1`;
+    return this.http.get<Customer[]>(url);
   }
   
-  fetchData() {
-    this.getData().subscribe(data => {
-      console.log('API Data:', data);
-    });
+  getQuotationListsByCustomerId(
+    customerId: number,
+    pageNumber: number,
+  ): Observable<any> {
+    // const url = `${this.apiUrl}${customerId}${this.quotationByCustomerId}`;
+    const url = `https://localhost:7153/api/customers/${customerId}/quotations?pendingPageNumber=${pageNumber}&paidPageNumber=${pageNumber}`;
+    return this.http.get<QuotationListResponse>(url);
   }
+
   //authentification
   private static readonly mockUser = {
     username: 'user',
