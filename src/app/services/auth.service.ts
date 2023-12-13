@@ -34,13 +34,15 @@ export default class AuthService {
 
   UserId:number = 2;
 
-  login(email: string, password: string){
+  login(email: string, password: string): Observable<string> {
     const headers = { 'Content-Type': 'application/json' };
     const user: UserDto = { Email: email, Password: password };
-    console.log(user);
-    return this.http.post<UserDto>(`${this.baseUrl}/login`, {user},{headers});
+  
+    return this.http.post<string>(`${this.baseUrl}/login`, user, {
+      headers,
+      responseType: 'text' as 'json' // Specify the response type as text
+    });
   }
-
   // storeToken(tokenValue: string){
   //   localStorage.setItem('token', tokenValue)
   // }

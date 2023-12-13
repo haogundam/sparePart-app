@@ -20,17 +20,27 @@ export class LoginComponent {
 
   onLogin(userEmail: string, userPassword: string) {
     this.authService.login(userEmail, userPassword).subscribe(
-      (user: any) => {
-        console.log('User:', user);
+      (token: string) => {
+        console.log('Token:', token);
+  
+        // Check if a valid token is received
+        if (token) {
+          // Save the token in localStorage or a more secure storage
+          localStorage.setItem('token', token);
+  
+          // Navigate to the layout page
+          this.router.navigate(['/layout']);
+        } else {
+          console.error('Invalid token');
+          // Handle invalid token or login failure
+        }
+      },
+      (error) => {
+        console.error('Login failed:', error);
+        // Handle login error
       }
-    )
-      ;
-    // this.authService.login(this.userEmail,this.userPassword);
-    console.log('login');
-
-    // Use your authentication service here
-    // For demonstration, navigate to layout
-    this.router.navigate(['/layout']);
+    );
   }
+  
 
 }

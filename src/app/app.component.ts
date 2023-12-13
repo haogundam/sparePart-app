@@ -16,8 +16,8 @@ import AuthService from './services/auth.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,MatIconModule,DetailSidebarComponent, LoginComponent, HistoryPageComponent,LayoutComponent,HttpClientModule,],
-  providers: [ApiService,HttpClientModule,AuthService],
+  imports: [CommonModule, MatIconModule, HttpClientModule,RouterOutlet],
+  providers: [ApiService, HttpClientModule, AuthService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

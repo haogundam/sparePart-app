@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HistoryPageComponent } from './history-page/history-page.component'; // Import the HistoryComponent
 import { LayoutComponent } from './layout/layout.component';
-
+import { AuthGuard } from './services/auth.guard';
 
 export const routes: Routes = [
-        { path: '', component: LoginComponent },
+        { path: '', component: LoginComponent,canActivate: [AuthGuard] },
         { path: 'history', component: HistoryPageComponent },
         { path: 'layout', component: LayoutComponent},
         
