@@ -19,13 +19,13 @@ export interface QuoteList {
   export interface QuotationListResponse {
     CustomerId: number;
     CustomerName: string;
-    PendingQuotationList: QuotationResponse[];
-    PaidQuotationList: QuotationResponse[];
+    QuotationList: QuotationResponse[];
   }
   // QuotationResponse model in Angular code
   export interface QuotationResponse {
     quoteNo: number;
     quoteDate: string;
     quoteValidDate: string;
+    status: string;
     // other properties
   }

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import AuthService from '../services/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -19,15 +20,16 @@ import { Router } from '@angular/router';
 
 
 export class LayoutComponent {
-  constructor(private router: Router) { }
+  constructor(private router: Router,private authService:AuthService) { }
   
   logout() {
+    this.authService.signOut();
     this.router.navigate(['']);
   }
   onHistory() {
     this.router.navigate(['/history']);
   }
-
+  
   empty(){
     
   }

@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Customer } from '../models/customer.model';
-import { QuotationListResponse } from '../models/quotation.model';
+import { QuotationListResponse, QuotationResponse } from '../models/quotation.model';
 @Component({
   selector: 'app-history-page',
   standalone: true,
@@ -21,8 +21,8 @@ import { QuotationListResponse } from '../models/quotation.model';
   styleUrl: './history-page.component.scss'
 })
 export class HistoryPageComponent implements OnInit {
-selectedQuotationListByCustomerId: any;
-selectedQuotationList: any;
+  selectedQuotationListByCustomerId: QuotationResponse[] = [];
+  selectedQuotationList: any;
 
   selectedCustomer: Customer[] = [];
   // selectedQuotationList: QuoteList[] = [];
@@ -70,18 +70,13 @@ selectedQuotationList: any;
     this.resetShowQuotationState();
     this.onclickCustomer = index;
     this.showQuotationListItemBoolean = 1;
-    this.apiService.getQuotationListsByCustomerId(index, 1).subscribe(
+     this.apiService.getQuotationListsByCustomerId(index, 1).subscribe(
       (apiResponse: QuotationListResponse[]) => {
         
-        this.selectedQuotationListByCustomerId = apiResponse.map((item) => ({
-          CustomerId: item.CustomerId,
-          CustomerName: item.CustomerName,
-          PendingQuotationList: item.PendingQuotationList,
-          PaidQuotationList: item.PaidQuotationList,
-        }));
+        this.selectedQuotationListByCustomerId = (apiResponse as any).quotationList;
         this.onclickCustomer = index;
         this.showQuotationListItemBoolean = 1;
-        console.log('Quotation List:', this.selectedQuotationListByCustomerId);
+        console.log('Quotation List:', apiResponse,this.selectedQuotationListByCustomerId);
       },
       (error) => {
         console.error('Error fetching quotation lists:', error);

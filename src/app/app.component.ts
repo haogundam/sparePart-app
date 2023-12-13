@@ -13,11 +13,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import AuthService from './services/auth.service';
+import { AuthGuard } from './services/auth.guard';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, MatIconModule, HttpClientModule,RouterOutlet],
-  providers: [ApiService, HttpClientModule, AuthService],
+  providers: [ApiService, HttpClientModule, AuthService,AuthGuard],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User,UserDto } from '../models/auth.model';
 import { Observable } from 'rxjs';
@@ -8,8 +8,9 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export default class AuthService {
+export default class AuthService   {
 
+ 
   private baseUrl: string = 'https://localhost:7153/api/auth';
   private userPayload:any;
   constructor(private http: HttpClient, private router: Router) {
@@ -23,16 +24,15 @@ export default class AuthService {
   //   return this.http.post<any>(`${this.baseUrl}authenticate`,loginObj)
   // }
 
-  // signOut(){
-  //   localStorage.clear();
-  //   this.router.navigate(['login'])
-  // }
+  signOut(){
+    localStorage.clear();
+    this.router.navigate([''])
+  }
   register(email: string, password: string): Observable<any> {
     const user: UserDto = { Email: email, Password: password };
     return this.http.post<any>(`${this.baseUrl}/register`, user);
   }
 
-  UserId:number = 2;
 
   login(email: string, password: string): Observable<string> {
     const headers = { 'Content-Type': 'application/json' };
@@ -43,6 +43,14 @@ export default class AuthService {
       responseType: 'text' as 'json' // Specify the response type as text
     });
   }
+  private jwtHelper: JwtHelperService = new JwtHelperService();
+
+  isTokenValid(token: string): boolean {
+    // Check if the token is not expired
+    return !this.jwtHelper.isTokenExpired(token);
+  }
+ 
+  
   // storeToken(tokenValue: string){
   //   localStorage.setItem('token', tokenValue)
   // }

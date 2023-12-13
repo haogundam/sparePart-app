@@ -32,21 +32,11 @@ export class ApiService {
     pageNumber: number,
   ): Observable<any> {
     // const url = `${this.apiUrl}${customerId}${this.quotationByCustomerId}`;
-    const url = `https://localhost:7153/api/customers/${customerId}/quotations?pendingPageNumber=${pageNumber}&paidPageNumber=${pageNumber}`;
+    const url = `https://localhost:7153/api/customers/${customerId}/quotations?pageNumber=1`;
     return this.http.get<QuotationListResponse>(url);
   }
 
-  //authentification
-  private static readonly mockUser = {
-    username: 'user',
-    password: 'password',
-  };
+ 
 
-  static login(username: string, password: string): Observable<boolean> {
-    // Simulate authentication logic
-    const isAuthenticated = username === this.mockUser.username && password === this.mockUser.password;
-
-    // Return an observable with the authentication result
-    return of(isAuthenticated);
-  }
+  
 }
