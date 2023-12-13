@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams,HttpClientModule  } from '@angular/common/http';
 import { Router } from '@angular/router';
-//import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { User,UserDto } from '../models/auth.model';
 import { Observable } from 'rxjs';
 /* import { TokenApiModel } from '../models/token-api.model'; */
 @Injectable({
   providedIn: 'root'
 })
-export default class AuthService {
+export class AuthService {
 
   private baseUrl: string = 'https://localhost:7153/api/auth';
   private userPayload:any;
   constructor(private http: HttpClient, private router: Router) {
-  }
+   }
 
   // signUp(userObj: any) {
   //   return this.http.post<any>(`${this.baseUrl}register`, userObj)
@@ -28,16 +28,15 @@ export default class AuthService {
   //   this.router.navigate(['login'])
   // }
   register(email: string, password: string): Observable<any> {
-    const user: UserDto = { Email: email, Password: password };
+    const user: User = { UserId: this.UserId, Email: email, Password: password };
     return this.http.post<any>(`${this.baseUrl}/register`, user);
   }
 
-  UserId:number = 2;
+  UserId:number = 1;
 
   login(email: string, password: string){
     const headers = { 'Content-Type': 'application/json' };
-    const user: UserDto = { Email: email, Password: password };
-    console.log(user);
+    const user: User = { UserId: this.UserId, Email: email, Password: password };
     return this.http.post<UserDto>(`${this.baseUrl}/login`, {user},{headers});
   }
 
