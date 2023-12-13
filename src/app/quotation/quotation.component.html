@@ -1,0 +1,103 @@
+<!-- Header-->
+<header class="app-header">
+    <div class="app-title">
+      <span>Quotations</span>
+    </div>
+  </header>
+
+  
+<!-- Body -->
+<!-- Left Bar -->
+<div>
+    <app-layout class="content"></app-layout>
+
+</div>
+
+<!-- Right Bar -->
+<div>
+ <app-quotation-sidebar class="sidebar-history"></app-quotation-sidebar>
+</div>
+
+<!-- Center -->
+<body>
+
+    <!-- search bar-->
+    <div class="searchCard">
+        <div class="searchBar">
+            <i class="fa fa-search"></i>
+            <input type="text" [(ngModel)]="searchQuery" [placeholder]="'Search for SKU...'"  class="skuSearch" (keyup.enter)="onSearch()">
+            <button type="click" (click)="onSearch()">Search</button>        
+        </div>
+    </div>
+
+    <!-- search results-->
+    <div class="searchResults">
+            <table> 
+                <span>
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Part Name</th>
+                        <th>Manufacturer</th>
+                        <th>Quantity Left</th>
+                        <th>Price</th>
+                        <th>Warehouse</th>
+                        <th><div></div></th>
+                        <th><div></div></th>
+                    </tr>
+                </thead>
+            </span>
+
+        <tbody>
+            <tr *ngFor="let product of selectedSKU; let i = index;" class="product-info">
+                <td>{{product.sku}}</td>
+                <td>{{product.partName}}</td>
+                <td>{{product.manufacturer}}</td>
+                <td>{{product.quantityLeft}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.warehouse}}</td>
+                <td><input type="text" [placeholder]="'Quantity...'"></td>
+                <td><input type="text" [placeholder]="'Price...'"></td>
+            </tr>
+        </tbody>
+
+        </table>
+    </div>
+
+
+
+
+    <!-- Alternative Results similar to Search Results-->
+    <div class="alternateText">
+        <h1 >Alternative Products Similar to {{productdetails[0].partName}}...</h1>
+    </div>
+    <div class="alternateTable">
+        <table>
+            <thead>
+            <tr>
+                <th>SKU</th>
+                <th>Part Name</th>
+                <th>Manufacturer</th>
+                <th>Quantity Left</th>
+                <th>Price</th>
+                <th>Warehouse</th>
+                <th><div></div></th>
+                <th><div></div></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of filteredproducts;let i = index;" class="product-info">
+                <td>{{product.sku}}</td>
+                <td>{{product.partName}}</td>
+                <td>{{product.manufacturer}}</td>
+                <td>{{product.quantityLeft}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.warehouse}}</td>
+                <td><input type="text" [placeholder]="'Quantity...'"></td>
+                <td><input type="text" [placeholder]="'Price...'"></td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+</body>
