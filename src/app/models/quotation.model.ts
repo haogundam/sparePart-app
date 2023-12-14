@@ -10,22 +10,28 @@ export interface QuoteList {
   }
   
   export interface QuotationPart {
-    quotePartId: number;
     quoteNo: number;
-    partId: number;
-    unitPrice: number;
-    qiantity: number;
+    quoteDate: string;
+    totalAmount: number;
+    parts: PartsInQuoteList[];
+    
+  }
+  export interface PartsInQuoteList{
+    partId  : number;
+    partName : string;
+    quantity : number;
+    unitPrice : number;
   }
   export interface QuotationListResponse {
     CustomerId: number;
     CustomerName: string;
-    QuotationList: QuotationResponse[];
+    quotationList: QuotationResponse[];
   }
   // QuotationResponse model in Angular code
   export interface QuotationResponse {
     quoteNo: number;
     quoteDate: string;
     quoteValidDate: string;
-    status: string;
+    status: number;
     // other properties
   }

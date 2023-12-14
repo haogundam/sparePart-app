@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { DetailSidebarComponent } from '../detail-sidebar/detail-sidebar.component';
 import { LayoutComponent } from '../layout/layout.component';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, KeyValue, KeyValuePipe } from '@angular/common';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,30 +12,30 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Customer } from '../models/customer.model';
-import { QuotationListResponse, QuotationResponse } from '../models/quotation.model';
+import { PartsInQuoteList, QuotationListResponse, QuotationPart, QuotationResponse } from '../models/quotation.model';
 @Component({
   selector: 'app-history-page',
   standalone: true,
-  imports: [DetailSidebarComponent, LayoutComponent, FormsModule, CommonModule],
+  imports: [DetailSidebarComponent, LayoutComponent, FormsModule, CommonModule,KeyValuePipe],
   templateUrl: './history-page.component.html',
   styleUrl: './history-page.component.scss'
 })
 export class HistoryPageComponent implements OnInit {
   selectedQuotationListByCustomerId: QuotationResponse[] = [];
   selectedQuotationList: any;
-
+  pendingQuotationList: QuotationResponse[] = [];
+  completedQuotationList: QuotationResponse[] = [];
   selectedCustomer: Customer[] = [];
-  // selectedQuotationList: QuoteList[] = [];
-  // selectedQuotationListByCustomerId: QuotationListResponse[] = [];
   onclickCustomer: number = 0;
   showQuotationListItemBoolean: number = 0;
-  // selectedQuotationPart: QuotationPart[] = [];
   searchQuery: string = '';
   selectedQuantity: any;
   customerListObservable: Observable<any> = of([]);
+  showQuotationListDetailItemBoolean: number = 0;
+  totalAmountOfQuotationList: any;
   constructor(private snackBar: MatSnackBar, private apiService: ApiService) {
-  
-   }
+
+  }
 
   ngOnInit(): void {
     // Call your API service method here
@@ -54,7 +54,7 @@ export class HistoryPageComponent implements OnInit {
   filteredCustomers: Customer[] = [];
   searchCustomer(customerName: string) {
     //filter customers based on searchQuery
-    this.resetShowQuotationState(); 
+    this.resetShowQuotationState();
     this.apiService.searchCustomerByName(customerName).subscribe(
       (customers: Customer[]) => {
         this.selectedCustomer = customers;
@@ -66,17 +66,35 @@ export class HistoryPageComponent implements OnInit {
     );
   }
 
-  searchQuotation(customerName: string, index: number): void {
+  searchQuotation(index: number, id: number): void {
     this.resetShowQuotationState();
+    this.selectedQuotationListByCustomerId = [];
+    this.completedQuotationList = [];
+    this.pendingQuotationList = [];
     this.onclickCustomer = index;
     this.showQuotationListItemBoolean = 1;
-     this.apiService.getQuotationListsByCustomerId(index, 1).subscribe(
+    this.apiService.getQuotationListsByCustomerId(id, 1).subscribe(
       (apiResponse: QuotationListResponse[]) => {
-        
         this.selectedQuotationListByCustomerId = (apiResponse as any).quotationList;
+  
+        for (let i = 0; i < this.selectedQuotationListByCustomerId.length; i++) {
+          if (this.selectedQuotationListByCustomerId[i].status === 0) {
+            console.log("Current: ", this.selectedQuotationListByCustomerId[i]);
+            this.pendingQuotationList = [...this.pendingQuotationList, this.selectedQuotationListByCustomerId[i]];
+            console.log('This is equal 0', this.pendingQuotationList);
+          } else if (this.selectedQuotationListByCustomerId[i].status === 1) {
+            console.log("Current: ", this.selectedQuotationListByCustomerId[i]);
+            this.completedQuotationList = [...this.completedQuotationList, this.selectedQuotationListByCustomerId[i]];
+            console.log('This is equal 1:', this.completedQuotationList);
+          } else {
+            console.log('This is equal nothing:',);
+            console.log('Quotation List:', this.selectedQuotationListByCustomerId[i].status);
+          }
+        }
         this.onclickCustomer = index;
         this.showQuotationListItemBoolean = 1;
-        console.log('Quotation List:', apiResponse,this.selectedQuotationListByCustomerId);
+  
+        console.log('Complete List:', this.completedQuotationList, 'pending List:', this.pendingQuotationList);
       },
       (error) => {
         console.error('Error fetching quotation lists:', error);
@@ -86,7 +104,7 @@ export class HistoryPageComponent implements OnInit {
 
   itemsPerPage: number = 10; // Number of items per page
   currentPage: number = 1; // Current page
-  totalPages: number =2;  
+  totalPages: number = 2;
 
 
 
@@ -94,10 +112,10 @@ export class HistoryPageComponent implements OnInit {
   goToPage(direction: 'prev' | 'next'): void {
     if (direction === 'prev' && this.currentPage > 1) {
       this.currentPage--;
-      
+
     } else if (direction === 'next' && this.currentPage < this.totalPages) {
       this.currentPage++;
-    
+
     }
     this.apiService.fetchAllCustomerListByPage(this.currentPage).subscribe(
       (customers: Customer[]) => {
@@ -131,13 +149,14 @@ export class HistoryPageComponent implements OnInit {
   resetShowQuotationState() {
     // Reset the boolean state to 0
     this.showQuotationListItemBoolean = 0;
+    this.showQuotationListDetailItemBoolean = 0;
   }
 
 
   openSnackBar() {
     const x = document.getElementById("snackbar");
 
-    if (x) {  
+    if (x) {
       // Add the "show" class to DIV
       x.className = "show";
 
@@ -164,13 +183,24 @@ export class HistoryPageComponent implements OnInit {
     this.openSnackBar();
   }
 
-  quotationList: any;
-  searchQuotationListItem(arg0: number) {
-    throw new Error('Method not implemented.');
+  quotationList: PartsInQuoteList[] = [];
+  searchQuotationListDetailItem(quoteNo: number, customerId: number) {
+    this.showQuotationListDetailItemBoolean = 1;
+    this.apiService.searchQuotationListDetailItem(quoteNo, customerId).subscribe(
+      (response) => {
+        this.quotationList = response.parts; // Assuming 'parts' is the array
+        console.log('Quotation List:', this.quotationList);
+        this.totalAmountOfQuotationList = response.totalAmount;
+      },
+      (error) => {
+        console.error('Error fetching quotation lists:', error);
+      }
+    );
+    
   }
 
   showCustomerDetails() {
-    throw new Error('Method not implemented.');
+    this.showQuotationListDetailItemBoolean = 0;
   }
 
   // .

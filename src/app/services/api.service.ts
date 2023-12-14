@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { Customer } from '../models/customer.model';
-import { QuotationListResponse } from '../models/quotation.model';
+import { QuotationListResponse, QuotationPart } from '../models/quotation.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class ApiService {
   private apiUrl = 'https://localhost:7153/api/customers/';
 
   constructor(private http: HttpClient) { }
-  private quotationByCustomerId = `/quotations/?name=hao&pageNumber=1`
+  
   fetchAllCustomerListByPage(pageNumber: number) : Observable<Customer[]>{
     const url = `https://localhost:7153/api/customers/?name=&pageNumber=${pageNumber}`;
     return this.http.get<Customer[]>(url);
@@ -36,7 +36,10 @@ export class ApiService {
     return this.http.get<QuotationListResponse>(url);
   }
 
- 
+  searchQuotationListDetailItem(quotationNo: number,customerId: number): Observable<any> {
+    const url = `https://localhost:7153/api/customers/${customerId}/quotations/${quotationNo}?pageNumber=1`;
+    return this.http.get<QuotationPart[]>(url);
+  }
 
   
 }
