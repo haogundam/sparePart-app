@@ -32,7 +32,7 @@ export class HistoryPageComponent implements OnInit {
   selectedQuantity: any;
   customerListObservable: Observable<any> = of([]);
   showQuotationListDetailItemBoolean: number = 0;
-  totalAmountOfQuotationList: any;
+  totalAmountOfQuotationList: number = 0;
   constructor(private snackBar: MatSnackBar, private apiService: ApiService) {
 
   }
@@ -150,6 +150,7 @@ export class HistoryPageComponent implements OnInit {
     // Reset the boolean state to 0
     this.showQuotationListItemBoolean = 0;
     this.showQuotationListDetailItemBoolean = 0;
+    this.totalAmountOfQuotationList = 0;
   }
 
 
@@ -190,17 +191,23 @@ export class HistoryPageComponent implements OnInit {
       (response) => {
         this.quotationList = response.parts; // Assuming 'parts' is the array
         console.log('Quotation List:', this.quotationList);
-        this.totalAmountOfQuotationList = response.totalAmount;
+        console.log('Total Amount:', response.totalAmount);
+        if(this.quotationList.length === 0){
+          this.totalAmountOfQuotationList = 0;
+        }else{
+          this.totalAmountOfQuotationList = response.totalAmount;
+        }
       },
       (error) => {
         console.error('Error fetching quotation lists:', error);
       }
     );
-    
+  
   }
 
   showCustomerDetails() {
     this.showQuotationListDetailItemBoolean = 0;
+    this.totalAmountOfQuotationList = 0;
   }
 
   // .
