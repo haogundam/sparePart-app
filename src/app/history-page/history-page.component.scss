@@ -503,6 +503,47 @@ margin-bottom: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.pagination-cell {
+  text-align: right;
+  display: flex;
+  justify-content: right;
+  align-items: right;
+  padding: 10px; // or any other padding you prefer
+}
+
+.pagination-btn {
+  padding: 5px 10px;
+  margin: 0 10px;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #e2e6ea;
+  }
+
+  &:disabled {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+  }
+}
+
+.pagination-input {
+    width: 30px;
+  text-align: right;
+  margin: 0 10px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.pagination-info {
+  display: inline-flex;
+  align-items: right;
+}
+
 .sidebar-history .button {
   background-color: #52abfc;
   color: white;

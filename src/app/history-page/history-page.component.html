@@ -37,10 +37,10 @@
     </table>
   </div>
   <div class="page-selector">
-    <button (click)="goToPage('prev')">Previous</button>
-    <span>Page <input type="number" [(ngModel)]="currentPage" (change)="goToPageInput()" />
-      of {{ totalPages }}</span>
-    <button (click)="goToPage('next')">Next</button>
+    <button *ngIf=" currentPage>1" (click)="goToPage('prev','customer')">Previous</button>
+    <span>Page <input type="number" [(ngModel)]="currentPage" (change)="goToPageInput('customer')" />
+      of {{ totalPage }}</span>
+    <button *ngIf="totalPage> currentPage" (click)="goToPage('next','customer')">Next</button>
   </div>
 
 
@@ -160,6 +160,7 @@
       </div>
       <div *ngIf="showQuotationListDetailItemBoolean === 1">
         <h4>Quotation details</h4>
+
         <!-- Your detail bar content goes here -->
         <table class="quotation-table-detail">
           <thead>
@@ -168,7 +169,7 @@
               <th>Part ID</th>
               <th>Part Name</th>
               <th>Quantity</th>
-              <th>Unit Price</th>
+              <th>Unit Price (RM)</th>
             </tr>
           </thead>
           <tbody class="quotation-table-item">
@@ -179,6 +180,17 @@
               <td>{{item.quantity}}</td>
               <td>{{item.unitPrice}}</td>
               <td></td>
+            </tr>
+            <tr>
+              <td colspan="3"> <!-- Adjust the colspan to match the number of columns in your table -->
+                <div class="pagination-container">
+                  <button *ngIf="quotationCurrentPage > 1" (click)="goToPage('prev','quote')" class="pagination-btn">Previous</button>
+                  <span class="pagination-info">
+                    Page <input type="number" [(ngModel)]="quotationCurrentPage" (change)="goToPageInput('quote')" class="pagination-input" /> of {{ quotationTotalPage }}
+                  </span>
+                  <button *ngIf="quotationTotalPage > quotationCurrentPage" (click)="goToPage('next','quote')" class="pagination-btn">Next</button>
+                </div>
+              </td>
             </tr>
             <tr>
               <td colspan="4"></td>
