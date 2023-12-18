@@ -1,23 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { HistoryPageComponent } from './history-page/history-page.component'; // Import the HistoryComponent
-import { LayoutComponent } from './layout/layout.component';
-import AuthService from './services/auth.service';
-import { AuthGuard } from './services/auth.guard';
+import { HistoryPageComponent } from './history-page/history-page.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-        { path: '', component: LoginComponent},
-        { path: 'history', component: HistoryPageComponent },
-        { path: 'layout', component: LayoutComponent},
-        
-        // Add other routes as needed
+  { path: '', component: LoginComponent },
+  { path: 'history', component: HistoryPageComponent , canActivate: [AuthGuard] },
+  // other routes...
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {
-        
-}
+export class AppRoutingModule {}

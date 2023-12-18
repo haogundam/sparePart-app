@@ -11,14 +11,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ApiService } from './services/api.service';
-import { HttpClientModule,HttpResponse } from '@angular/common/http';
+import { HttpClientModule,HttpResponse,HttpClient } from '@angular/common/http';
 import AuthService from './services/auth.service';
-import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, MatIconModule, HttpClientModule,RouterOutlet],
-  providers: [ApiService, HttpClientModule, AuthService,AuthGuard,HttpResponse],
+  providers: [ApiService, HttpClientModule, AuthService,AuthGuard,HttpResponse,HttpClient],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

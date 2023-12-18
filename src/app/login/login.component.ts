@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { ApiService } from '../services/api.service';
@@ -29,7 +29,7 @@ export class LoginComponent {
           localStorage.setItem('token', token);
   
           // Navigate to the layout page
-          this.router.navigate(['/layout']);
+          this.router.navigate(['/history']);
         } else {
           console.error('Invalid token');
           // Handle invalid token or login failure

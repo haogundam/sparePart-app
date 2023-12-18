@@ -6,7 +6,7 @@
     <div class="search-bar">
       <div class="search-input">
         <input type="text" [(ngModel)]="searchQuery" placeholder="Search for customer name...."
-          (keypress)="searchCustomer(searchQuery)" />
+          (keyup)="searchCustomer(searchQuery)" />
         <button class="button button-submit" (click)="searchCustomer(searchQuery)">Search</button>
       </div>
     </div>

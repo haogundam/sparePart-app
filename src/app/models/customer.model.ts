@@ -5,3 +5,6 @@ export interface Customer {
   customerContact: string;
 }
 
+export interface CreateCustomer extends Customer {
+  address: string;
+}
