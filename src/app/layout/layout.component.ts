@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import AuthService from '../services/auth.service';
+import {AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-layout',

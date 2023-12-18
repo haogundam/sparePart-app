@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { ApiService } from '../services/api.service';
-import AuthService from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -22,12 +22,12 @@ export class LoginComponent {
     this.authService.login(userEmail, userPassword).subscribe(
       (token: string) => {
         console.log('Token:', token);
-  
+
         // Check if a valid token is received
         if (token) {
           // Save the token in localStorage or a more secure storage
           localStorage.setItem('token', token);
-  
+
           // Navigate to the layout page
           this.router.navigate(['/history']);
         } else {
@@ -41,6 +41,6 @@ export class LoginComponent {
       }
     );
   }
-  
+
 
 }

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export default class AuthService {
+export  class AuthService {
 
 
   private baseUrl: string = 'https://localhost:7153/api/auth';
@@ -45,7 +45,7 @@ export default class AuthService {
   }
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
-  isTokenValid(token: string): boolean {
+   isTokenValid(token: string): boolean {
     // Check if the token is not expired
     return !this.jwtHelper.isTokenExpired(token);
   }
