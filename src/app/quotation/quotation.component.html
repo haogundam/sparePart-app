@@ -53,19 +53,13 @@
 
         <tbody>
             <tr *ngFor="let part of filteredproducts" >
-            <!-- <tr *ngFor="let product of selectedSKU; let i = index;" class="product-info"> -->
-                <!-- <td>{{product.sku}}</td>
-                <td>{{product.partName}}</td>
-                <td>{{product.manufacturer}}</td>
-                <td>{{product.quantityLeft}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.warehouse}}</td> -->
+
                 <td>{{part.sku}}</td>
                 <td>{{part.partName}}</td>
                 <td>{{part.supplierName}}</td>
-                <td>{{part.totalQuantity}}</td>
+                <td>{{part.quantity}}</td>
                 <td>{{part.sellingPrice}}</td>
-                <td>{{part.WarehouseName}}</td>
+                <td>{{part.warehouseName}}</td>
                 <td><input type="text" [placeholder]="'Quantity...'"></td>
                 <td><input type="text" [placeholder]="'Price...'"></td>
             </tr>
@@ -99,20 +93,20 @@
                         </thead>
             </span>
         <tbody>
-            <!-- <tr *ngFor="let product of filteredproducts;let i = index;" class="product-info"> -->
-                <tr>
-                <!-- <td>{{product.sku}}</td>
+            <tr *ngFor="let product of similarProducts;let i = index;" class="product-info">
+              
+                <td>{{product.sku}}</td>
                 <td>{{product.partName}}</td>
-                <td>{{product.manufacturer}}</td>
-                <td>{{product.quantityLeft}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.warehouse}}</td> -->
-                <td>[SKU]</td>
+                <td>{{product.supplierName}}</td>
+                <td>{{product.NewQuantity}}</td>
+                <td>{{product.NewPrice}}</td>
+                <td>{{product.warehouseName}}</td>
+                <!-- <td>[SKU]</td>
                 <td>[partName]</td>
                 <td>[manufacturer]</td>
                 <td>[quantityLeft]</td>
                 <td>[Price]</td>
-                <td>[Warehouse]</td>
+                <td>[Warehouse]</td> -->
                 <td><input type="text" [placeholder]="'Quantity...'"></td>
                 <td><input type="text" [placeholder]="'Price...'"></td>
             </tr>

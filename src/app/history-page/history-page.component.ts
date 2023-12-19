@@ -3,7 +3,6 @@ import { DetailSidebarComponent } from '../detail-sidebar/detail-sidebar.compone
 import { LayoutComponent } from '../layout/layout.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, KeyValue, KeyValuePipe } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../services/api.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -37,7 +36,7 @@ export class HistoryPageComponent implements OnInit {
   currentPage: number = 1;
   totalPageItems: number = 0;
   quotationCurrentId: number = 0;
-  constructor(private snackBar: MatSnackBar, private apiService: ApiService) {
+  constructor( private apiService: ApiService) {
 
   }
 
@@ -130,10 +129,10 @@ export class HistoryPageComponent implements OnInit {
       this.currentPage++;
 
     }
-    else if (direction === 'prev' && this.currentPage > 1 && type === 'quote') {
+    else if (direction === 'prev' && this.quotationCurrentPage > 1 && type === 'quote') {
       this.quotationCurrentPage--;
     }
-    else if (direction === 'next' && this.currentPage < this.totalPage && type === 'quote') {
+    else if (direction === 'next' && this.quotationCurrentPage < this.quotationTotalPage && type === 'quote') {
       this.quotationCurrentPage++;
 
     }

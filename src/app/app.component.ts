@@ -7,18 +7,18 @@ import { NgModule } from '@angular/core';
 import { HistoryPageComponent } from './history-page/history-page.component';
 import { LayoutComponent } from './layout/layout.component';
 import { DetailSidebarComponent } from './detail-sidebar/detail-sidebar.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
-
 import { ApiService } from './services/api.service';
 import { HttpClientModule, HttpResponse, HttpClient } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard.service';
+import {MaterialModule} from './material.module';
+import { QuotationSidebarComponent } from './quotation-sidebar/quotation-sidebar.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, MatIconModule, HttpClientModule, RouterOutlet,MatDialogModule],
-  providers: [ApiService, HttpClientModule, AuthService, AuthGuard, HttpResponse, HttpClient],
+  imports: [CommonModule, HttpClientModule, RouterOutlet,MaterialModule],
+  providers: [ApiService, HttpClientModule, AuthService, AuthGuard, HttpResponse, HttpClient,QuotationSidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

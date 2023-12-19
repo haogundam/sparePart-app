@@ -15,7 +15,7 @@ import { Customer } from '../models/customer.model';
 import { QuotationListResponse } from '../models/quotation.model';
 import { parts, partsResponse } from '../models/parts.model';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 
 @Injectable({
@@ -33,6 +33,7 @@ export class QuotationComponent implements OnInit{
 
 filteredproducts: partsResponse[] = [];
 selectedSKU: parts[]=[];
+similarProducts:  partsResponse[] = [];;
 
 onSearch() {
 throw new Error('Method not implemented.');
@@ -44,20 +45,25 @@ throw new Error('Method not implemented.');
 
 
   //search product by SKU
-  searchPart(SKU: string): Observable<partsResponse[]> {
-    return this.apiService.GetAllParts().pipe(
-      map((searchQueryPart: partsResponse[]) => {
-        this.filteredproducts = searchQueryPart;
+  searchPart(searchQueryPart: string) {
+    return this.apiService.searchPartsBySKU(searchQueryPart).subscribe(
+      (part: HttpResponse<partsResponse[]>) => {
+        this.filteredproducts = part.body as partsResponse[];
         console.log('SKU:', this.filteredproducts);
-        return this.filteredproducts; 
-      }),
-    );
-  }
+        if (searchQueryPart != null){
+      
+        }
+      },
+      (error) => {
+        console.error('Error fetching part lists:', error);
+      }
+    )
+  };
 
   ngOnInit(): void {
     this.apiService.GetAllParts().subscribe(
-      (part : partsResponse[]) => {
-        this.filteredproducts = part;
+      (part : HttpResponse<partsResponse[]>) => {
+        this.filteredproducts = part.body as partsResponse[];
         console.log('SKU:', this.filteredproducts);
       },
       (error) => {
@@ -66,9 +72,17 @@ throw new Error('Method not implemented.');
     )
   }
 
-//search customer by name
-  
-
+  showSameCategorySKU(sku : string) {
+      return this.apiService.showSameCategorySKU(sku).subscribe(
+        (part: HttpResponse<partsResponse[]>) => {
+          this.similarProducts = part.body as partsResponse[];
+          console.log('SKU:', this.similarProducts);
+        },
+        (error) => {
+          console.error('Error fetching part lists:', error);
+        }
+      )
+    }
 
 
   //reset visibility of parts list
