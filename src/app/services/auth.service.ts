@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserDto } from '../models/auth.model';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 /* import { TokenApiModel } from '../models/token-api.model'; */
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { Observable } from 'rxjs';
 export  class AuthService {
 
 
-  private baseUrl: string = 'https://localhost:7153/api/auth';
+  private baseUrl: string = `${environment.apiUrl}auth`;
   private userPayload: any;
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -51,8 +52,17 @@ export  class AuthService {
   }
   isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
-    // Add logic to check if the token is valid and not expired
     return !!token;
+  }
+
+  getAuthToken() {
+    return localStorage.getItem('token') as string;
+  }
+  getHeaders() {
+    return new HttpHeaders({
+   
+      Authorization: "Bearer " + this.getAuthToken(),
+    });
   }
 
   // storeToken(tokenValue: string){

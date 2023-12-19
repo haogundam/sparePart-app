@@ -13,12 +13,13 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard.service';
 import {MaterialModule} from './material.module';
 import { QuotationSidebarComponent } from './quotation-sidebar/quotation-sidebar.component';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterOutlet,MaterialModule],
-  providers: [ApiService, HttpClientModule, AuthService, AuthGuard, HttpResponse, HttpClient,QuotationSidebarComponent],
+  imports: [CommonModule, RouterOutlet,MaterialModule],
+  providers: [ApiService, AuthService, AuthGuard, HttpResponse ,QuotationSidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
