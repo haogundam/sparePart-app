@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
+import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { LayoutComponent } from '../layout/layout.component';
+import { Dialog } from '@angular/cdk/dialog';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -18,7 +19,7 @@ export class LoginComponent {
 
   userEmail: string = '';
   userPassword: string = '';
-  constructor(private router: Router, private apiService: ApiService, private authService: AuthService, private http: HttpClient) { }
+  constructor(private router: Router, private apiService: ApiService, private authService: AuthService, private http: HttpClient,private dialog:Dialog) { }
 
   onLogin(userEmail: string, userPassword: string) {
     
@@ -41,8 +42,13 @@ export class LoginComponent {
       },
       (error) => {
         console.error('Login failed:', error);
-        this.loginFailDialog.nativeElement.showModal();
-
+        const dialogRef = this.dialog.open(LoginComponent, {
+          width: '300px',
+          
+          data: { message: 'Login failed' }
+        });
+    
+        
         
         // Handle login error
       }

@@ -8,6 +8,7 @@ import { HistoryPageComponent } from './history-page/history-page.component';
 import { LayoutComponent } from './layout/layout.component';
 import { DetailSidebarComponent } from './detail-sidebar/detail-sidebar.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { ApiService } from './services/api.service';
 import { HttpClientModule, HttpResponse, HttpClient } from '@angular/common/http';
@@ -16,7 +17,7 @@ import { AuthGuard } from './guards/auth.guard.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, MatIconModule, HttpClientModule, RouterOutlet],
+  imports: [CommonModule, MatIconModule, HttpClientModule, RouterOutlet,MatDialogModule],
   providers: [ApiService, HttpClientModule, AuthService, AuthGuard, HttpResponse, HttpClient],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
