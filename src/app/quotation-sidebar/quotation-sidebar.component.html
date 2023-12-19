@@ -1,0 +1,76 @@
+<!-- detail-sidebar.component.html -->
+
+<div class="sidebar">
+    <div class="container">
+      <div class="title">
+        <h2>Quotations</h2>
+      </div>
+      <hr width="93%;" color="#d9d9d9" size="1">
+  
+      <div class="customer-details">
+        
+        <div class="customer-id">
+          <form class="searchCustomerForm">
+            <!-- <mat-form-field class="example-full-width">
+              <mat-label>Search for a Customer...</mat-label> -->
+              <input type="text" [placeholder]="'Seach for a Customer...'" (keyup)="onSearch()">
+              <!-- matInput [formControl]="myControl" [matAutocomplete]="auto" (keyup)="customerFilter()" -->
+              <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{ option.name }}
+                </mat-option> -->
+                <!-- <mat-option [value]="'Register New Customer'">
+                  <button mat-icon-button (click)="createCustomer(user)">Create a new Customer Profile</button>
+                </mat-option> -->
+              <!-- </mat-autocomplete> -->
+            <!-- </mat-form-field> -->
+          </form>
+        </div>
+  
+        <div class="quotation-info">
+          <p class="quotation-id">[Quotation ID]</p>
+          <p class="date">[Date]</p>
+        </div>
+      </div>
+  
+      <div>
+      <table  class="quotation-table">
+        <thead>
+          <tr >
+            <th>SKU</th>
+            <th>Part Name</th>
+            <th>Part ID</th>
+            <th>Unit Price</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <div class="divider"></div>
+        <tbody class="quotation-table-item">
+            <tr *ngFor="let customers of customer">
+              <td>customers.customerName</td>
+              <td>DUmmy</td>
+              <td>Dummy</td>
+              <td>DUmmmy</td>
+            <td>
+              <button class="button" (click)="onDeleteClick()">Del</button>
+            </td>
+          </tr>
+        </tbody>        
+      </table>
+    </div>
+
+      <div class="column-container">
+          <hr width="100%;" color="#d9d9d9" size="1" margin-left="15px">  
+        <div class="buttons-box">
+
+          <p>Total Price: RM XXXXX.XX</p>
+
+        <button (click)="openModal('submit')" class="submit-button">Submit Quotation</button>
+  
+        <button (click)="openModal('cancel')" class="cancel-button">Cancel</button>
+
+        <button mat-button (click)="openRegistrationForm()">Register</button>
+      </div>
+     </div>
+    </div>
+  </div> 

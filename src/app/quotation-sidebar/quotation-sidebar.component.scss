@@ -1,0 +1,98 @@
+.sidebar {
+    background-color:#F1F0F0;
+    margin-right: 2px;
+    float:right;    
+    width: 27.95%;
+    height: 650px;
+    display: flex;
+}
+.sidebar h2 {
+    margin-left: 15px;  
+}
+
+.customer-id {
+    height: 50px;
+    width : 400px;
+    margin-left: 13px;
+    display: flex;
+    align-items: center;
+}
+
+.customer-id input {
+    width: 100%;
+    height: 25px;
+    border: none;
+    border-radius: 8px;
+    outline-color: grey;
+}
+
+.searchCustomerForm {
+    width: 100%;
+}
+
+
+mat-form-field {
+    padding-top: 15px;
+    width: 95%;
+    
+}
+
+.quotation-info {
+    display: flex;
+    text-align: center;
+    width: 100%;
+}
+
+.quotation-id {
+    flex:0.5;
+}
+
+.date {
+    flex:0.5;
+}
+
+    .quotation-table tr{
+        display : flex;
+        width: 100%;
+        overflow-y: auto;
+        max-height: 150px;
+    }
+
+    .quotation-table th,td {
+        width:80px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+.buttons-box {
+    // background-color:#52abfc ;
+    height: 80px;
+    width: 100%;
+    text-align: center;
+    display : flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.submit-button {
+    background-color: #52abfc;
+    margin:10px;
+    border:none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    width: 120px;
+    height: 40px;
+}
+
+.cancel-button {
+    border:none;
+    border-radius: 8px;
+    background-color: #c30e0e;
+    color:white;
+    font-weight: bold;
+    width:90px;
+    height: 20px;
+}
+

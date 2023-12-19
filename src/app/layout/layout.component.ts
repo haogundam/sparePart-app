@@ -21,6 +21,10 @@ import { Router } from '@angular/router';
 export class LayoutComponent {
   constructor(private router: Router) { }
   
+  quotation() {
+    this.router.navigate(['/quotation'])
+  }
+
   logout() {
     this.router.navigate(['']);
   }

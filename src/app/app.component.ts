@@ -12,11 +12,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,MatIconModule,DetailSidebarComponent, LoginComponent, HistoryPageComponent,LayoutComponent,HttpClientModule],
+  imports: [CommonModule, RouterOutlet,
+    MatIconModule,DetailSidebarComponent,
+     LoginComponent, HistoryPageComponent,
+     LayoutComponent,HttpClientModule,
+     ReactiveFormsModule,
+    ],
   providers: [ApiService,HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
