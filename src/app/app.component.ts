@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ApiService } from './services/api.service';
 import { HttpClientModule, HttpResponse, HttpClient } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './guards/auth.guard.service';
 @Component({
   selector: 'app-root',
   standalone: true,

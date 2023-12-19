@@ -20,7 +20,10 @@ import {AuthService } from '../services/auth.service';
 
 
 export class LayoutComponent {
-  constructor(private router: Router,private authService:AuthService) { }
+   userEmail: string = '';
+  constructor(private router: Router,private authService:AuthService) {
+    this.userEmail = localStorage.getItem('userEmail') as string;
+   }
   
   logout() {
     this.authService.signOut();
@@ -33,4 +36,5 @@ export class LayoutComponent {
   empty(){
     
   }
+
 }
