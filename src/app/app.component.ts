@@ -18,8 +18,8 @@ import { AuthInterceptor } from './auth.interceptor';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,MaterialModule],
-  providers: [ApiService, AuthService, AuthGuard, HttpResponse ,QuotationSidebarComponent],
+  imports: [CommonModule, HttpClientModule, RouterOutlet,MaterialModule],
+  providers: [ApiService, HttpClientModule, AuthService, AuthGuard, HttpResponse, HttpClient,QuotationSidebarComponent, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

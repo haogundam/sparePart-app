@@ -51,7 +51,7 @@ throw new Error('Method not implemented.');
         this.filteredproducts = part.body as partsResponse[];
         console.log('SKU:', this.filteredproducts);
         if (searchQueryPart != null){
-      
+          this.showSameCategorySKU(searchQueryPart);
         }
       },
       (error) => {
@@ -64,7 +64,7 @@ throw new Error('Method not implemented.');
     this.apiService.GetAllParts().subscribe(
       (part : HttpResponse<partsResponse[]>) => {
         this.filteredproducts = part.body as partsResponse[];
-        console.log('SKU:', this.filteredproducts);
+        console.log('SKU All:', this.filteredproducts);
       },
       (error) => {
         console.error('Error fetching parts sku:', error);
@@ -76,7 +76,7 @@ throw new Error('Method not implemented.');
       return this.apiService.showSameCategorySKU(sku).subscribe(
         (part: HttpResponse<partsResponse[]>) => {
           this.similarProducts = part.body as partsResponse[];
-          console.log('SKU:', this.similarProducts);
+          console.log('SKU same category:', this.similarProducts);
         },
         (error) => {
           console.error('Error fetching part lists:', error);

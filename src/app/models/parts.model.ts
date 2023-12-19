@@ -15,7 +15,7 @@ export interface partsResponse{
     partName: string;
     sellingPrice: number;
     supplierName: string;
-    quantity: number;
+    totalQuantity: number;
     warehouseName:string;
     NewQuantity: number;
     NewPrice: number;

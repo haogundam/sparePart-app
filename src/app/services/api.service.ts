@@ -29,24 +29,28 @@ export class ApiService {
   //Get Parts Data
 
   GetAllParts(): Observable<HttpResponse<partsResponse[]>> {
+    const headers = this.auth.getHeaders();
     const url = `${environment.apiUrl}parts?pageNumber=1`;
-    return this.http.get<partsResponse[]>(url, { observe: 'response' });
+    return this.http.get<partsResponse[]>(url, { observe: 'response', headers: headers  });
   }
 
   searchCustomerByName(customerName: string): Observable<HttpResponse<Customer[]>> {
+    const headers = this.auth.getHeaders();
     const url = `${this.apiUrl}?name=${customerName}&pageNumber=1`;
-    return this.http.get<Customer[]>(url, { observe: 'response' });
+    return this.http.get<Customer[]>(url, { observe: 'response', headers: headers  });
   }
 
   //Search Parts By SKU
   searchPartsBySKU(sku: string): Observable<HttpResponse<partsResponse[]>> {
+    const headers = this.auth.getHeaders();
     const url = `${environment.apiUrl}parts?sku=${sku}&pageNumber=1`;
-    return this.http.get<partsResponse[]>(url, { observe: 'response' });
+    return this.http.get<partsResponse[]>(url, { observe: 'response', headers: headers  });
   }
 
   showSameCategorySKU(sku: string): Observable<HttpResponse<partsResponse[]>> {
     const url = `${environment.apiUrl}parts/category?sku=${sku}&pageNumber=1`;
-    return this.http.get<partsResponse[]>(url, { observe: 'response' });
+    const headers = this.auth.getHeaders();
+    return this.http.get<partsResponse[]>(url, { observe: 'response', headers: headers  });
   }
 
   //Fetch Quotation via Search Customer Id
@@ -55,14 +59,16 @@ export class ApiService {
     customerId: number,
     pageNumber: number,
   ): Observable<HttpResponse<any>> {
+    const headers = this.auth.getHeaders();
     // const url = `${this.apiUrl}${customerId}${this.quotationByCustomerId}`;
     const url = `${this.apiUrl}${customerId}/quotations?pageNumber=1`;
-    return this.http.get<QuotationListResponse>(`${url}`, { observe: 'response' });
+    return this.http.get<QuotationListResponse>(`${url}`, { observe: 'response' , headers: headers });
   }
 
   searchQuotationListDetailItem(quotationNo: number, customerId: number, pageNumber: number): Observable<HttpResponse<QuotationPart[]>> {
     const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}?pageNumber=${pageNumber}`;
-    return this.http.get<QuotationPart[]>(url, { observe: 'response' });
+    const headers = this.auth.getHeaders();
+    return this.http.get<QuotationPart[]>(url, { observe: 'response' , headers: headers });
   }
 
 
