@@ -1,10 +1,12 @@
 export interface Customer {
-    customerId: number;
+  customerId: number;
   customerName: string;
   customerEmail: string;
   customerContact: string;
 }
 
-export interface CreateCustomer extends Customer {
-  address: string;
+export interface createCustomer extends Customer {
+  address1: string;
+  address2: string;
 }
+

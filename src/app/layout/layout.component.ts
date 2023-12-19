@@ -25,6 +25,10 @@ export class LayoutComponent {
     this.userEmail = localStorage.getItem('userEmail') as string;
    }
   
+  quotation() {
+    this.router.navigate(['/quotation'])
+  }
+
   logout() {
     this.authService.signOut();
     this.router.navigate(['']);

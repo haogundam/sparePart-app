@@ -29,6 +29,15 @@ export class ApiService {
     return this.http.get<Customer[]>(url, { observe: 'response' });
   }
   
+  //Search Parts By SKU
+  searchPartsBySKU(sku: string): Observable<parts[]> {
+    const url = `https://localhost:7047/api/customers/?sku=${sku}&pageNumber=1`;
+    return this.http.get<parts[]>(url);
+  }
+
+
+//Fetch Quotation via Search Customer Id
+
   getQuotationListsByCustomerId(
     customerId: number,
     pageNumber: number,
