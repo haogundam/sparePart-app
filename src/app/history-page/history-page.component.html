@@ -184,6 +184,11 @@
               <td>{{item.unitPrice}}</td>
               <td></td>
             </tr>
+            
+            <tr>
+              <td colspan="4"></td>
+              <td>Total Price: {{totalAmountOfQuotationList}}</td>
+            </tr>
             <tr>
               <td colspan="3"> <!-- Adjust the colspan to match the number of columns in your table -->
                 <div class="pagination-container">
@@ -194,11 +199,7 @@
                   <button *ngIf="quotationTotalPage > quotationCurrentPage" (click)="goToPage('next','quote')" class="pagination-btn">Next</button>
                 </div>
               </td>
-            </tr>
-            <tr>
-              <td colspan="4"></td>
-              <td>Total Price: {{totalAmountOfQuotationList}}</td>
-            </tr>
+            </tr> 
           </tbody>
         </table>
       </div>
