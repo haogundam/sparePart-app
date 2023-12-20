@@ -11,14 +11,17 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ApiService } from '../services/api.service';
 import { Customer } from '../models/customer.model';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogActions,
+  MatDialogClose,MatDialogContent,MatDialogTitle,} from '@angular/material/dialog';
 import { RegistrationDialogComponent } from '../registration-dialog/registration-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
+import { startWith, map } from 'rxjs';
 
 export interface User {
-  sku: string;
+  //sku: string;
   name: string;
-  partId: string;
-  unitPrice: number;
+  //partId: string;
+  //unitPrice: number;
 }
 
 interface QuotationListItem {
@@ -44,18 +47,18 @@ interface FilteredOptions{
   imports: [CommonModule,FormsModule,MatFormFieldModule,
     MatInputModule, MatAutocompleteModule,
     ReactiveFormsModule, AsyncPipe, DialogComponent,
-    MatDialogModule
+    MatDialogModule, MatButtonModule
   ],
   templateUrl: './quotation-sidebar.component.html',
   styleUrls: ['./quotation-sidebar.component.scss'],
 })
 
 // implements OnInit
-export class QuotationSidebarComponent {
-filteredOption: FilteredOptions[]= [
-  {sku:1234,name:"Joseph",partId:1234,unitPrice:22.32},]
+export class QuotationSidebarComponent implements OnInit{
+// filteredOption: FilteredOptions[]= [
+//   {sku:1234,name:"Joseph",partId:1234,unitPrice:22.32},]
 
-;
+// ;
  
   openModal(arg0: string) {
     throw new Error('Method not implemented.');
@@ -65,48 +68,64 @@ filteredOption: FilteredOptions[]= [
     throw new Error('Method not implemented.');
   }
 
-  //Arrays of Dummy Data
-  quotationList: QuotationListItem[] = [
-    { categoryName: 'Category 1', partName: 'AAAAAA', quantityLeft: 10, price: 50, warehouse: 'Warehouse A' },
-    { categoryName: 'Category 2', partName: 'BBBBBB', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 1', partName: 'CCCCCC', quantityLeft: 10, price: 50, warehouse: 'Warehouse A' },
-    { categoryName: 'Category 2', partName: 'DDDDDD', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 1', partName: 'EEEEEE', quantityLeft: 10, price: 50, warehouse: 'Warehouse A' },
-    { categoryName: 'Category 2', partName: 'FFFFFF', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-    { categoryName: 'Category 1', partName: 'GGGGGG', quantityLeft: 10, price: 50, warehouse: 'Warehouse A' },
-    { categoryName: 'Category 2', partName: 'HHHHHH', quantityLeft: 20, price: 75, warehouse: 'Warehouse B' },
-  ];
 
-  option = this.quotationList;
+  // customerSearch: string = '';
+  // customer: Customer[] = [];
 
-  customerSearch: string = '';
-  customer: Customer[] = [];
-
-  constructor(private apiService : ApiService, public dialog: MatDialog) {}
-
-onSearch() {
-  if (this.customerSearch.trim() !== '') {
-    this.apiService.searchCustomerByName(this.customerSearch).subscribe(
-      (customers : Customer[]) =>
-    {
-      this.customer = customers;
-    },
-    (error) => {
-      console.error('Error fetching customer', error);
-      console.log('Customer Name:', this.customer)
-    }
-    );
+  constructor(private apiService : ApiService, public dialog: MatDialog) {
+    
   }
-}
+
+// onSearch() {
+//   if (this.customerSearch.trim() !== '') {
+//     this.apiService.searchCustomerByName(this.customerSearch).subscribe(
+//       (customers : Customer[]) =>
+//     {
+//       this.customer = customers;
+//     },
+//     (error) => {
+//       console.error('Error fetching customer', error);
+//       console.log('Customer Name:', this.customer)
+//     }
+//     );
+//   }
+// }
 
 //register customer
 openRegistrationForm():void {
   const dialogRef = this.dialog.open(RegistrationDialogComponent, {
-    width: '400px',
+    width: '700px',
   });
 
   dialogRef.afterClosed().subscribe((result) => {
     console.log('The registration dialog was closed',result);
   });
  }
+
+
+ //autocomplete
+ myControl = new FormControl<string | User>('');
+ options: User[] = [{name: 'Mary'}, {name: 'Shelley'}, {name: 'Igor'}];
+ filteredOptions!: Observable<User[]>;
+
+ ngOnInit() {
+   this.filteredOptions = this.myControl.valueChanges.pipe(
+     startWith(''),
+     map(value => {
+       const name = typeof value === 'string' ? value : value?.name;
+       return name ? this._filter(name as string) : this.options.slice();
+     }),
+   );
+ }
+
+ displayFn(user: User): string {
+   return user && user.name ? user.name : '';
+ }
+
+ private _filter(name: string): User[] {
+   const filterValue = name.toLowerCase();
+
+   return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
+ }
+
 }

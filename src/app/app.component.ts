@@ -13,6 +13,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,DetailSidebarComponent,
      LoginComponent, HistoryPageComponent,
      LayoutComponent,HttpClientModule,
-     ReactiveFormsModule,
+     ReactiveFormsModule, MatAutocompleteModule
     ],
   providers: [ApiService,HttpClientModule],
   templateUrl: './app.component.html',

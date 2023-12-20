@@ -1,20 +1,37 @@
-<body>
-  <!-- registration.component.html -->
-  <h1>Register Customer Profile</h1>
-  <form [formGroup]="registrationForm" (ngSubmit)="registerCustomer()">
-    <!-- Name and Contact Section -->
+<body mat-dialog-content>
+
+  <div mat-dialog-actions class="closefield">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <button mat-icon-button mat-dialog-close class="closebutton">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+<div class="form-title">
+  <p mat-dialog-title>Customer Profile Registration</p>
+</div>
+
+  <form (ngSubmit)="registerCustomer()">
     <div class="name_contact">
       <div class="input_header">
-        <h3>Customer Name</h3>
-        <h3>Customer Contact</h3>
+        <div class="first">
+          <h3>Customer Name</h3>
+        </div>
+        <div class="second">
+          <h3>Customer Contact</h3>
+        </div>
       </div>
-      <div class="input_bar">
+      <div class="splitbars">
+        <div class="first">
         <input formControlName="name">
+        </div>
+        <div>
         <input formControlName="contact">
+        </div>
       </div>
     </div>
   
-    <!-- Email Section -->
     <div class="email">
       <div class="input_header">
         <h3>Email</h3>
@@ -24,19 +41,18 @@
       </div>
     </div>
   
-    <!-- Address Section -->
     <div class="address">
       <div class="input_header">
         <h3>Address</h3>
       </div>
-      <div class="input_bar">
-        <input formControlName="address1">
+      <div>
+        <input class="input_bar" formControlName="address1">
       </div>
-      <div class="input_bar">
-        <input formControlName="address2">
+      <div>
+        <input class="input_bar" formControlName="address2">
       </div>
     </div>
   
-    <button type="submit">Register</button>
+    <div class="submitfield"><button class="submit" type="submit">Register</button></div>
   </form>
 </body>

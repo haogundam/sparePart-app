@@ -2,8 +2,7 @@ body {
     margin-left : 14.5%;
     margin-right :30%;
     width : 57.5%;
-    background-color: white;
-    height: 650px;
+    height: 93.85vh;
 }
 
 // .search-history {
@@ -12,16 +11,15 @@ body {
 
 
 //search bar
-
 .searchCard {
     width: 100%;
-    height: 50px;
+    height: 45px;
     
 }
 
 .searchBar input {
-    width :720px;
-    margin-left: 15px;
+    width :81%;
+    margin-left: 1.35%;
     border:none;
     border-radius: 8px;
     height: 30px;
@@ -42,13 +40,14 @@ body {
 }
 
 
-//search results table
 
+//search results table
 .searchResults {
-    height: 250px;
-    width: 850px;
-    margin-left: 8px;
-    text-align: center;    
+    height: 32.5%;
+    width: 100%;
+    margin-left: 1%;    
+    text-align: center;  
+    background-color: pink;  
 }
 
 .searchResults thead {
@@ -65,34 +64,46 @@ body {
 }
 
 .searchResults th,td {
-    width: 100px;
+    width: 75px;
     color: black;
-
 }
 
 .searchResults tbody{
     display: inline-block;
 }
 
-.searchResults input {
-    width: 75px;
+.searchResults td input {
+    width: 50px;    
 }
 
+.addQuote {
+    font-weight: bold;
+    background-color: #52abfc;
+    border:none;
+    border-radius: 100%;
+    width:30px;
+    height: 30px;
+    color: white;
+    font-size:16px;
+}
 
+.addQuote:hover {
+    cursor:pointer;
+}
 
+//TEXT FOR THE ALTERNATE PRODUCT
 .alternateText {
     color:gray;
-    margin-left: 15px;
-    margin-top: -15px;
+    margin-left: 2%;
 }
 
 
 
     //ALternate products table
     .alternateTable {
-        height: 250px;
-        width: 850px;
-        margin-left: 8px;
+        height: 30%;
+        width: 100%;
+        margin-left: 1%;
         text-align: center;    
         margin-top: -15px;
     }
@@ -111,7 +122,7 @@ body {
     }
 
     .alternateTable th,td {
-        width: 100px;
+        width: 75px;
         color: black;
 
     }
@@ -121,5 +132,5 @@ body {
     }
 
     .alternateTable td input {
-        width: 75px;
+        width: 50px;
     }

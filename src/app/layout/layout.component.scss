@@ -82,7 +82,7 @@
 
 .user-info {
   margin-top: auto;
-  background-color: #b0b7bc;
+  background-color: #ebebed;
   width: 90%;
   padding: 12px;
   display: flex;
@@ -103,10 +103,14 @@
 }
 
 .logout-label {
-  font-family: 'Plus Jakarta Sans';
-  color: #b33c3c;
+  background-color: #b33c3c;
   font-size: 24px;
-  font-weight: 500;
+  font-weight: bold;
+  font-style: italic;
+  color:white;
+  border:none;
+  width: 18vh;
+  height: 5vh;
 }
 
 /* Content Styles */
