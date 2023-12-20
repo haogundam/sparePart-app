@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { LayoutComponent } from '../layout/layout.component';
 import { Dialog } from '@angular/cdk/dialog';
+import { FailLoginComponent } from '../fail-login/fail-login.component';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -42,12 +43,10 @@ export class LoginComponent {
       },
       (error) => {
         console.error('Login failed:', error);
-        const dialogRef = this.dialog.open(LoginComponent, {
-          width: '300px',
-          
-          data: { message: 'Login failed' }
-        });
-    
+
+        // const dialogRef = this.dialog.open(FailLoginComponent, {
+        //   width: '250px',
+        // });
         
         
         // Handle login error
