@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { DataService } from '../services/data.services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
-
+import { ApiService } from '../services/api.service';
+import { Customer, createCustomerRequest, registerCustomerProfile } from '../models/customer.model';
 import { MatDialog, MatDialogActions,
   MatDialogClose,MatDialogContent,MatDialogTitle,} from '@angular/material/dialog';
-
 @Component({
   selector: 'app-registration-dialog',
   templateUrl: './registration-dialog.component.html',
@@ -15,22 +15,14 @@ import { MatDialog, MatDialogActions,
   standalone: true,
 })
 
-export class RegistrationDialogComponent {
 
-  
-  // registrationForm  : FormGroup = this.fb.group({
-  //   name: ['', Validators.required],
-  //   contact: ['', Validators.required],
-  //   email: ['', [Validators.required, Validators.email]],
-  //   address1: ['', Validators.required],
-  //   address2: [''],
-  // });;
+export class RegistrationDialogComponent{
 
-  // constructor(
-  //   private fb: FormBuilder,
-  //   private dataService: DataService,
-  //   private snackBar: MatSnackBar
-  // ) {}
+  // constructor(private fb: FormBuilder, private apiService: ApiService) {
+  // }
+
+  // registrationForm!: FormGroup;
+
 
   // ngOnInit(): void {
   //   this.registrationForm = this.fb.group({
@@ -42,28 +34,25 @@ export class RegistrationDialogComponent {
   //   });
   // }
 
-  registerCustomer(): void {
-    // if (this.registrationForm.valid) {
-    //   const customerData = this.registrationForm.value;
-    //   this.dataService.registerCustomer(customerData).subscribe(
-    //     (response) => {
-    //       console.log('Registration successful:', response);
-    //       this.snackBar.open('Registration successful!', 'Close', {
-    //         duration: 3000,
-    //       });
-    //       this.registrationForm.reset();
-    //     },
-    //     (error) => {
-    //       console.error('Registration failed:', error);
-    //       this.snackBar.open('Registration failed. Please try again.', 'Close', {
-    //         duration: 3000,
-    //       });
-    //     }
-    //   );
-    // } else {
-    //   this.snackBar.open('Please fill in all required fields.', 'Close', {
-    //     duration: 3000,
-    //   });
-    // }
+  // registerCustomer(): void {
+  //   if (this.registrationForm.valid) {
+  //     const requestData = this.registrationForm.value;
+  //     // Assuming ApiService has a method named registerCustomer
+  //     this.apiService.registerCustomer(requestData).subscribe(
+  //       (response: createCustomerRequest[]) => {
+  //         console.log('Registration successful:', response);
+  //         // Handle success (e.g., show a success message)
+  //       },
+  //       (error) => {
+  //         console.error('Registration failed:', error);
+  //         // Handle error (e.g., show an error message)
+  //       }
+  //     );
+  //   } else {
+  //     // Form is not valid, handle accordingly (e.g., show validation errors)
+  //   }
+  // }
+  registerCustomer(){
+      
   }
 }

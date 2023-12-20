@@ -91,6 +91,7 @@ export class QuotationSidebarComponent implements OnInit{
 //   }
 // }
 
+
 //register customer
 openRegistrationForm():void {
   const dialogRef = this.dialog.open(RegistrationDialogComponent, {
@@ -117,6 +118,7 @@ openRegistrationForm():void {
      }),
    );
  }
+ 
 
  displayFn(user: User): string {
    return user && user.name ? user.name : '';

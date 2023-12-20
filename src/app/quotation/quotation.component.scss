@@ -43,11 +43,10 @@ body {
 
 //search results table
 .searchResults {
-    height: 32.5%;
+    height: 30%;
     width: 100%;
     margin-left: 1%;    
     text-align: center;  
-    background-color: pink;  
 }
 
 .searchResults thead {
@@ -64,24 +63,33 @@ body {
 }
 
 .searchResults th,td {
-    width: 75px;
+    width: 100px;
     color: black;
 }
 
-.searchResults tbody{
+.searchResults tbody, thead{
     display: inline-block;
 }
 
 .searchResults td input {
-    width: 50px;    
+    width: 60px;    
+}
+
+.blankspace {
+    background-color: #52abfc;
+    width: 75px;
+}
+
+.blankspace-button{
+    width: 40px;
 }
 
 .addQuote {
     font-weight: bold;
     background-color: #52abfc;
     border:none;
-    border-radius: 100%;
-    width:30px;
+    border-radius: 12px;
+    width:60px;
     height: 30px;
     color: white;
     font-size:16px;
@@ -122,9 +130,8 @@ body {
     }
 
     .alternateTable th,td {
-        width: 75px;
+        width: 100px;
         color: black;
-
     }
 
     .alternateTable tbody{
@@ -132,5 +139,5 @@ body {
     }
 
     .alternateTable td input {
-        width: 50px;
+        width: 60px;
     }

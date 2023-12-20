@@ -4,13 +4,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
-import { Customer } from '../models/customer.model';
+import { Customer, createCustomerRequest } from '../models/customer.model';
 import { QuotationListResponse } from '../models/quotation.model';
 import { ObserversModule } from '@angular/cdk/observers';
 import { parts, partsResponse } from '../models/parts.model';
+
 @Injectable({
   providedIn: 'root',
 })
+
 export class ApiService {
 
   private apiUrl = 'https://localhost:7047/api/customers/';
@@ -25,6 +27,12 @@ export class ApiService {
 
     
   }
+  //register customer
+  registerCustomer(reqBody:createCustomerRequest[]) :Observable<createCustomerRequest[]> {
+    const url = `https://localhost:7047/api/customers`;
+    return this.http.post<createCustomerRequest[]>(url,reqBody);
+  }
+ 
  
   //Get Parts Data
 
@@ -73,6 +81,5 @@ export class ApiService {
     return of(isAuthenticated);
   }
 
-  //Fetch Parts Data
   
 }

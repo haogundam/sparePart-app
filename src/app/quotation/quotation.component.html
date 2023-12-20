@@ -22,14 +22,14 @@
                 <thead>
                     <tr class="product-list">
                         <th>SKU</th>
-                        <th>Part Name</th>
-                        <th>Manufacturer</th>
+                        <th>Name</th>
+                        <th>Manu.</th>
                         <th>Quantity</th>
-                        <th>Sell Price</th>
+                        <th>Price</th>
                         <th>Warehouse</th>
-                        <th><div></div></th>
-                        <th><div></div></th>
-                        <th><div></div></th>
+                        <th><div class="blankspace"></div></th>
+                        <th><div class="blankspace"></div></th>
+                        <th><div class="blankspace"></div></th>
                     </tr>
                 </thead>
             </span>
@@ -42,8 +42,8 @@
                 <td>{{part.totalQuantity}}</td>
                 <td>{{part.sellingPrice}}</td>
                 <td>{{part.WarehouseName}}</td>
-                <td><input type="text" [placeholder]="'Qty'"></td>
-                <td><input type="text" [placeholder]="'Price'"></td>
+                <td><input type="text" [placeholder]="'Qty...'"></td>
+                <td><input type="text" [placeholder]="'Price...'"></td>
                 <td><button class="addQuote">+</button></td>
             </tr>
         </tbody>
@@ -65,27 +65,27 @@
                 <thead>
                 <tr>
                     <th>SKU</th>
-                    <th>Part Name</th>
-                    <th>Manufacturer</th>
-                    <th>Quantity Left</th>
+                    <th>Name</th>
+                    <th>Manu.</th>
+                    <th>Quantity</th>
                     <th>Price</th>
                     <th>Warehouse</th>
-                    <th><div></div></th>
-                    <th><div></div></th>
-                    <th><div></div></th>
+                    <th><div class="blankspace"></div></th>
+                    <th><div class="blankspace"></div></th>
+                    <th><div class="blankspace-button"></div></th>
                 </tr>
                 </thead>
             </span>
         <tbody>
-                <tr>
-                <td>[SKU]</td>
-                <td>[partName]</td>
-                <td>[manufacturer]</td>
-                <td>[quantityLeft]</td>
-                <td>[Price]</td>
-                <td>[Warehouse]</td>
-                <td><input type="text" [placeholder]="'Qty'"></td>
-                <td><input type="text" [placeholder]="'Price'"></td>
+            <tr *ngFor="let part of filteredproducts" >
+                <td>{{part.sku}}</td>
+                <td>{{part.partName}}</td>
+                <td>{{part.supplierName}}</td>
+                <td>{{part.totalQuantity}}</td>
+                <td>{{part.sellingPrice}}</td>
+                <td>{{part.WarehouseName}}</td>
+                <td><input type="text" [placeholder]="'Qty...'"></td>
+                <td><input type="text" [placeholder]="'Price...'"></td>
                 <td><button class="addQuote">+</button></td>
             </tr>
         </tbody>
