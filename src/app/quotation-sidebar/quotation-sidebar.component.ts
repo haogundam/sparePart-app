@@ -12,6 +12,7 @@ import { Customer } from '../models/customer.model';
 import { RegistrationDialogComponent } from '../registration-dialog/registration-dialog.component';
 import { HttpResponse } from '@angular/common/http';
 import { CreateQuotationResponse } from '../models/quotation.model';
+import { QuotationPart } from '../models/quotation.model';
 export interface User {
   sku: string;
   name: string;
@@ -89,11 +90,21 @@ export class QuotationSidebarComponent {
       );
     }
   }
+  quotationId: number = 0;
+  quotationDate: Date = new Date();
   createQuotation(id: number) {
     console.log('Creating quotation for customer ID:', id);
     this.apiService.createQuotation(id).subscribe(
       (response: string) => {
+        this.quotationId = response as unknown as number;
         console.log('Quotation created successfully',response );
+
+        this.apiService.searchQuotationListDetailItem(this.customer[0].customerId,response as unknown as number,1).subscribe(
+          (dateResponse:HttpResponse<QuotationPart[]>) => {
+            this.quotationDate = (dateResponse.body as any).parts.quoteDate as unknown as Date;
+            console.log('Quotation created successfully',dateResponse );
+          }
+        );
       },
       (error) => {
         console.error('Error creating quotation', error);
