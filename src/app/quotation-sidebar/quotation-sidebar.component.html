@@ -10,11 +10,10 @@
       <div class="customer-details">
         
         <div class="customer-id">
-          <form class="searchCustomerForm">
+          <!-- <form class="searchCustomerForm"> -->
             <!-- <mat-form-field class="example-full-width">
               <mat-label>Search for a Customer...</mat-label> -->
-              <input type="text" [placeholder]="'Seach for a Customer...'" (keyup)="onSearch()">
-              <!-- matInput [formControl]="myControl" [matAutocomplete]="auto" (keyup)="customerFilter()" -->
+                            <!-- matInput [formControl]="myControl" [matAutocomplete]="auto" (keyup)="customerFilter()" -->
               <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                   {{ option.name }}
@@ -24,7 +23,9 @@
                 </mat-option> -->
               <!-- </mat-autocomplete> -->
             <!-- </mat-form-field> -->
-          </form>
+          <!-- </form> -->
+          <input type="text" [(ngModel)]="searchCustomerName" placeholder="Search for customer name.."
+              (keyup)="searchCustomer()" (keyup.enter)="createQuotation(customer[0].customerId)"/>
         </div>
   
         <div class="quotation-info">

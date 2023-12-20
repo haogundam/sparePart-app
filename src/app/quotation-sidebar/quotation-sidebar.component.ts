@@ -5,12 +5,13 @@ import { NgModel } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AsyncPipe } from '@angular/common';
-import {Observable, of} from 'rxjs';
-import { DialogComponent } from '../dialog/dialog.component'; 
+import { Observable, of } from 'rxjs';
+import { DialogComponent } from '../dialog/dialog.component';
 import { ApiService } from '../services/api.service';
 import { Customer } from '../models/customer.model';
 import { RegistrationDialogComponent } from '../registration-dialog/registration-dialog.component';
 import { HttpResponse } from '@angular/common/http';
+import { CreateQuotationResponse } from '../models/quotation.model';
 export interface User {
   sku: string;
   name: string;
@@ -28,20 +29,20 @@ interface QuotationListItem {
 }
 
 
-interface FilteredOptions{
-  sku:number;
-  name:string;
-  partId:number;
-  unitPrice:number;
+interface FilteredOptions {
+  sku: number;
+  name: string;
+  partId: number;
+  unitPrice: number;
 }
 
 @Component({
   selector: 'app-quotation-sidebar',
   standalone: true,
-  imports: [CommonModule,FormsModule,
-     MatAutocompleteModule,
+  imports: [CommonModule, FormsModule,
+    MatAutocompleteModule,
     ReactiveFormsModule, AsyncPipe, DialogComponent
-    
+
   ],
   templateUrl: './quotation-sidebar.component.html',
   styleUrls: ['./quotation-sidebar.component.scss'],
@@ -49,11 +50,13 @@ interface FilteredOptions{
 
 // implements OnInit
 export class QuotationSidebarComponent {
-filteredOption: FilteredOptions[]= [
-  {sku:1234,name:"Joseph",partId:1234,unitPrice:22.32},]
 
-;
- 
+  filteredOption: FilteredOptions[] = [
+    { sku: 1234, name: "Joseph", partId: 1234, unitPrice: 22.32 },]
+
+    ;
+  searchCustomerName: string = '';
+
   openModal(arg0: string) {
     throw new Error('Method not implemented.');
   }
@@ -68,27 +71,38 @@ filteredOption: FilteredOptions[]= [
 
   option = this.quotationList;
 
-  customerSearch: string = '';
   customer: Customer[] = [];
 
-  constructor(private apiService : ApiService) {}
+  constructor(private apiService: ApiService) { }
 
-onSearch() {
-  if (this.customerSearch.trim() !== '') {
-    this.apiService.searchCustomerByName(this.customerSearch).subscribe(
-      (response: HttpResponse<Customer[]>) => {
-        this.customer = response.body as Customer[];
+  searchCustomer() {
+    if (this.searchCustomerName.trim() !== '') {
+      this.apiService.searchCustomerByName(this.searchCustomerName).subscribe(
+        (response: HttpResponse<Customer[]>) => {
+          this.customer = response.body as Customer[];
+          console.log('Customer Name:', this.customer);
+        },
+        (error) => {
+          console.error('Error fetching customer', error);
+          console.log('Customer Name:', this.customer)
+        }
+      );
+    }
+  }
+  createQuotation(id: number) {
+    console.log('Creating quotation for customer ID:', id);
+    this.apiService.createQuotation(id).subscribe(
+      (response: string) => {
+        console.log('Quotation created successfully',response );
       },
       (error) => {
-        console.error('Error fetching customer', error);
-        console.log('Customer Name:', this.customer)
+        console.error('Error creating quotation', error);
       }
     );
   }
-}
 
-//register customer
-openRegistrationForm():void {
- 
- }
+  //register customer
+  openRegistrationForm(): void {
+
+  }
 }

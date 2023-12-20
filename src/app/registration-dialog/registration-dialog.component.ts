@@ -58,4 +58,5 @@ export class RegistrationDialogComponent implements OnInit {
       });
     }
   }
+  
 }

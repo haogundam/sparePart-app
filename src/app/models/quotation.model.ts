@@ -35,3 +35,7 @@ export interface QuoteList {
     status: number;
     // other properties
   }
+
+  export interface CreateQuotationResponse{
+    string: string;
+  }

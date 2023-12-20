@@ -24,7 +24,9 @@ export class HistoryPageComponent implements OnInit {
   selectedQuotationList: any;
   pendingQuotationList: QuotationResponse[] = [];
   completedQuotationList: QuotationResponse[] = [];
-  selectedCustomer: Customer[] = [];
+  selectedCustomer: Customer[] = [
+    
+  ];
   onclickCustomer: number = 0;
   showQuotationListItemBoolean: number = 0;
   searchQuery: string = '';
