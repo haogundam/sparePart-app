@@ -27,9 +27,9 @@
     </div> -->
     <div class="searchCard">
         <div class="searchBar">
-            <input type="text" [(ngModel)]="searchQueryPart" placeholder="Search for product SKU...."
-            (xkeypress)="searchPart(searchQueryPart)" />
-          <button class="button button-submit" (click)="searchPart(searchQueryPart)">Search</button>        
+            <input type="text" tabindex="1" [(ngModel)]="searchQueryPart" placeholder="Search for product SKU...."
+            (keyup)="searchPart(searchQueryPart)" />
+          <button class="button button-submit" tabindex="2"(click)="searchPart(searchQueryPart)">Search</button>        
         </div>
     </div>
 
@@ -60,8 +60,8 @@
                 <td>{{part.totalQuantity}}</td>
                 <td>{{part.sellingPrice}}</td>
                 <td>{{part.warehouseName}}</td>
-                <td><input type="text" [placeholder]="'Quantity...'"></td>
-                <td><input type="text" [placeholder]="'Price...'"></td>
+                <td><input type="text" tabindex="3" [placeholder]="'Quantity...'"></td>
+                <td><input type="text"  tabindex="3"[placeholder]="'Price...'"></td>
             </tr>
         </tbody>
 
@@ -107,8 +107,8 @@
                 <td>[quantityLeft]</td>
                 <td>[Price]</td>
                 <td>[Warehouse]</td> -->
-                <td><input type="text" [placeholder]="'Quantity...'"></td>
-                <td><input type="text" [placeholder]="'Price...'"></td>
+                <td><input type="text"   tabindex="4" [placeholder]="'Quantity...'"></td>
+                <td><input type="text"   tabindex="4" [placeholder]="'Price...'"></td>
             </tr>
         </tbody>
         </table>

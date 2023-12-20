@@ -130,7 +130,7 @@
 .quotation-table-completed td:nth-child(2) {
   /* Styles for the second th/td */
   padding-left: 10px;
-  padding-right: 75px;
+  padding-right: 10px;
 }
 
 .quotation-table-detail th:nth-child(3),
@@ -139,7 +139,7 @@
 .quotation-table-completed td:nth-child(3) {
   /* Styles for the third th/td */
   padding-left: 10px;
-  padding-right: 25px;
+  padding-right:5px;
 }
 
 .quotation-table-detail th:nth-child(4),
@@ -148,7 +148,6 @@
 .quotation-table-completed td:nth-child(4) {
   /* Styles for the fourth th/td */
   padding-left: 5px;
-  padding-right: 10px;
 }
 
 .text pre,
