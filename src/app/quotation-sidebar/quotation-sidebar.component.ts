@@ -16,6 +16,7 @@ import { MatDialog, MatDialogActions,
 import { RegistrationDialogComponent } from '../registration-dialog/registration-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { startWith, map } from 'rxjs';
+import { RegistrationDialogModule } from '../registration-dialog/registration-dialog.module';
 
 export interface User {
   //sku: string;
@@ -47,7 +48,7 @@ interface FilteredOptions{
   imports: [CommonModule,FormsModule,MatFormFieldModule,
     MatInputModule, MatAutocompleteModule,
     ReactiveFormsModule, AsyncPipe, DialogComponent,
-    MatDialogModule, MatButtonModule
+    MatDialogModule, MatButtonModule, RegistrationDialogModule
   ],
   templateUrl: './quotation-sidebar.component.html',
   styleUrls: ['./quotation-sidebar.component.scss'],

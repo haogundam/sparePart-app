@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RegistrationDialogModule } from './registration-dialog/registration-dialog.module';
 @NgModule({
   declarations: [
     // ... your components
@@ -10,7 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   imports: [
      // Add this line
     // ... other modules
-    ReactiveFormsModule, FormsModule, MatDialogModule,
+    ReactiveFormsModule, FormsModule, MatDialogModule, RegistrationDialogModule
   ],
   bootstrap: [],
 })

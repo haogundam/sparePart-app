@@ -24,3 +24,11 @@ export interface registerCustomerProfile {
   CustomerEmail: string;
   CustomerAddress:string;
 }
+
+export interface formData {
+  customername: string;
+  customercontact: number;
+  customeremail: string;
+  customeraddress1: string;
+  customeraddress2: string;
+}
