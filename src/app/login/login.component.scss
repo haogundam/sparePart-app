@@ -1,0 +1,92 @@
+/* login.component.css */
+
+.background {
+    background: linear-gradient(to bottom right, #CFD9E8, #5F8AAE);
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    height: 100vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .content-container {
+    max-width: 570px;
+    width: 100%;
+    
+    padding: 30px;
+  }
+  
+  .company-name {
+    font-family: 'Outfit';
+    color: #FFFFFF;
+    font-size: 36px;
+    margin-bottom: 38px;
+    text-align: center;
+
+  }
+  
+  .login-container {
+    text-align: center;
+  }
+  
+  .login-box {
+    display: inline-block;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .login-header {
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 24px;
+  }
+  
+  .login-form {
+    margin-top: 15px;
+  }
+
+  .login-form input {
+    width: 90%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    border-width: 0px;
+    border-color: #e9ebeb;
+    background-color: #f3fbfb;
+  }
+  
+    .login-form input:focus {
+        outline: none;
+        border-color: #b6d5ef;
+        border-width: 3px;
+    }
+  .login-form input:hover{
+    background-color:#f4f4f4 ;
+  }
+    
+  .login-form button {
+    background-color: #4c84af;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 60vh;
+  }
+  
+  .login-form button:hover {
+    background-color: #457fa0;
+  }
+
+  dialog {
+    border: none;
+    border-radius: 5px;
+    padding: 20px;
+    width: 20%;
+    text-align: center;
+ 
+  }

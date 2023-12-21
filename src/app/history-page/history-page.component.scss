@@ -1,0 +1,672 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+
+.title {
+  font-size: 30px;
+  font-family: 'Manrope';
+  font-weight: bold;
+  margin-bottom: 2px;
+  text-align: center;
+}
+
+.divider {
+  height: 1px;
+  background-color: #e5e7eb;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.icon {
+  font-size: 28px;
+  color: #6f61ef;
+  margin-right: 12px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding-left: 2.5%;
+  text-align: left;
+  /* Adjusted alignment */
+}
+
+.text {
+  display: flex;
+  align-items: center;
+}
+
+.pre-number {
+  margin-right: 8px;
+}
+
+.details {
+  margin-left: 8px;
+}
+
+.quotation-table-pending {
+  height: 80%;
+  max-height: 200px;
+}
+
+.quotation-table-completed {
+  height: 100%;
+  max-height: 250px;
+}
+
+.quotation-table-detail,
+.quotation-table-pending,
+.quotation-table-completed {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+
+  th {
+    background-color: rgb(183, 183, 183);
+    position: sticky;
+    top: 0;
+    padding: 5px;
+    /* Adjusted padding */
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 5px;
+    white-space: nowrap;
+  }
+
+  .button-view-side {
+    width: auto;
+    height: 20px;
+    background-color: #52abfc;
+    color: white;
+    font-size: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+}
+
+.quotation-table-detail .partName,
+.quotation-table-pending .partName,
+.quotation-table-completed .partName {
+  width: 30%;
+}
+
+.quotation-table-pending th:nth-child(1),
+.quotation-table-pending th:nth-child(1),
+.quotation-table-completed th:nth-child(1) {
+  padding-left: 5px;
+}
+
+.quotation-table-detail th:nth-child(1),
+.quotation-table-pending td:nth-child(1),
+.quotation-table-completed td:nth-child(1) {
+  /* Styles for the first th/td */
+  padding: 1px;
+}
+
+.quotation-table-detail th:nth-child(2),
+.quotation-table-detail th:nth-child(2),
+.quotation-table-pending th:nth-child(2),
+.quotation-table-completed th:nth-child(2),
+.quotation-table-pending td:nth-child(2),
+.quotation-table-completed td:nth-child(2) {
+  /* Styles for the second th/td */
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.quotation-table-detail th:nth-child(3),
+.quotation-table-pending th:nth-child(3),
+.quotation-table-pending td:nth-child(3),
+.quotation-table-completed td:nth-child(3) {
+  /* Styles for the third th/td */
+  padding-left: 3px;
+  padding-right:5px;
+}
+
+.quotation-table-detail th:nth-child(4),
+.quotation-table-detail th:nth-child(4),
+.quotation-table-pending td:nth-child(4),
+.quotation-table-completed td:nth-child(4) {
+  /* Styles for the fourth th/td */
+  padding-left: 2px;
+}
+
+.text pre,
+.text span {
+  margin-right: 10px;
+  font-family: 'Manrope';
+  font-size: 16px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+}
+
+.input-field {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.button {
+  width: 80px;
+}
+
+/* customer-details.component.css */
+
+.customer-details {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0px;
+  flex: 0 0 auto; /* This means no grow, no shrink, and auto basis */
+  
+ 
+}
+
+.customer-id {
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.customer-name {
+  font-size: 14px;
+  text-align: center;
+} 
+
+.button-return {
+  width: 100px;
+  height: 20px;
+  background-color: #52abfc;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  float: left;
+
+}
+
+.quotation-info {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1px;
+}
+
+.quotation-id,
+.date {
+  font-family: 'Manrope';
+  font-size: 16px;
+}
+
+.header-row {
+
+  .button-add {
+    width: auto;
+    font-size: 14px;
+    padding: 8px;
+    margin-left: 10px;
+    border-radius: 8px;
+    border-color: rgb(112, 187, 0);
+    background-color: rgb(121, 202, 0);
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+
+  .button-add:hover {
+    background-color: rgb(71, 118, 0);
+    color: #ffffff;
+    cursor: pointer;
+  }
+}
+
+.item-number {
+  margin-right: -40px;
+}
+
+.column-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0px;
+}
+
+.total-price {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.cancel-button {
+  width: 100px;
+  height: 20px;
+  margin-top: 10px;
+  background-color: #c30e0e;
+  color: white;
+  font-size: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.divider {
+  height: 1px;
+  background-color: #e5e7eb;
+  margin-bottom: 8px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 12%;
+  // margin-right: 5%;
+  height: 90vh;
+  /* Use full viewport height */
+}
+
+.search-bar {
+  width: 63%;
+  background-color: #ffffff;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  display: flex;
+
+  input {
+    flex: 1;
+    /* Take remaining width */
+    padding: 8px;
+    border: 2px solid #52abfc;
+    border-radius: 8px;
+    margin-right: 10px;
+  }
+
+  input:focus {
+    outline: none;
+    border: 2px solid #909090;
+  }
+
+  button {
+    height: 40px;
+    padding: 0 24px;
+    background-color: #52abfc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    width: auto;
+  }
+
+  .button-submit:hover {
+    background-color: #102f4c;
+    cursor: pointer;
+  }
+}
+
+.search-result {
+  flex: 1;
+  /* Take remaining height /
+overflow-y: auto;
+/ Changed to auto for better usability /
+margin-bottom: 16px;
+/ Added margin to separate from the content */
+}
+
+.item-actions {
+  .button-view:hover {
+    background-color: #102f4c;
+    cursor: pointer;
+  }
+}
+
+.header-row {
+  height: auto;
+  background-color: #6ea1df;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  padding: 0 24px;
+  max-width: 63%;
+  max-height: 70vh;
+  width: 100%;
+  /* Adjusted width */
+
+
+  padding-bottom: 10px;
+  padding: 10px;
+
+  th {
+    padding-left: 20px;
+  }
+}
+
+.customer-table-container {
+  height: 100%;
+  overflow-y: auto;
+  width: 66%;
+  max-height: 50vh;
+
+}
+
+.customer-table {
+  margin-top: auto;
+  height: 100%;
+  overflow-y: auto;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.customer-table tbody {
+  max-height: 50vh;
+  /* Set max height for tbody */
+  overflow-y: auto;
+  /* Enable vertical scrolling for tbody */
+}
+
+
+.customer-item {
+  background-color: #f1f4f8;
+
+}
+
+.customer-item td {
+
+  padding: 8px;
+  padding-left: 25px;
+  border: 1px solid #ddd;
+  /* Add borders between cells */
+}
+
+.button-view {
+  padding: 8px;
+  background-color: #52abfc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  width: auto;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.button-view:hover {
+  background-color: #06325c;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+
+  select {
+    margin-right: 16px;
+    padding: 8px;
+  }
+
+  button {
+    height: 40px;
+    padding: 0 24px;
+    background-color: #52abfc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+  }
+}
+
+/* Add these styles to your component's CSS or global styles */
+.page-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  /* Adjust the margin as needed */
+}
+
+.page-selector button,
+.page-selector input {
+  margin: 0 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.page-selector span {
+  font-size: 16px;
+}
+
+.page-selector input {
+  width: 40px;
+  /* Adjust the width as needed */
+  text-align: center;
+}
+
+.page-selector button:hover {
+  cursor: pointer;
+  border-color: #6285a6;
+  background-color: #adceeb;
+  color: rgb(47, 87, 95);
+}
+
+/* Detail Sidebar Styles */
+.sidebar-history {
+  width: 30%;
+  height: 100vh;
+  /* Full height of the viewport */
+  background-color: #f1f4f8;
+  box-shadow: 1px 0 10px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
+  overflow-y: auto;
+  /* Enables scrolling if content overflows */
+  padding: 24px;
+  box-sizing: border-box;
+  /* Include padding in the width */
+
+  right: 0;
+  float: right;
+  top: 0;
+  position: fixed;
+  margin-top: 3em;
+  margin-left: auto;
+}
+
+.sidebar-history h4 {
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.sidebar-history .customer-details,
+.sidebar-history .quotation-details {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-cell {
+  text-align: right;
+  display: flex;
+  justify-content: right;
+  align-items: right;
+  padding: 10px; // or any other padding you prefer
+}
+
+.pagination-btn {
+  padding: 5px 10px;
+  margin: 0 10px;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #e2e6ea;
+  }
+
+  &:disabled {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+  }
+}
+
+.pagination-input {
+    width: 30px;
+  text-align: right;
+  margin: 0 10px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.pagination-info {
+  display: inline-flex;
+  align-items: right;
+}
+
+.sidebar-history .button {
+  background-color: #52abfc;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-history .button:hover {
+  background-color: #409edc;
+}
+
+.sidebar-history table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sidebar-history th,
+.sidebar-history td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.sidebar-history th {
+  background-color: #eee;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar-history {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+  }
+}
+
+#snackbar {
+  visibility: hidden;
+  /* Hidden by default. Visible on click */
+  min-width: 250px;
+  /* Set a default minimum width */
+  margin-left: -125px;
+  /* Divide value of min-width by 2 */
+  background-color: #333;
+  /* Black background color */
+  color: #fff;
+  /* White text color */
+  text-align: center;
+  /* Centered text */
+  border-radius: 2px;
+  /* Rounded borders */
+  padding: 16px;
+  /* Padding */
+  position: fixed;
+  /* Sit on top of the screen */
+  z-index: 1;
+  /* Add a z-index if needed */
+  left: 50%;
+  /* Center the snackbar */
+  bottom: 30px;
+  /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible;
+  /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}

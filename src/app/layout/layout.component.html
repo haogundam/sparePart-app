@@ -1,0 +1,37 @@
+<!-- layout.component.html-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<header class="app-header">
+  <div class="app-title">
+    <span>Quotation History</span>
+  </div>
+</header>
+
+<div class="sidebar">
+  <div class="company-info" >
+
+    <span class="company-name">Company Name</span>
+  </div>
+
+  <div class="sidebar-item" (click)="quotation()">
+
+    <span class="item-label">Quoting Items</span>
+  </div>
+
+  <div class="sidebar-item"(click)="onHistory()">
+
+    <span class="item-label"  >History</span>
+  </div>
+
+  <div class="sidebar-item" (click)="empty()">
+
+    <span class="item-label">PlaceHolder</span>
+  </div>
+
+  <div class="user-info">
+    <div class="user-details">
+      <span class="user-email">{{userEmail}}</span>
+      <button class="logout-label" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>
