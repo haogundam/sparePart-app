@@ -35,11 +35,11 @@ interface QuotationListItem {
 }
 
 
-interface FilteredOptions{
-  sku:number;
-  name:string;
-  partId:number;
-  unitPrice:number;
+interface FilteredOptions {
+  sku: number;
+  name: string;
+  partId: number;
+  unitPrice: number;
 }
 
 @Component({
@@ -55,12 +55,14 @@ interface FilteredOptions{
 })
 
 // implements OnInit
-export class QuotationSidebarComponent implements OnInit{
-// filteredOption: FilteredOptions[]= [
-//   {sku:1234,name:"Joseph",partId:1234,unitPrice:22.32},]
+export class QuotationSidebarComponent {
 
-// ;
- 
+  filteredOption: FilteredOptions[] = [
+    { sku: 1234, name: "Joseph", partId: 1234, unitPrice: 22.32 },]
+
+    ;
+  searchCustomerName: string = '';
+
   openModal(arg0: string) {
     throw new Error('Method not implemented.');
   }
@@ -69,66 +71,56 @@ export class QuotationSidebarComponent implements OnInit{
     throw new Error('Method not implemented.');
   }
 
+  //Arrays of Dummy Data
+  quotationList: QuotationListItem[] = [
+  ];
 
-  // customerSearch: string = '';
-  // customer: Customer[] = [];
+  option = this.quotationList;
 
-  constructor(private apiService : ApiService, public dialog: MatDialog) {
-    
+  customer: Customer[] = [];
+
+  constructor(private apiService: ApiService) { }
+
+  searchCustomer() {
+    if (this.searchCustomerName.trim() !== '') {
+      this.apiService.searchCustomerByName(this.searchCustomerName).subscribe(
+        (response: HttpResponse<Customer[]>) => {
+          this.customer = response.body as Customer[];
+          console.log('Customer Name:', this.customer);
+        },
+        (error) => {
+          console.error('Error fetching customer', error);
+          console.log('Customer Name:', this.customer)
+        }
+      );
+    }
+  }
+  quotationId: number = 0;
+  quoteDetail: QuotationPart[] = [];
+  quotationDate:string = '';
+  createQuotation(id: number) {
+    console.log('Creating quotation for customer ID:', id);
+    this.apiService.createQuotation(id).subscribe(
+      (response: string) => {
+        this.quotationId = response as unknown as number;
+        console.log('Quotation created successfully',response );
+
+        this.apiService.searchQuotationListDetailItem(response as unknown as number,this.customer[0].customerId,1).subscribe(
+          (dateResponse:HttpResponse<QuotationPart[]>) => {
+            this.quotationDate = (dateResponse.body as any).parts.quoteDate as string;
+            this.quoteDetail = (dateResponse.body as any).parts.quoteDetail;
+            console.log('Quotation created successfully',dateResponse );
+          }
+        );
+      },
+      (error) => {
+        console.error('Error creating quotation', error);
+      }
+    );
   }
 
-// onSearch() {
-//   if (this.customerSearch.trim() !== '') {
-//     this.apiService.searchCustomerByName(this.customerSearch).subscribe(
-//       (customers : Customer[]) =>
-//     {
-//       this.customer = customers;
-//     },
-//     (error) => {
-//       console.error('Error fetching customer', error);
-//       console.log('Customer Name:', this.customer)
-//     }
-//     );
-//   }
-// }
+  //register customer
+  openRegistrationForm(): void {
 
-
-//register customer
-openRegistrationForm():void {
-  const dialogRef = this.dialog.open(RegistrationDialogComponent, {
-    width: '700px',
-  });
-
-  dialogRef.afterClosed().subscribe((result) => {
-    console.log('The registration dialog was closed',result);
-  });
- }
-
-
- //autocomplete
- myControl = new FormControl<string | User>('');
- options: User[] = [{name: 'Mary'}, {name: 'Shelley'}, {name: 'Igor'}];
- filteredOptions!: Observable<User[]>;
-
- ngOnInit() {
-   this.filteredOptions = this.myControl.valueChanges.pipe(
-     startWith(''),
-     map(value => {
-       const name = typeof value === 'string' ? value : value?.name;
-       return name ? this._filter(name as string) : this.options.slice();
-     }),
-   );
- }
- 
-
- displayFn(user: User): string {
-   return user && user.name ? user.name : '';
- }
-
- private _filter(name: string): User[] {
-   const filterValue = name.toLowerCase();
-
-   return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
- }
-
+  }
 }

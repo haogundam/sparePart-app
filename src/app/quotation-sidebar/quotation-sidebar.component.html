@@ -1,39 +1,48 @@
+<<<<<<< HEAD
+=======
+<!-- detail-sidebar.component.html -->
+
+>>>>>>> new-branch
 <div class="sidebar">
     <div class="container">
       <div class="title">
         <h2>Quotations</h2>
       </div>
       <hr width="93%;" color="#d9d9d9" size="1">
+  
       <div class="customer-details">
+        
         <div class="customer-id">
-          
-          <form class="searchCustomerForm">
-            <mat-form-field class="example-full-width">
-              <mat-label>Customer Name</mat-label>
-              <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <!-- <form class="searchCustomerForm"> -->
+            <!-- <mat-form-field class="example-full-width">
+              <mat-label>Search for a Customer...</mat-label> -->
+                            <!-- matInput [formControl]="myControl" [matAutocomplete]="auto" (keyup)="customerFilter()" -->
+              <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                   {{ option.name }}
-                </mat-option>
-                
-              </mat-autocomplete>
-            </mat-form-field>
-          </form>
-          
+                </mat-option> -->
+                <!-- <mat-option [value]="'Register New Customer'">
+                  <button mat-icon-button (click)="createCustomer(user)">Create a new Customer Profile</button>
+                </mat-option> -->
+              <!-- </mat-autocomplete> -->
+            <!-- </mat-form-field> -->
+          <!-- </form> -->
+          <input type="text" [(ngModel)]="searchCustomerName" placeholder="Search for customer name.."
+              (keyup)="searchCustomer()" (keyup.enter)="createQuotation(customer[0].customerId)"/>
         </div>
   
         <div class="quotation-info">
-          <p class="quotation-id">[Quotation ID]</p>
-          <p class="date">[Date]</p>
+          <p class="quotation-id">Quotation ID : {{quotationId}}</p>
+          <p class="date">Date : {{quotationDate}}</p>
         </div>
       </div>
   
       <div>
-       <table  class="quotation-table">
+      <table  class="quotation-table">
         <thead>
           <tr >
-            <th>SKU</th>
-            <th>Part Name</th>
+            <!-- <th>SKU</th> -->
+            <th>{{quoteDetail}}</th>
             <th>Part ID</th>
             <th>Unit Price</th>
             <th>Delete</th>
@@ -41,8 +50,8 @@
         </thead>
         <div class="divider"></div>
         <tbody class="quotation-table-item">
-            <tr>
-              <td>customerName</td>
+            <tr *ngFor="let customers of quoteDetail,let i = index">
+              <td>{{quoteDetail[0].parts[i].partId}}</td>
               <td>DUmmy</td>
               <td>Dummy</td>
               <td>DUmmmy</td>

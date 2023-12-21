@@ -7,24 +7,37 @@ import { NgModule } from '@angular/core';
 import { HistoryPageComponent } from './history-page/history-page.component';
 import { LayoutComponent } from './layout/layout.component';
 import { DetailSidebarComponent } from './detail-sidebar/detail-sidebar.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ApiService } from './services/api.service';
-import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+// import { MatIconModule } from '@angular/material/icon';
+// import { MatSnackBar } from '@angular/material/snack-bar';
+// import { MatSnackBarModule } from '@angular/material/snack-bar';
+// import { ApiService } from './services/api.service';
+// import { HttpClientModule } from '@angular/common/http';
+// import { ReactiveFormsModule } from '@angular/forms';
+// import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
+// @Component({
+//   selector: 'app-root',
+//   standalone: true,
+//   imports: [CommonModule, RouterOutlet,
+//     MatIconModule,DetailSidebarComponent,
+//      LoginComponent, HistoryPageComponent,
+//      LayoutComponent,HttpClientModule,
+//      ReactiveFormsModule, MatAutocompleteModule
+//     ],
+//   providers: [ApiService,HttpClientModule],
+import { ApiService } from './services/api.service';
+import { HttpClientModule, HttpResponse, HttpClient } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard.service';
+import {MaterialModule} from './material.module';
+import { QuotationSidebarComponent } from './quotation-sidebar/quotation-sidebar.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,
-    MatIconModule,DetailSidebarComponent,
-     LoginComponent, HistoryPageComponent,
-     LayoutComponent,HttpClientModule,
-     ReactiveFormsModule, MatAutocompleteModule
-    ],
-  providers: [ApiService,HttpClientModule],
+  imports: [CommonModule, HttpClientModule, RouterOutlet,MaterialModule],
+  providers: [ApiService, HttpClientModule, AuthService, AuthGuard, HttpResponse, HttpClient,QuotationSidebarComponent, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

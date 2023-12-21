@@ -1,17 +1,35 @@
+<!-- Header-->
+
+
+  
+<!-- Body -->
 <!-- Left Bar -->
+
     <app-layout class="content"></app-layout>
+
+
+
 <!-- Right Bar -->
 <div>
  <app-quotation-sidebar class="sidebar-history"></app-quotation-sidebar>
 </div>
+
 <!-- Center -->
 <body>
 
+    <!-- search bar
     <div class="searchCard">
         <div class="searchBar">
-            <input type="text" [(ngModel)]="searchQueryPart" placeholder="Search for product SKU...."
-            (xkeypress)="searchPart(searchQueryPart)" />
-          <button class="button button-submit" (click)="searchPart(searchQueryPart)">Search</button>        
+            <i class="fa fa-search"></i>
+            <input type="text" [(ngModel)]="searchQuery" [placeholder]="'Search for SKU...'"  class="skuSearch" (keyup.enter)="onSearch()">
+            <button type="click" (click)="onSearch()">Search</button>        
+        </div>
+    </div> -->
+    <div class="searchCard">
+        <div class="searchBar">
+            <input type="text" tabindex="1" [(ngModel)]="searchQueryPart" placeholder="Search for product SKU...."
+            (keyup)="searchPart(searchQueryPart)" />
+          <button class="button button-submit" tabindex="2"(click)="searchPart(searchQueryPart)">Search</button>        
         </div>
     </div>
 
@@ -34,19 +52,24 @@
                 </thead>
             </span>
 
-        <tbody>
-            <tr *ngFor="let part of filteredproducts" >
-                <td>{{part.sku}}</td>
-                <td>{{part.partName}}</td>
-                <td>{{part.supplierName}}</td>
-                <td>{{part.totalQuantity}}</td>
-                <td>{{part.sellingPrice}}</td>
-                <td>{{part.WarehouseName}}</td>
-                <td><input type="text" [placeholder]="'Qty...'"></td>
-                <td><input type="text" [placeholder]="'Price...'"></td>
-                <td><button class="addQuote">+</button></td>
-            </tr>
-        </tbody>
+            <tbody>
+                <tr *ngFor="let part of filteredproducts">
+                    <td>{{part.sku}}</td>
+                    <td>{{part.partName}}</td>
+                    <td>{{part.supplierName}}</td>
+                    <td>{{part.totalQuantity}}</td>
+                    <td>{{part.sellingPrice}}</td>
+                    <td>{{part.warehouseName}}</td>
+                    <td>
+                        <input type="number" tabindex="3" [placeholder]="'Quantity...'" [max]="part.totalQuantity" #quantityInput>
+                    </td>
+                    <td>
+                        <input type="number" tabindex="3" [placeholder]="'Price...'" #priceInput (keyup.tab)="addPartToQuotation(part, quantityInput.valueAsNumber , priceInput.valueAsNumber)">
+                    </td>
+                    <td><button class="addQuote">+</button></td>
+                </tr>
+            </tbody>
+            
 
         </table>
     </div>
@@ -65,27 +88,33 @@
                 <thead>
                 <tr>
                     <th>SKU</th>
-                    <th>Name</th>
-                    <th>Manu.</th>
-                    <th>Quantity</th>
+                    <th>Part Name</th>
+                    <th>Manufacturer</th>
+                    <th>Quantity Left</th>
                     <th>Price</th>
                     <th>Warehouse</th>
-                    <th><div class="blankspace"></div></th>
-                    <th><div class="blankspace"></div></th>
-                    <th><div class="blankspace-button"></div></th>
+                    <th><div></div></th>
+                    <th><div></div></th>
                 </tr>
-                </thead>
+                        </thead>
             </span>
         <tbody>
-            <tr *ngFor="let part of filteredproducts" >
-                <td>{{part.sku}}</td>
-                <td>{{part.partName}}</td>
-                <td>{{part.supplierName}}</td>
-                <td>{{part.totalQuantity}}</td>
-                <td>{{part.sellingPrice}}</td>
-                <td>{{part.WarehouseName}}</td>
-                <td><input type="text" [placeholder]="'Qty...'"></td>
-                <td><input type="text" [placeholder]="'Price...'"></td>
+            <tr *ngFor="let product of similarProducts;let i = index;" class="product-info">
+              
+                <td>{{product.sku}}</td>
+                <td>{{product.partName}}</td>
+                <td>{{product.supplierName}}</td>
+                <td>{{product.totalQuantity}}</td>
+                <td>{{product.sellingPrice}}</td>
+                <td>{{product.warehouseName}}</td>
+                <!-- <td>[SKU]</td>
+                <td>[partName]</td>
+                <td>[manufacturer]</td>
+                <td>[quantityLeft]</td>
+                <td>[Price]</td>
+                <td>[Warehouse]</td> -->
+                <td><input type="text"   tabindex="4" [placeholder]="'Quantity...'"></td>
+                <td><input type="text"   tabindex="4" [placeholder]="'Price...'"></td>
                 <td><button class="addQuote">+</button></td>
             </tr>
         </tbody>

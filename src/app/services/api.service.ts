@@ -1,85 +1,85 @@
 // api.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
-import { Customer, createCustomerRequest } from '../models/customer.model';
-import { QuotationListResponse } from '../models/quotation.model';
-import { ObserversModule } from '@angular/cdk/observers';
+import { Customer } from '../models/customer.model';
+import { CreateQuotationResponse, QuotationListResponse, QuotationPart } from '../models/quotation.model';
+import { environment } from '../../environments/environment';
 import { parts, partsResponse } from '../models/parts.model';
-
+import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-
 export class ApiService {
 
-  private apiUrl = 'https://localhost:7047/api/customers/';
+  private apiUrl = `${environment.apiUrl}customers/`;
 
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
-  //Fetch Customer Data
-
-  constructor(private http: HttpClient) { }
-  fetchAllCustomerListByPage(pageNumber: number) : Observable<Customer[]>{
-    const url = `https://localhost:7047/api/customers/?name=&pageNumber=${pageNumber}`;
-    return this.http.get<Customer[]>(url);
-
-    
+  fetchAllCustomerListByPage(pageNumber: number): Observable<HttpResponse<Customer[]>> {
+    const url = `${this.apiUrl}?name=&pageNumber=${pageNumber}`;
+    const headers = this.auth.getHeaders();
+    console.log('Headers:', headers);
+    console.log('URL:', url);
+    return this.http.get<Customer[]>(`${url}`, { observe: 'response', headers: headers });
   }
-  //register customer
-  registerCustomer(reqBody:createCustomerRequest) :Observable<createCustomerRequest> {
-    const url = `https://localhost:7047/api/customers`;
-    return this.http.post<createCustomerRequest>(url,reqBody);
-  }
- 
- 
+
   //Get Parts Data
 
-  GetAllParts() :Observable<partsResponse[]> {
-    const url =`https://localhost:7047/api/parts?pageNumber=1`;
-    return this.http.get<partsResponse[]>(url);
+  GetAllParts(): Observable<HttpResponse<partsResponse[]>> {
+    const headers = this.auth.getHeaders();
+    const url = `${environment.apiUrl}parts?pageNumber=1`;
+    return this.http.get<partsResponse[]>(url, { observe: 'response', headers: headers });
   }
-  //Search Customer By Name
 
-  searchCustomerByName(customerName: string): Observable<Customer[]> {
-    const url = `https://localhost:7047/api/customers/?name=${customerName}&pageNumber=1`;
-    return this.http.get<Customer[]>(url);
+  searchCustomerByName(customerName: string): Observable<HttpResponse<Customer[]>> {
+    const headers = this.auth.getHeaders();
+    const url = `${this.apiUrl}?name=${customerName}&pageNumber=1`;
+    return this.http.get<Customer[]>(url, { observe: 'response', headers: headers });
   }
-  
+
   //Search Parts By SKU
-  searchPartsBySKU(sku: string): Observable<parts[]> {
-    const url = `https://localhost:7047/api/customers/?sku=${sku}&pageNumber=1`;
-    return this.http.get<parts[]>(url);
+  searchPartsBySKU(sku: string): Observable<HttpResponse<partsResponse[]>> {
+    const headers = this.auth.getHeaders();
+    const url = `${environment.apiUrl}parts?sku=${sku}&pageNumber=1`;
+    return this.http.get<partsResponse[]>(url, { observe: 'response', headers: headers });
   }
 
+  showSameCategorySKU(sku: string): Observable<HttpResponse<partsResponse[]>> {
+    const url = `${environment.apiUrl}parts/category?sku=${sku}&pageNumber=1`;
+    const headers = this.auth.getHeaders();
+    return this.http.get<partsResponse[]>(url, { observe: 'response', headers: headers });
+  }
 
-//Fetch Quotation via Search Customer Id
+  //Fetch Quotation via Search Customer Id
 
   getQuotationListsByCustomerId(
     customerId: number,
     pageNumber: number,
-  ): Observable<any> {
+  ): Observable<HttpResponse<any>> {
+    const headers = this.auth.getHeaders();
     // const url = `${this.apiUrl}${customerId}${this.quotationByCustomerId}`;
-    const url = `https://localhost:7047/api/customers/${customerId}/quotations?pendingPageNumber=${pageNumber}&paidPageNumber=${pageNumber}`;
-    return this.http.get<QuotationListResponse>(url);
+    const url = `${this.apiUrl}${customerId}/quotations?pageNumber=1`;
+    return this.http.get<QuotationListResponse>(`${url}`, { observe: 'response', headers: headers });
   }
 
-
-  //User authentification
-
-  private static readonly mockUser = {
-    username: 'user',
-    password: 'password',
-  };
-
-  static login(username: string, password: string): Observable<boolean> {
-    // Simulate authentication logic
-    const isAuthenticated = username === this.mockUser.username && password === this.mockUser.password;
-
-    // Return an observable with the authentication result
-    return of(isAuthenticated);
+  searchQuotationListDetailItem(quotationNo: number, customerId: number, pageNumber: number): Observable<HttpResponse<QuotationPart[]>> {
+    const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}?pageNumber=${pageNumber}`;
+    const headers = this.auth.getHeaders();
+    return this.http.get<QuotationPart[]>(url, { observe: 'response', headers: headers });
   }
 
-  
+  createQuotation(customerId: number):  Observable<string> {
+    const url = `${this.apiUrl}${customerId}/quotations`;
+    const headers = this.auth.getHeaders();
+    return this.http.post(url, {}, { headers: headers, responseType: 'text' }
+    );
+  }
+  // registerCustomer(reqBody:createCustomerRequest) :Observable<createCustomerRequest> {
+  //   const url = `https://localhost:7047/api/customers`;
+  //   return this.http.post<createCustomerRequest>(url,reqBody);
+  // }
+
 }

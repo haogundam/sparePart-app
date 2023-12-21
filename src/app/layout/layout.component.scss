@@ -82,7 +82,7 @@
 
 .user-info {
   margin-top: auto;
-  background-color: #ebebed;
+  background-color: #b0b7bc;
   width: 90%;
   padding: 12px;
   display: flex;
@@ -92,6 +92,7 @@
 .user-info .user-details {
   display: flex;
   flex-direction: column;
+  
 }
 
 .user-info .user-email {
@@ -103,14 +104,10 @@
 }
 
 .logout-label {
-  background-color: #b33c3c;
+  font-family: 'Plus Jakarta Sans';
+  color: #b33c3c;
   font-size: 24px;
-  font-weight: bold;
-  font-style: italic;
-  color:white;
-  border:none;
-  width: 18vh;
-  height: 5vh;
+  font-weight: 500;
 }
 
 /* Content Styles */

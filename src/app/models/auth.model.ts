@@ -5,7 +5,7 @@ export interface User{
 }
 
 export interface UserDto{
-    UserId: number;
+ 
     Email: string;
     Password: string;
 }

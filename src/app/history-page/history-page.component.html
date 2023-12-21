@@ -6,7 +6,7 @@
     <div class="search-bar">
       <div class="search-input">
         <input type="text" [(ngModel)]="searchQuery" placeholder="Search for customer name...."
-          (xkeypress)="searchCustomer(searchQuery)" />
+          (keyup)="searchCustomer(searchQuery)" />
         <button class="button button-submit" (click)="searchCustomer(searchQuery)">Search</button>
       </div>
     </div>
@@ -28,21 +28,21 @@
           <td>{{ customer.customerName }}</td>
           <td>{{ customer.customerContact }}</td>
           <td>{{ customer.customerEmail }}</td>
-          <td >
-            <button class="button button-view" (click)="searchQuotation(customer.customerName, i)">View quote</button>
+          <td>
+            <button class="button button-view" (click)="searchQuotation(i, customer.customerId)">View quote</button>
           </td>
         </tr>
       </tbody>
-       
+
     </table>
   </div>
   <div class="page-selector">
-    <button (click)="goToPage('prev')">Previous</button>
-    <span>Page  <input type="number" [(ngModel)]="currentPage" (change)="goToPageInput()" />
-      of {{ totalPages }}</span>
-    <button (click)="goToPage('next')">Next</button>
-  </div> 
-  
+    <button *ngIf=" currentPage>1" (click)="goToPage('prev','customer')">Previous</button>
+    <span>Page <input type="number" [(ngModel)]="currentPage" (change)="goToPageInput('customer')" />
+      of {{ totalPage }}</span>
+    <button *ngIf="totalPage> currentPage" (click)="goToPage('next','customer')">Next</button>
+  </div>
+
 
 </div>
 
@@ -51,7 +51,6 @@
   <div class="container">
     <div class="title">
       <span>Details</span>
-      
     </div>
     <hr width="93%;" color="#d9d9d9" size="1">
 
@@ -64,79 +63,149 @@
           <p>Current customer ID: [{{selectedCustomer[onclickCustomer].customerId }}]</p>
           <div class="customer-name">
             <p>
-              <!-- <button *ngIf="showQuotationListItemBoolean === 1" class="button button-return"
-                (click)="showCustomerDetails()">
+              <button *ngIf="showQuotationListItemBoolean === 1  &&  showQuotationListDetailItemBoolean === 1"
+                class="button-return" (click)="showCustomerDetails()">
                 &#8617;
-              </button> -->
+              </button>
+
+
               Customer Name: {{ selectedCustomer[onclickCustomer].customerName }}
             </p>
           </div>
         </div>
       </div>
-  
 
 
-  <div *ngIf="showQuotationListItemBoolean ===0">
-      <p>No quotations selected</p>
-    </div>
-    <div *ngIf=" showQuotationListItemBoolean ===1">
-      <h4>Pending Quotations</h4>
-      <table class="quotation-table-pending">
-        <div class="divider"></div>
-        <tbody class="quotation-table-item">
-          <tr *ngFor="let item of selectedQuotationListByCustomerId; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td class="partName">xddd</td>
-            <td>xddd</td>
-            <td>sss</td>
-            <td>
-              <button class="button button-view-side" (click)="searchQuotationListItem(1)">View quote</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div *ngIf="showQuotationListItemBoolean ===0">
+        <h4>No Completed Quotations</h4>
+      </div>
+      <div
+        *ngIf="pendingQuotationList ===null  && showQuotationListItemBoolean ===1  &&  showQuotationListDetailItemBoolean !== 1">
+        <h4>No Pending Quotations</h4>
+      </div>
+      <!-- Display Pending Quotations -->
+      <div
+        *ngIf="showQuotationListItemBoolean === 1 && pendingQuotationList !==null   &&  showQuotationListDetailItemBoolean !== 1">
+        <h4>Pending Quotations</h4>
+        <table class="quotation-table-pending">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Quotation ID</th>
+              <th>Date</th>
+              <th>Valid Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody class="quotation-table-item">
+            <tr *ngFor="let item of pendingQuotationList; let i = index">
+              <ng-container *ngIf="pendingQuotationList !== null">
+                <td>{{ i + 1 }}</td>
+                <td class="partName">{{item.quoteNo}}</td>
+                <td>{{item.quoteDate}}</td>
+                <td>{{item.quoteValidDate}}</td>
+                <td>
+                  <button class="button button-view-side"
+                    (click)="searchQuotationListDetailItem(item.quoteNo, selectedCustomer[onclickCustomer].customerId)">View
+                    details</button>
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+
+
+
+      <div *ngIf="showQuotationListItemBoolean ===0">
+        <h4>No Completed Quotations</h4>
+      </div>
+      <div
+        *ngIf="completedQuotationList=== null && showQuotationListItemBoolean ===1 &&  showQuotationListDetailItemBoolean !== 1">
+        <h4>No Completed Quotations</h4>
+      </div>
+      <div
+        *ngIf="showQuotationListItemBoolean === 1 && completedQuotationList !==null  &&  showQuotationListDetailItemBoolean !== 1">
+        <h4>Completed Quotations</h4>
+        <table class="quotation-table-completed">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Quotation ID</th>
+              <th>Date</th>
+              <th>Valid Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody class="quotation-table-item">
+            <tr *ngFor="let item of completedQuotationList; let i = index">
+              <ng-container *ngIf="completedQuotationList !== null">
+                <td>{{ i + 1 }}</td>
+                <td class="partName">{{item.quoteNo}}</td>
+                <td>{{item.quoteDate}}</td>
+                <td>{{item.quoteValidDate}}</td>
+                <td>
+                  <button class="button button-view-side"
+                    (click)="searchQuotationListDetailItem(item.quoteNo, selectedCustomer[onclickCustomer].customerId)">View
+                    details</button>
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="showQuotationListDetailItemBoolean === 1">
+        <h4>Quotation details</h4>
+
+        <!-- Your detail bar content goes here -->
+        <table class="quotation-table-detail">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Part ID</th>
+              <th>Part Name</th>
+              <th>Quantity</th>
+              <th>Unit Price (RM)</th>
+            </tr>
+          </thead>
+          <tbody class="quotation-table-item">
+            <tr *ngFor="let item of quotationList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td class="partName">{{item.partId}}</td>
+              <td>{{item.partName}}</td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.unitPrice}}</td>
+              <td></td>
+            </tr>
+            
+            <tr>
+              <td colspan="4"></td>
+              <td>Total Price: {{totalAmountOfQuotationList.toFixed(2)}}</td>
+            </tr>
+            <tr>
+              <td colspan="3"> <!-- Adjust the colspan to match the number of columns in your table -->
+                <div class="pagination-container">
+                  <button *ngIf="quotationCurrentPage > 1" (click)="goToPage('prev','quote')" class="pagination-btn">Previous</button>
+                  <span class="pagination-info">
+                    Page <input type="number" [(ngModel)]="quotationCurrentPage" (change)="goToPageInput('quote')" class="pagination-input" /> of {{ quotationTotalPage }}
+                  </span>
+                  <button *ngIf="quotationTotalPage > quotationCurrentPage" (click)="goToPage('next','quote')" class="pagination-btn">Next</button>
+                </div>
+              </td>
+            </tr> 
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
-</div>
-    <!--
-    <div *ngIf="selectedQuotationList.length === 0 ">
-      <p>No completed quotations</p>
-    </div>
-    <div *ngIf="selectedQuotationList.length > 0 ">
-      <h4>Completed Quotations</h4>
-      <table class="quotation-table-completed">
-        <tbody class="quotation-table-item">
-          <tr *ngFor="let item of selectedQuotationList; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td class="partName">{{ item?.quoteNo }}</td>
-            <td>{{ item?.quoteDate }}</td>
-            <td>{{ item?.quoteValidDate }}</td>
-            <td>
-              <button class="button button-view-side" (click)="searchQuotationListItem(1)">View quote</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div *ngIf="showQuotationListItemBoolean === 1">
-      <table class="quotation-table-detail">
-        <tbody class="quotation-table-item">
-          <tr *ngFor="let item of quotationList; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td class="partName"></td>
-            <td>[Part ID]</td>
-            <td>[Unit Price]</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
 
 
--->
 
-<div id="snackbar">Success!</div> 
+
+
+
+<div id="snackbar">Success!</div>
