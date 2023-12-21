@@ -16,9 +16,7 @@
     "@angular/compiler": "^17.0.0",
     "@angular/core": "^17.0.0",
     "@angular/forms": "^17.0.0",
-<<<<<<< HEAD
     "@angular/material": "^17.0.2",
-=======
     "@angular/material": "^17.0.4",
     "@angular/router": "^17.0.0",
     "rxjs": "~7.8.0",

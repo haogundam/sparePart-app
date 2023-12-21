@@ -1,18 +1,10 @@
 import { Injectable } from '@angular/core';
-<<<<<<< HEAD
-import { HttpClient, HttpHeaders, HttpParams,HttpClientModule  } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { User,UserDto } from '../models/auth.model';
-import { Observable } from 'rxjs';
-=======
 import { HttpClient , HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserDto } from '../models/auth.model';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
->>>>>>> new-branch
 /* import { TokenApiModel } from '../models/token-api.model'; */
 @Injectable({
   providedIn: 'root'
