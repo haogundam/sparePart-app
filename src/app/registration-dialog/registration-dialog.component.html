@@ -12,7 +12,7 @@
   <p mat-dialog-title>Customer Profile Registration</p>
 </div>
 
-  <form (ngSubmit)="registerCustomer()">
+  <form (ngSubmit)="registerCustomer()" [formGroup]="registrationForm">
     <div class="name_contact">
       <div class="input_header">
         <div class="first">
@@ -24,10 +24,10 @@
       </div>
       <div class="splitbars">
         <div class="first">
-        <input type="text" formControlName="name">
+        <input type="text" formControlName="name" placeholder="Name...">
         </div>
         <div>
-        <input type="number" formControlName="contact">
+        <input type="text" formControlName="contact" placeholder="Phone Number...">
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
         <h3>Email</h3>
       </div>
       <div>
-        <input type="text" class="input_bar" formControlName="email" >
+        <input type="text" class="input_bar" formControlName="email" placeholder="E-Mail..." >
       </div>
     </div>
   
@@ -46,10 +46,10 @@
         <h3>Address</h3>
       </div>
       <div>
-        <input type="text" class="input_bar" formControlName="address1">
+        <input type="text" class="input_bar" formControlName="address1" placeholder="Address Line 1">
       </div>
       <div>
-        <input type="text" class="input_bar" formControlName="address2">
+        <input type="text" class="input_bar" formControlName="address2" placeholder="Address Line 2">
       </div>
     </div>
   

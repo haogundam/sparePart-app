@@ -28,9 +28,9 @@ export class ApiService {
     
   }
   //register customer
-  registerCustomer(reqBody:createCustomerRequest[]) :Observable<createCustomerRequest[]> {
+  registerCustomer(reqBody:createCustomerRequest) :Observable<createCustomerRequest> {
     const url = `https://localhost:7047/api/customers`;
-    return this.http.post<createCustomerRequest[]>(url,reqBody);
+    return this.http.post<createCustomerRequest>(url,reqBody);
   }
  
  

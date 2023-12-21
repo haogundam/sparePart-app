@@ -5,6 +5,7 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,7 @@ import { ApiService } from '../services/api.service';
   imports: [
     CommonModule,
     HttpClientModule,
-    MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatIconModule
+    MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatIconModule, ReactiveFormsModule
   ],
   providers: [
     ApiService,

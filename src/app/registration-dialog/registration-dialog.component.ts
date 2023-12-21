@@ -26,7 +26,7 @@ export class RegistrationDialogComponent{
     });
   }
 
-  registrationForm!: FormGroup;
+  registrationForm: FormGroup;
 
 
   ngOnInit(): void {
@@ -35,10 +35,18 @@ export class RegistrationDialogComponent{
 
   registerCustomer(): void {
     if (this.registrationForm.valid) {
-      const requestData = this.registrationForm.value;
+      const address1 = this.registrationForm.get('address1')?.value || '';
+      const address2 = this.registrationForm.get('address2')?.value || '';
+      
+      const combinedAddress = `${address1} ${address2}`.trim();
+
+      const requestData: createCustomerRequest = {
+        ...this.registrationForm.value,
+        address: combinedAddress,
+      }
       // Assuming ApiService has a method named registerCustomer
       this.apiService.registerCustomer(requestData).subscribe(
-        (response: createCustomerRequest[]) => {
+        (response: createCustomerRequest) => {
           console.log('Registration successful:', response);
           // Handle success (e.g., show a success message)
         },
