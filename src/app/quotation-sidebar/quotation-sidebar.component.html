@@ -37,7 +37,7 @@
         <thead>
           <tr >
             <!-- <th>SKU</th> -->
-            <th>{{quoteDetail}}</th>
+            <th>Part Name</th>
             <th>Part ID</th>
             <th>Unit Price</th>
             <th>Delete</th>
@@ -45,13 +45,12 @@
         </thead>
         <div class="divider"></div>
         <tbody class="quotation-table-item">
-            <tr *ngFor="let customers of quoteDetail,let i = index">
-              <td>{{quoteDetail[0].parts[i].partId}}</td>
-              <td>DUmmy</td>
-              <td>Dummy</td>
-              <td>DUmmmy</td>
+          <tr *ngFor="let part of partsInQuotation; let i = index">
+            <td>{{ part.partName }}</td>
+            <td>{{ part.partId }}</td>
+            <td>{{ part.unitPrice }}</td>
             <td>
-              <button class="button" (click)="onDeleteClick()">Del</button>
+              <button class="button" (click)="onDeleteClick(i)">Del</button>
             </td>
           </tr>
         </tbody>        

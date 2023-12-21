@@ -17,5 +17,28 @@ export class SharedDataService {
   changeQuotationId(quotationId: number) {
     this.quotationIdSource.next(quotationId);
   }
+  private partsInQuotation: any[] = [];
+
+  // Observable to allow components to subscribe to changes
+  private partsInQuotationSubject = new BehaviorSubject<any[]>(this.partsInQuotation);
+  public partsInQuotation$ = this.partsInQuotationSubject.asObservable();
+
+  // Method to add a part to the quotation
+  addPartToQuotation(part: any) {
+    this.partsInQuotation.push(part);
+    this.partsInQuotationSubject.next(this.partsInQuotation);
+  }
+
+  // Method to get the parts in the quotation
+  getPartsInQuotation(): any[] {
+    return this.partsInQuotation;
+  }
+
+  // Method to remove a part from the quotation
+  removePartFromQuotation(index: number) {
+    this.partsInQuotation.splice(index, 1);
+    this.partsInQuotationSubject.next(this.partsInQuotation); 
+    
+  }
 
 }

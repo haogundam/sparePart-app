@@ -65,9 +65,7 @@ export class QuotationSidebarComponent implements OnInit {
   openModal(arg0: string) {
     throw new Error('Method not implemented.');
   }
-  onDeleteClick() {
-    throw new Error('Method not implemented.');
-  }
+ 
 
   filteredOption: FilteredOptions[] = [
     { sku: 1234, name: "Joseph", partId: 1234, unitPrice: 22.32 },]
@@ -76,6 +74,7 @@ export class QuotationSidebarComponent implements OnInit {
   searchCustomerName: string = '';
   customerId: number | null = 0;
   quotationIdd: number | null = 0;
+  partsInQuotation: any[] = [];
   ngOnInit(): void {
     this.sharedDataService.currentCustomerId.subscribe(id => {
       this.customerId = id;
@@ -83,7 +82,11 @@ export class QuotationSidebarComponent implements OnInit {
     this.sharedDataService.currentQuotationId.subscribe(id => {
       this.quotationIdd = id;
     });
+    this.sharedDataService.partsInQuotation$.subscribe(parts => {
+      this.partsInQuotation = parts;
+    });
   }
+  
   //Arrays of Dummy Data
   quotationList: QuotationListItem[] = [
   ];
@@ -123,6 +126,7 @@ export class QuotationSidebarComponent implements OnInit {
           (dateResponse: HttpResponse<QuotationPart[]>) => {
             this.quotationDate = (dateResponse.body as any).parts.quoteDate as string;
             this.quoteDetail = (dateResponse.body as any).parts.quoteDetail;
+
             console.log('Quotation created successfully', dateResponse);
           }
         );
@@ -136,5 +140,8 @@ export class QuotationSidebarComponent implements OnInit {
   //register customer
   openRegistrationForm(): void {
 
+  }
+  onDeleteClick(index: number) {
+    this.sharedDataService.removePartFromQuotation(index);
   }
 }

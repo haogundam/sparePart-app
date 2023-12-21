@@ -94,13 +94,15 @@ throw new Error('Method not implemented.');
     }
     quoteAddPart!: QuotePartAdd;
   //add part to quotation
-  addPartToQuotation(customerId:number ,quoteNo:number,partId:number,quantity : number, unitPrice : number) {
+  addPartToQuotation(customerId:number ,quoteNo:number,partId:number,quantity : number, unitPrice : number,partName:string) {
     console.log('Adding part to quotation:', quoteNo);
     this.quoteAddPart = {
       partId: partId,
       unitPrice: unitPrice,
       quantity: quantity,
     };
+    const partToAdd = { partId, quantity, unitPrice, partName };
+    this.sharedDataService.addPartToQuotation(partToAdd);
     console.log('Adding part to quotation:', this.quoteAddPart);
     this.apiService.addPartToQuotation(customerId,quoteNo,this.quoteAddPart).subscribe(
       (part: any) => {

@@ -66,7 +66,7 @@
                     <td>
                         <input type="number" tabindex="3" [placeholder]="'Price...'" #priceInput >
                     </td>
-                    <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,part.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber)">+</button></td>
+                    <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,part.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber,part.partName)">+</button></td>
                 </tr>
             </tbody>
             
@@ -113,9 +113,14 @@
                 <td>[quantityLeft]</td>
                 <td>[Price]</td>
                 <td>[Warehouse]</td> -->
-                <td><input type="text"   tabindex="4" [placeholder]="'Quantity...'" ></td>
-                <td><input type="text"   tabindex="4" [placeholder]="'Price...'"></td>
-                <td><button class="addQuote" >+</button></td>
+                <td>
+                    <input type="number" tabindex="4" [placeholder]="'Quantity...'" [max]="product.totalQuantity" #quantityInput>
+                </td>
+                <td>
+                    <input type="number" tabindex="4" [placeholder]="'Price...'" #priceInput >
+                </td>
+                <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,product.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber,product.partName)">+</button></td>
+
             </tr>
         </tbody>
         </table>
