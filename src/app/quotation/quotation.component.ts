@@ -12,11 +12,12 @@ import { take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { QuotationSidebarComponent } from '../quotation-sidebar/quotation-sidebar.component';
 import { Customer } from '../models/customer.model';
-import { QuotationListResponse } from '../models/quotation.model';
+import { QuotationListResponse, QuotationPart,QuotePartAdd } from '../models/quotation.model';
 import { parts, partsResponse } from '../models/parts.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
+import { SharedDataService } from '../shared-data.service';
 
 @Injectable({
   providedIn:'root',
@@ -41,7 +42,7 @@ throw new Error('Method not implemented.');
 }
   searchQueryPart : any;
 
-  constructor(private apiService: ApiService){}
+  constructor(private apiService: ApiService,private sharedDataService: SharedDataService){}
 
 
 
@@ -60,7 +61,8 @@ throw new Error('Method not implemented.');
       }
     )
   };
-
+  customerId!: number;
+  quotationIdd!: number ;
   ngOnInit(): void {
     this.apiService.GetAllParts().subscribe(
       (part : HttpResponse<partsResponse[]>) => {
@@ -71,6 +73,12 @@ throw new Error('Method not implemented.');
         console.error('Error fetching parts sku:', error);
       }
     )
+    this.sharedDataService.currentCustomerId.subscribe(id => {
+      this.customerId = id??0;
+    });
+    this.sharedDataService.currentQuotationId.subscribe(id => {
+      this.quotationIdd = id??0;
+    });
   }
 
   showSameCategorySKU(sku : string) {
@@ -84,11 +92,24 @@ throw new Error('Method not implemented.');
         }
       )
     }
-
+    quoteAddPart!: QuotePartAdd;
   //add part to quotation
-  addPartToQuotation(part : partsResponse, unitPrice : number,quantity : number) {
-    console.log('Adding part to quotation:', part.sku);
-    // this.selectedSKU.push(part);
+  addPartToQuotation(customerId:number ,quoteNo:number,partId:number,quantity : number, unitPrice : number) {
+    console.log('Adding part to quotation:', quoteNo);
+    this.quoteAddPart = {
+      partId: partId,
+      unitPrice: unitPrice,
+      quantity: quantity,
+    };
+    console.log('Adding part to quotation:', this.quoteAddPart);
+    this.apiService.addPartToQuotation(customerId,quoteNo,this.quoteAddPart).subscribe(
+      (part: any) => {
+        console.log( part);
+      },
+      (error) => {
+        console.error('Error adding part to quotation:', error);
+      }
+    )
     console.log('Selected SKU:', this.selectedSKU);
   }
   //reset visibility of parts list

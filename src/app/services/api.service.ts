@@ -5,10 +5,11 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { Customer } from '../models/customer.model';
-import { CreateQuotationResponse, QuotationListResponse, QuotationPart } from '../models/quotation.model';
+import { CreateQuotationResponse, QuotationListResponse, QuotationPart,QuotePartAdd } from '../models/quotation.model';
 import { environment } from '../../environments/environment';
 import { parts, partsResponse } from '../models/parts.model';
 import { AuthService } from './auth.service';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -71,12 +72,21 @@ export class ApiService {
     return this.http.get<QuotationPart[]>(url, { observe: 'response', headers: headers });
   }
 
-  createQuotation(customerId: number):  Observable<string> {
+  createQuotation(customerId: number): Observable<string> {
     const url = `${this.apiUrl}${customerId}/quotations`;
     const headers = this.auth.getHeaders();
     return this.http.post(url, {}, { headers: headers, responseType: 'text' }
     );
   }
+
+  addPartToQuotation(customerId: number, quotationNo: number, quotePartAdd: QuotePartAdd): Observable<HttpResponse<string>> {
+    const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}`;
+    const headers = this.auth.getHeaders();
+    const body = quotePartAdd;
+    return this.http.post<string>(url, body, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
+  }
+    
+
   // registerCustomer(reqBody:createCustomerRequest) :Observable<createCustomerRequest> {
   //   const url = `https://localhost:7047/api/customers`;
   //   return this.http.post<createCustomerRequest>(url,reqBody);

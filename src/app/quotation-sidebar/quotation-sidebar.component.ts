@@ -6,13 +6,15 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AsyncPipe } from '@angular/common';
-import {Observable, of} from 'rxjs';
-import { DialogComponent } from '../dialog/dialog.component'; 
+import { Observable, of } from 'rxjs';
+import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ApiService } from '../services/api.service';
 import { Customer } from '../models/customer.model';
-import { MatDialog, MatDialogActions,
-  MatDialogClose,MatDialogContent,MatDialogTitle,} from '@angular/material/dialog';
+import {
+  MatDialog, MatDialogActions,
+  MatDialogClose, MatDialogContent, MatDialogTitle,
+} from '@angular/material/dialog';
 import { RegistrationDialogComponent } from '../registration-dialog/registration-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { startWith, map } from 'rxjs';
@@ -20,6 +22,7 @@ import { RegistrationDialogModule } from '../registration-dialog/registration-di
 import { QuotationPart } from '../models/quotation.model';
 import { QuotationComponent } from '../quotation/quotation.component';
 import { HttpResponse } from '@angular/common/http';
+import { SharedDataService } from '../shared-data.service';
 
 export interface User {
   //sku: string;
@@ -48,7 +51,7 @@ interface FilteredOptions {
 @Component({
   selector: 'app-quotation-sidebar',
   standalone: true,
-  imports: [CommonModule,FormsModule,MatFormFieldModule,
+  imports: [CommonModule, FormsModule, MatFormFieldModule,
     MatInputModule, MatAutocompleteModule,
     ReactiveFormsModule, AsyncPipe, DialogComponent,
     MatDialogModule, MatButtonModule, RegistrationDialogModule
@@ -58,22 +61,29 @@ interface FilteredOptions {
 })
 
 // implements OnInit
-export class QuotationSidebarComponent {
+export class QuotationSidebarComponent implements OnInit {
+  openModal(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
+  onDeleteClick() {
+    throw new Error('Method not implemented.');
+  }
 
   filteredOption: FilteredOptions[] = [
     { sku: 1234, name: "Joseph", partId: 1234, unitPrice: 22.32 },]
 
     ;
   searchCustomerName: string = '';
-
-  openModal(arg0: string) {
-    throw new Error('Method not implemented.');
+  customerId: number | null = 0;
+  quotationIdd: number | null = 0;
+  ngOnInit(): void {
+    this.sharedDataService.currentCustomerId.subscribe(id => {
+      this.customerId = id;
+    });
+    this.sharedDataService.currentQuotationId.subscribe(id => {
+      this.quotationIdd = id;
+    });
   }
-  private _model: any;
-  onDeleteClick() {
-    throw new Error('Method not implemented.');
-  }
-
   //Arrays of Dummy Data
   quotationList: QuotationListItem[] = [
   ];
@@ -82,7 +92,7 @@ export class QuotationSidebarComponent {
 
   customer: Customer[] = [];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private sharedDataService: SharedDataService) { }
 
   searchCustomer() {
     if (this.searchCustomerName.trim() !== '') {
@@ -100,19 +110,20 @@ export class QuotationSidebarComponent {
   }
   quotationId: number = 0;
   quoteDetail: QuotationPart[] = [];
-  quotationDate:string = '';
+  quotationDate: string = '';
   createQuotation(id: number) {
     console.log('Creating quotation for customer ID:', id);
     this.apiService.createQuotation(id).subscribe(
       (response: string) => {
         this.quotationId = response as unknown as number;
-        console.log('Quotation created successfully',response );
-
-        this.apiService.searchQuotationListDetailItem(response as unknown as number,this.customer[0].customerId,1).subscribe(
-          (dateResponse:HttpResponse<QuotationPart[]>) => {
+        this.sharedDataService.changeQuotationId(this.quotationId);
+        console.log('Quotation created successfully', response);
+        this.sharedDataService.changeCustomerId(id);
+        this.apiService.searchQuotationListDetailItem(response as unknown as number, this.customer[0].customerId, 1).subscribe(
+          (dateResponse: HttpResponse<QuotationPart[]>) => {
             this.quotationDate = (dateResponse.body as any).parts.quoteDate as string;
             this.quoteDetail = (dateResponse.body as any).parts.quoteDetail;
-            console.log('Quotation created successfully',dateResponse );
+            console.log('Quotation created successfully', dateResponse);
           }
         );
       },

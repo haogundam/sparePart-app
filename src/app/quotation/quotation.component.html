@@ -64,9 +64,9 @@
                         <input type="number" tabindex="3" [placeholder]="'Quantity...'" [max]="part.totalQuantity" #quantityInput>
                     </td>
                     <td>
-                        <input type="number" tabindex="3" [placeholder]="'Price...'" #priceInput (keyup.tab)="addPartToQuotation(part, quantityInput.valueAsNumber , priceInput.valueAsNumber)">
+                        <input type="number" tabindex="3" [placeholder]="'Price...'" #priceInput >
                     </td>
-                    <td><button class="addQuote">+</button></td>
+                    <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,part.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber)">+</button></td>
                 </tr>
             </tbody>
             
@@ -113,9 +113,9 @@
                 <td>[quantityLeft]</td>
                 <td>[Price]</td>
                 <td>[Warehouse]</td> -->
-                <td><input type="text"   tabindex="4" [placeholder]="'Quantity...'"></td>
+                <td><input type="text"   tabindex="4" [placeholder]="'Quantity...'" ></td>
                 <td><input type="text"   tabindex="4" [placeholder]="'Price...'"></td>
-                <td><button class="addQuote">+</button></td>
+                <td><button class="addQuote" >+</button></td>
             </tr>
         </tbody>
         </table>
