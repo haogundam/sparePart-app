@@ -21,8 +21,9 @@ import {AuthService } from '../services/auth.service';
 
 export class LayoutComponent {
    
-  
+  constructor(private router: Router, private authService: AuthService) {}
   quotation() {
+    this.router.navigate(['/quotation']);
   }
 
   logout() {

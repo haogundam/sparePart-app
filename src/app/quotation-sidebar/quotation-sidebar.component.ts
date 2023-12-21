@@ -19,7 +19,7 @@ import { startWith, map } from 'rxjs';
 import { RegistrationDialogModule } from '../registration-dialog/registration-dialog.module';
 import { QuotationPart } from '../models/quotation.model';
 import { QuotationComponent } from '../quotation/quotation.component';
-
+import { HttpResponse } from '@angular/common/http';
 
 export interface User {
   //sku: string;

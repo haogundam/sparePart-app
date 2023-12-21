@@ -45,17 +45,17 @@ export class RegistrationDialogComponent{
         address: combinedAddress,
       }
       // Assuming ApiService has a method named registerCustomer
-      this.apiService.registerCustomer(requestData).subscribe(
-        (response: createCustomerRequest) => {
-          console.log('Registration successful:', response);
-          // Handle success (e.g., show a success message)
-        },
-        (error) => {
-          console.error('Registration failed:', error);
-          // Handle error (e.g., show an error message)
-        }
-      );
-    } else {
+    //   this.apiService.registerCustomer(requestData).subscribe(
+    //     (response: createCustomerRequest) => {
+    //       console.log('Registration successful:', response);
+    //       // Handle success (e.g., show a success message)
+    //     },
+    //     (error) => {
+    //       console.error('Registration failed:', error);
+    //       // Handle error (e.g., show an error message)
+    //     }
+    //   );
+    // } else {
       // Form is not valid, handle accordingly (e.g., show validation errors)
     }
   }
