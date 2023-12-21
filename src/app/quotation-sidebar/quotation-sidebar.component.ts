@@ -17,6 +17,9 @@ import { RegistrationDialogComponent } from '../registration-dialog/registration
 import { MatButtonModule } from '@angular/material/button';
 import { startWith, map } from 'rxjs';
 import { RegistrationDialogModule } from '../registration-dialog/registration-dialog.module';
+import { QuotationPart } from '../models/quotation.model';
+import { QuotationComponent } from '../quotation/quotation.component';
+
 
 export interface User {
   //sku: string;

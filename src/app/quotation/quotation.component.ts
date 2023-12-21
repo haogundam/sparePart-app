@@ -88,7 +88,7 @@ throw new Error('Method not implemented.');
   //add part to quotation
   addPartToQuotation(part : partsResponse, unitPrice : number,quantity : number) {
     console.log('Adding part to quotation:', part.sku);
-    this.selectedSKU.push(part);
+    // this.selectedSKU.push(part);
     console.log('Selected SKU:', this.selectedSKU);
   }
   //reset visibility of parts list
