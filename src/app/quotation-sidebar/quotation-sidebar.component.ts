@@ -103,7 +103,7 @@ export class QuotationSidebarComponent implements OnInit {
 
   searchCustomer() {
     if (this.searchCustomerName.trim() !== '') {
-      this.apiService.searchCustomerByName(this.searchCustomerName).subscribe(
+      this.apiService.searchCustomerByName(this.searchCustomerName,1).subscribe(
         (response: HttpResponse<Customer[]>) => {
           this.customer = response.body as Customer[];
           console.log('Customer Name:', this.customer);

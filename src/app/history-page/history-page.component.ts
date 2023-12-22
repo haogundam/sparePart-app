@@ -43,7 +43,7 @@ export class HistoryPageComponent implements OnInit {
 
   ngOnInit(): void {
     // Call your API service method here
-    this.apiService.fetchAllCustomerListByPage(1).subscribe(
+    this.apiService.fetchAllCustomerListByPage(1,'').subscribe(
       (customers: HttpResponse<Customer[]>) => {
         this.selectedCustomer = customers.body as Customer[];
         console.log('Customers:', this.selectedCustomer);
@@ -63,7 +63,25 @@ export class HistoryPageComponent implements OnInit {
   filteredCustomers: Customer[] = [];
   searchCustomer(customerName: string) {
     this.resetShowQuotationState();
-    this.apiService.searchCustomerByName(customerName).subscribe(
+    this.apiService.searchCustomerByName(customerName,this.currentPage).subscribe(
+      (response: HttpResponse<Customer[]>) => {
+        this.selectedCustomer = response.body as Customer[];
+        const pagination = response.headers.get('X-Pagination');
+        const paginationData = pagination ? JSON.parse(pagination) : null;
+        this.totalPage = paginationData.TotalPageCount;
+        this.currentPage = paginationData.CurrentPage;
+        console.log('Customers:', this.selectedCustomer);
+        console.log('Pagination Data:', paginationData);
+      },
+      (error) => {
+        console.error('Error fetching customers:', error);
+      }
+    );
+  }
+  searchCustomerOnSearchBar(customerName: string) {
+    this.resetShowQuotationState();
+    this.currentPage = 1;
+    this.apiService.searchCustomerByName(customerName,this.currentPage).subscribe(
       (response: HttpResponse<Customer[]>) => {
         this.selectedCustomer = response.body as Customer[];
         const pagination = response.headers.get('X-Pagination');
@@ -164,9 +182,11 @@ export class HistoryPageComponent implements OnInit {
   goToPage(direction: 'prev' | 'next', type: 'quote' | 'customer'): void {
     if (direction === 'prev' && this.currentPage > 1 && type === 'customer') {
       this.currentPage--;
+      this.searchCustomer(this.searchQuery);
 
     } else if (direction === 'next' && this.currentPage < this.totalPage && type === 'customer') {
       this.currentPage++;
+      this.searchCustomer(this.searchQuery);
 
     }
     else if (direction === 'prev' && this.quotationCurrentPage > 1 && type === 'quote') {
@@ -177,7 +197,7 @@ export class HistoryPageComponent implements OnInit {
 
     }
     if (type === 'customer') {
-      this.apiService.fetchAllCustomerListByPage(this.currentPage).subscribe(
+      this.apiService.fetchAllCustomerListByPage(this.currentPage,this.searchQuery).subscribe(
         (customers: HttpResponse<Customer[]>) => {
           this.selectedCustomer = customers.body as Customer[];
           console.log('Customers:', this.selectedCustomer);
@@ -196,8 +216,12 @@ export class HistoryPageComponent implements OnInit {
   goToPageInput( type: 'quote' | 'customer'): void {
     if (this.currentPage < 1 && type === 'customer') {
       this.currentPage = 1;
+      this.searchCustomer(this.searchQuery);
+
     } else if (this.currentPage > this.totalPage && type === 'customer') {
       this.currentPage = this.totalPage;
+      this.searchCustomer(this.searchQuery);
+
     } 
     else if (this.quotationCurrentPage < 1 && type === 'quote') {
       this.quotationCurrentPage = 1;
@@ -206,7 +230,7 @@ export class HistoryPageComponent implements OnInit {
       this.quotationCurrentPage = this.quotationTotalPage;
     }
     if (type === 'customer') {
-      this.apiService.fetchAllCustomerListByPage(this.currentPage).subscribe(
+      this.apiService.fetchAllCustomerListByPage(this.currentPage,this.searchQuery).subscribe(
         (customers: HttpResponse<Customer[]>) => {
           this.selectedCustomer = customers.body as Customer[];
           console.log('Customers:', this.selectedCustomer);

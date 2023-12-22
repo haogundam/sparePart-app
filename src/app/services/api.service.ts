@@ -19,8 +19,8 @@ export class ApiService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  fetchAllCustomerListByPage(pageNumber: number): Observable<HttpResponse<Customer[]>> {
-    const url = `${this.apiUrl}?name=&pageNumber=${pageNumber}`;
+  fetchAllCustomerListByPage(pageNumber: number,customerName: string): Observable<HttpResponse<Customer[]>> {
+    const url = `${this.apiUrl}?name=${customerName}&pageNumber=${pageNumber}`;
     const headers = this.auth.getHeaders();
     console.log('Headers:', headers);
     console.log('URL:', url);
@@ -35,9 +35,9 @@ export class ApiService {
     return this.http.get<partsResponse[]>(url, { observe: 'response', headers: headers });
   }
 
-  searchCustomerByName(customerName: string): Observable<HttpResponse<Customer[]>> {
+  searchCustomerByName(customerName: string,pageNumber: number): Observable<HttpResponse<Customer[]>> {
     const headers = this.auth.getHeaders();
-    const url = `${this.apiUrl}?name=${customerName}&pageNumber=1`;
+    const url = `${this.apiUrl}?name=${customerName}&pageNumber=${pageNumber}`;
     return this.http.get<Customer[]>(url, { observe: 'response', headers: headers });
   }
 
