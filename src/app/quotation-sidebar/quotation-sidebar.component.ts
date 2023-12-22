@@ -159,4 +159,17 @@ export class QuotationSidebarComponent implements OnInit {
       
     }
   }
+
+  submitQuotation() {
+    if (this.customerId !== null && this.quotationId !== null) {
+      this.apiService.submitQuotation(this.customerId, this.quotationId).subscribe(
+        (response: any) => {
+          console.log('Quotation submitted successfully', response);
+        },
+        (error) => {
+          console.error('Error submitting quotation', error);
+        }
+      );
+    }
+  }
 }

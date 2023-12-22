@@ -96,4 +96,9 @@ export class ApiService {
   //   return this.http.post<createCustomerRequest>(url,reqBody);
   // }
 
+  submitQuotation(customerId: number, quotationNo: number): Observable<HttpResponse<string>> {
+    const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/submit`;
+    const headers = this.auth.getHeaders();
+    return this.http.patch<string>(url, {}, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
+  }
 }
