@@ -20,7 +20,7 @@ import {AuthService } from '../services/auth.service';
 
 
 export class LayoutComponent {
-   
+   userEmail = localStorage.getItem('userEmail');
   constructor(private router: Router, private authService: AuthService) {}
   quotation() {
     this.router.navigate(['/quotation']);

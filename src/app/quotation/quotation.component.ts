@@ -98,8 +98,12 @@ throw new Error('Method not implemented.');
     }
     quoteAddPart!: QuotePartAdd;
   //add part to quotation
-  addPartToQuotation(customerId:number ,quoteNo:number,partId:number,quantity : number, unitPrice : number,partName:string) {
+  addPartToQuotation(customerId:number ,quoteNo:number,partId:number,quantity : number, unitPrice : number,partName:string,sellingPrice:number) {
     console.log('Adding part to quotation:', quoteNo);
+    if (unitPrice == 0 || unitPrice == null || unitPrice == undefined || Number.isNaN(unitPrice)){
+      unitPrice = sellingPrice;
+      console.log('unitPrice:', unitPrice ,'selling price:', sellingPrice);
+    }
     this.quoteAddPart = {
       partId: partId,
       unitPrice: unitPrice,
