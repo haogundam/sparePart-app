@@ -63,6 +63,7 @@ throw new Error('Method not implemented.');
   };
   customerId!: number;
   quotationIdd!: number ;
+  quotePartId!: number;
   ngOnInit(): void {
     this.apiService.GetAllParts().subscribe(
       (part : HttpResponse<partsResponse[]>) => {
@@ -78,6 +79,9 @@ throw new Error('Method not implemented.');
     });
     this.sharedDataService.currentQuotationId.subscribe(id => {
       this.quotationIdd = id??0;
+    });
+    this.sharedDataService.currentQuotePartId.subscribe(id => {
+      this.quotePartId = id??0;
     });
   }
 
@@ -105,8 +109,10 @@ throw new Error('Method not implemented.');
     this.sharedDataService.addPartToQuotation(partToAdd);
     console.log('Adding part to quotation:', this.quoteAddPart);
     this.apiService.addPartToQuotation(customerId,quoteNo,this.quoteAddPart).subscribe(
-      (part: any) => {
+      (part: HttpResponse<number>) => { // Fix: Change the type of the parameter to HttpResponse<number>
         console.log( part);
+        this.quotePartId = part.body as number; // Access the body of the HttpResponse
+        this.sharedDataService.changeQuotePartId(this.quotePartId);
       },
       (error) => {
         console.error('Error adding part to quotation:', error);

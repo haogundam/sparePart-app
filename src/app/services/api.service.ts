@@ -79,14 +79,18 @@ export class ApiService {
     );
   }
 
-  addPartToQuotation(customerId: number, quotationNo: number, quotePartAdd: QuotePartAdd): Observable<HttpResponse<string>> {
+  addPartToQuotation(customerId: number, quotationNo: number, quotePartAdd: QuotePartAdd): Observable<HttpResponse<number>> {
     const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}`;
     const headers = this.auth.getHeaders();
     const body = quotePartAdd;
-    return this.http.post<string>(url, body, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
+    return this.http.post<number>(url, body, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
   }
     
-
+  removePartFromQuotation( customerId: number, quotationNo: number, quotePartId: number): Observable<HttpResponse<string>> {
+    const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/quoteparts/${quotePartId}`;
+    const headers = this.auth.getHeaders();
+    return this.http.delete<string>(url, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
+  }
   // registerCustomer(reqBody:createCustomerRequest) :Observable<createCustomerRequest> {
   //   const url = `https://localhost:7047/api/customers`;
   //   return this.http.post<createCustomerRequest>(url,reqBody);

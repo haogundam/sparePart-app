@@ -9,6 +9,8 @@ export class SharedDataService {
   currentCustomerId = this.customerIdSource.asObservable();
   private quotationIdSource = new BehaviorSubject<number | null>(null);
   currentQuotationId = this.quotationIdSource.asObservable();
+  private quotePartIdSource = new BehaviorSubject<number | null>(null);
+  currentQuotePartId = this.quotePartIdSource.asObservable();
   constructor() { }
 
   changeCustomerId(customerId: number) {
@@ -39,6 +41,9 @@ export class SharedDataService {
     this.partsInQuotation.splice(index, 1);
     this.partsInQuotationSubject.next(this.partsInQuotation); 
     
+  }
+  changeQuotePartId(quotePartId: number) {
+    this.quotePartIdSource.next(quotePartId);
   }
 
 }

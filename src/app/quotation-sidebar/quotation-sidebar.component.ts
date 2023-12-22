@@ -75,6 +75,7 @@ export class QuotationSidebarComponent implements OnInit {
   customerId: number | null = 0;
   quotationIdd: number | null = 0;
   partsInQuotation: any[] = [];
+  quotepartId : number = 0;
   ngOnInit(): void {
     this.sharedDataService.currentCustomerId.subscribe(id => {
       this.customerId = id;
@@ -84,6 +85,9 @@ export class QuotationSidebarComponent implements OnInit {
     });
     this.sharedDataService.partsInQuotation$.subscribe(parts => {
       this.partsInQuotation = parts;
+    });
+    this.sharedDataService.currentQuotePartId.subscribe(id => {
+      this.quotepartId = id??0;
     });
   }
   
@@ -141,7 +145,18 @@ export class QuotationSidebarComponent implements OnInit {
   openRegistrationForm(): void {
 
   }
-  onDeleteClick(index: number) {
+  onDeleteClick(index: number,partId :number) {
     this.sharedDataService.removePartFromQuotation(index);
+    if (this.customerId !== null && this.quotationId !== null) {
+      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, this.quotepartId).subscribe(
+        (response: any) => {
+          console.log( response);
+        },
+        (error) => {
+          console.error('Error removing part', error);
+        }
+      );
+      
+    }
   }
 }
