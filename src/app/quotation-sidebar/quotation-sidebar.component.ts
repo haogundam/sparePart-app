@@ -18,11 +18,11 @@ import {
 import { RegistrationDialogComponent } from '../registration-dialog/registration-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { startWith, map } from 'rxjs';
-import { RegistrationDialogModule } from '../registration-dialog/registration-dialog.module';
 import { QuotationPart } from '../models/quotation.model';
 import { QuotationComponent } from '../quotation/quotation.component';
 import { HttpResponse } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
+import { RegistrationDialogModule } from '../registration-dialog/registration-dialog.module';
 
 export interface User {
   //sku: string;
@@ -54,7 +54,7 @@ interface FilteredOptions {
   imports: [CommonModule, FormsModule, MatFormFieldModule,
     MatInputModule, MatAutocompleteModule,
     ReactiveFormsModule, AsyncPipe, DialogComponent,
-    MatDialogModule, MatButtonModule, RegistrationDialogModule
+    MatDialogModule, MatButtonModule,RegistrationDialogModule
   ],
   templateUrl: './quotation-sidebar.component.html',
   styleUrls: ['./quotation-sidebar.component.scss'],
@@ -65,7 +65,7 @@ export class QuotationSidebarComponent implements OnInit {
   openModal(arg0: string) {
     throw new Error('Method not implemented.');
   }
- 
+
 
   filteredOption: FilteredOptions[] = [
     { sku: 1234, name: "Joseph", partId: 1234, unitPrice: 22.32 },]
@@ -75,7 +75,7 @@ export class QuotationSidebarComponent implements OnInit {
   customerId: number | null = 0;
   quotationIdd: number | null = 0;
   partsInQuotation: any[] = [];
-  quotepartId : number = 0;
+  quotepartId: number = 0;
   ngOnInit(): void {
     this.sharedDataService.currentCustomerId.subscribe(id => {
       this.customerId = id;
@@ -87,10 +87,10 @@ export class QuotationSidebarComponent implements OnInit {
       this.partsInQuotation = parts;
     });
     this.sharedDataService.currentQuotePartId.subscribe(id => {
-      this.quotepartId = id??0;
+      this.quotepartId = id ?? 0;
     });
   }
-  
+
   //Arrays of Dummy Data
   quotationList: QuotationListItem[] = [
   ];
@@ -99,11 +99,11 @@ export class QuotationSidebarComponent implements OnInit {
 
   customer: Customer[] = [];
 
-  constructor(private apiService: ApiService, private sharedDataService: SharedDataService) { }
+  constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog) { }
 
   searchCustomer() {
     if (this.searchCustomerName.trim() !== '') {
-      this.apiService.searchCustomerByName(this.searchCustomerName,1).subscribe(
+      this.apiService.searchCustomerByName(this.searchCustomerName, 1).subscribe(
         (response: HttpResponse<Customer[]>) => {
           this.customer = response.body as Customer[];
           console.log('Customer Name:', this.customer);
@@ -143,20 +143,26 @@ export class QuotationSidebarComponent implements OnInit {
 
   //register customer
   openRegistrationForm(): void {
-
+    const dialogRef = this.dialog.open(RegistrationDialogComponent, {
+      width: '500px',
+      height: '500px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
-  onDeleteClick(index: number,partId :number) {
+  onDeleteClick(index: number, partId: number) {
     this.sharedDataService.removePartFromQuotation(index);
     if (this.customerId !== null && this.quotationId !== null) {
       this.apiService.removePartFromQuotation(this.customerId, this.quotationId, this.quotepartId).subscribe(
         (response: any) => {
-          console.log( response);
+          console.log(response);
         },
         (error) => {
           console.error('Error removing part', error);
         }
       );
-      
+
     }
   }
 

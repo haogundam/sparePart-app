@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import {AuthService } from '../services/auth.service';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-layout',
@@ -21,13 +21,13 @@ import {AuthService } from '../services/auth.service';
 
 export class LayoutComponent {
    userEmail = localStorage.getItem('userEmail');
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private apiService: ApiService) {}
   quotation() {
     this.router.navigate(['/quotation']);
   }
 
   logout() {
-    this.authService.signOut();
+    this.apiService.signOut();
     this.router.navigate(['']);
   }
   onHistory() {
