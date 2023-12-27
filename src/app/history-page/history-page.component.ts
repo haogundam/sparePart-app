@@ -27,7 +27,7 @@ export class HistoryPageComponent implements OnInit {
   pendingQuotationList: QuotationResponse[] = [];
   completedQuotationList: QuotationResponse[] = [];
   selectedCustomer: Customer[] = [
-    
+
   ];
   onclickCustomer: number = 0;
   showQuotationListItemBoolean: number = 0;
@@ -40,13 +40,14 @@ export class HistoryPageComponent implements OnInit {
   currentPage: number = 1;
   totalPageItems: number = 0;
   quotationCurrentId: number = 0;
-  constructor( private apiService: ApiService,private router: Router,private sharedDataService: SharedDataService) {
+
+  constructor(private apiService: ApiService, private router: Router, private sharedDataService: SharedDataService) {
 
   }
 
   ngOnInit(): void {
     // Call your API service method here
-    this.apiService.fetchAllCustomerListByPage(1,'').subscribe(
+    this.apiService.fetchAllCustomerListByPage(1, '').subscribe(
       (customers: HttpResponse<Customer[]>) => {
         this.selectedCustomer = customers.body as Customer[];
         console.log('Customers:', this.selectedCustomer);
@@ -66,7 +67,7 @@ export class HistoryPageComponent implements OnInit {
   filteredCustomers: Customer[] = [];
   searchCustomer(customerName: string) {
     this.resetShowQuotationState();
-    this.apiService.searchCustomerByName(customerName,this.currentPage).subscribe(
+    this.apiService.searchCustomerByName(customerName, this.currentPage).subscribe(
       (response: HttpResponse<Customer[]>) => {
         this.selectedCustomer = response.body as Customer[];
         const pagination = response.headers.get('X-Pagination');
@@ -84,7 +85,7 @@ export class HistoryPageComponent implements OnInit {
   searchCustomerOnSearchBar(customerName: string) {
     this.resetShowQuotationState();
     this.currentPage = 1;
-    this.apiService.searchCustomerByName(customerName,this.currentPage).subscribe(
+    this.apiService.searchCustomerByName(customerName, this.currentPage).subscribe(
       (response: HttpResponse<Customer[]>) => {
         this.selectedCustomer = response.body as Customer[];
         const pagination = response.headers.get('X-Pagination');
@@ -105,7 +106,7 @@ export class HistoryPageComponent implements OnInit {
   completedQuotationCurrentPage: number = 1;
   pendingQuotationTotalPage: number = 1;
   completedQuotationTotalPage: number = 1;
-  searchQuotation(index: number, id: number): void {
+  searchQuotation(index: number, id: number, pageNumber?: number): void {
     this.resetShowQuotationState();
     this.selectedPaidQuotationListByCustomerId = [];
     this.selectedPendingQuotationListByCustomerId = [];
@@ -113,46 +114,46 @@ export class HistoryPageComponent implements OnInit {
     this.pendingQuotationList = [];
     this.onclickCustomer = index;
     this.showQuotationListItemBoolean = 1;
-    this.apiService.getQuotationListsByCustomerId(id, this.quotationCurrentPage).subscribe(
+    this.apiService.getQuotationListsByCustomerId(id, pageNumber ?? 1).subscribe(
       (apiResponse: HttpResponse<QuotationListResponse[]>) => {
         console.log('Paid Quotation List Pagination:', apiResponse.headers.get('Paid-Pagination'));
         console.log('Pending Quotation List Pagination:', apiResponse.headers.get('Pending-Pagination'));
         console.log('Response:', apiResponse.body);
-          
+
         const paidPaginationHeader = apiResponse.headers.get('Paid-Pagination');
         if (paidPaginationHeader !== null) {
-            const paidPaginationData = JSON.parse(paidPaginationHeader);
-            console.log('Paid Pagination Data:', paidPaginationData);
-        
-            if (paidPaginationData !== null) {
-                this.completedQuotationTotalPage = paidPaginationData.TotalPageCount;
-                this.completedQuotationList = (apiResponse.body as any).paidQuotationList;
-                console.log('Paid Quotation List:', this.completedQuotationList);
-            } else {
-                console.error('Paid pagination data is null');
-            }
+          const paidPaginationData = JSON.parse(paidPaginationHeader);
+          console.log('Paid Pagination Data:', paidPaginationData);
+
+          if (paidPaginationData !== null) {
+            this.completedQuotationTotalPage = paidPaginationData.TotalPageCount;
+            this.completedQuotationList = (apiResponse.body as any).paidQuotationList;
+            console.log('Paid Quotation List:', this.completedQuotationList);
+          } else {
+            console.error('Paid pagination data is null');
+          }
         } else {
-            // Handle the case where the header might not be present
-            console.error('Paid-Pagination header is missing');
+          // Handle the case where the header might not be present
+          console.error('Paid-Pagination header is missing');
         }
-        
+
         const pendingPaginationHeader = apiResponse.headers.get('Pending-Pagination');
         if (pendingPaginationHeader !== null) {
-            const pendingPaginationData = JSON.parse(pendingPaginationHeader);
-            console.log('Pending Pagination Data:', pendingPaginationData);
-        
-            if (pendingPaginationData !== null) {
-                this.pendingQuotationTotalPage = pendingPaginationData.TotalPageCount;
-                this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
-                console.log('Pending Quotation List:', this.pendingQuotationList);
-            } else {
-                console.error('Pending pagination data is null');
-            }
+          const pendingPaginationData = JSON.parse(pendingPaginationHeader);
+          console.log('Pending Pagination Data:', pendingPaginationData);
+
+          if (pendingPaginationData !== null) {
+            this.pendingQuotationTotalPage = pendingPaginationData.TotalPageCount;
+            this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
+            console.log('Pending Quotation List:', this.pendingQuotationList);
+          } else {
+            console.error('Pending pagination data is null');
+          }
         } else {
-            // Handle the case where the header might not be present
-            console.error('Pending-Pagination header is missing');
+          // Handle the case where the header might not be present
+          console.error('Pending-Pagination header is missing');
         }
-        
+
 
         // for (let i = 0; i < this.selectedQuotationListByCustomerId.length; i++) {
         //   if (this.selectedQuotationListByCustomerId[i].status === 0) {
@@ -182,9 +183,7 @@ export class HistoryPageComponent implements OnInit {
 
 
   // Function to handle page navigation
-  goToPage(direction: 'prev' | 'next', type: 'quote' | 'customer'): void {
-  const currentPageProperty = type + 'CurrentPage';
-
+  goToPage(direction: 'prev' | 'next', type: 'quote' | 'customer' | 'pending' | 'complete'): void {
     if (direction === 'prev' && this.currentPage > 1 && type === 'customer') {
       this.currentPage--;
       this.searchCustomer(this.searchQuery);
@@ -201,8 +200,29 @@ export class HistoryPageComponent implements OnInit {
       this.quotationCurrentPage++;
 
     }
+    else if (direction === 'prev' && this.pendingQuotationCurrentPage > 1 && type === 'pending') {
+      this.pendingQuotationCurrentPage--;
+      this.apiService.getQuotationListsByCustomerId( this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage ).subscribe(
+        (apiResponse: HttpResponse<QuotationListResponse[]>) => {
+          this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
+         });
+    }
+
+    else if (direction === 'next' && this.pendingQuotationCurrentPage < this.pendingQuotationTotalPage && type === 'pending') {
+      this.pendingQuotationCurrentPage++;
+      this.apiService.getQuotationListsByCustomerId( this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage ).subscribe(
+        (apiResponse: HttpResponse<QuotationListResponse[]>) => {
+          this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
+         });    }
+    else if (direction === 'prev' && this.completedQuotationCurrentPage > 1 && type === 'complete') {
+      this.completedQuotationCurrentPage--;
+    }
+    else if (direction === 'next' && this.completedQuotationCurrentPage < this.completedQuotationTotalPage && type === 'complete') {
+      this.completedQuotationCurrentPage++;
+
+    }
     if (type === 'customer') {
-      this.apiService.fetchAllCustomerListByPage(this.currentPage,this.searchQuery).subscribe(
+      this.apiService.fetchAllCustomerListByPage(this.currentPage, this.searchQuery).subscribe(
         (customers: HttpResponse<Customer[]>) => {
           this.selectedCustomer = customers.body as Customer[];
           console.log('Customers:', this.selectedCustomer);
@@ -213,12 +233,12 @@ export class HistoryPageComponent implements OnInit {
       );
     }
     else if (type === 'quote') {
-      this.searchQuotationListDetailItem(this.quotationCurrentId,this.selectedCustomer[this.onclickCustomer].customerId);
+      this.searchQuotationListDetailItem(this.quotationCurrentId, this.selectedCustomer[this.onclickCustomer].customerId);
     }
   }
 
   // Function to handle input change and navigate to the specified page
-  goToPageInput( type: 'quote' | 'customer'): void {
+  goToPageInput(type: 'quote' | 'customer' | 'pending' | 'complete'): void {
     if (this.currentPage < 1 && type === 'customer') {
       this.currentPage = 1;
       this.searchCustomer(this.searchQuery);
@@ -227,7 +247,7 @@ export class HistoryPageComponent implements OnInit {
       this.currentPage = this.totalPage;
       this.searchCustomer(this.searchQuery);
 
-    } 
+    }
     else if (this.quotationCurrentPage < 1 && type === 'quote') {
       this.quotationCurrentPage = 1;
     }
@@ -235,7 +255,7 @@ export class HistoryPageComponent implements OnInit {
       this.quotationCurrentPage = this.quotationTotalPage;
     }
     if (type === 'customer') {
-      this.apiService.fetchAllCustomerListByPage(this.currentPage,this.searchQuery).subscribe(
+      this.apiService.fetchAllCustomerListByPage(this.currentPage, this.searchQuery).subscribe(
         (customers: HttpResponse<Customer[]>) => {
           this.selectedCustomer = customers.body as Customer[];
           console.log('Customers:', this.selectedCustomer);
@@ -246,8 +266,31 @@ export class HistoryPageComponent implements OnInit {
       );
     }
     else if (type === 'quote') {
-      this.searchQuotationListDetailItem(this.quotationCurrentId,this.selectedCustomer[this.onclickCustomer].customerId);
+      this.searchQuotationListDetailItem(this.quotationCurrentId, this.selectedCustomer[this.onclickCustomer].customerId);
     }
+    else if (this.pendingQuotationCurrentPage > this.pendingQuotationTotalPage && type === 'pending') {
+      this.pendingQuotationCurrentPage = this.pendingQuotationTotalPage;
+      this.apiService.getQuotationListsByCustomerId( this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage ).subscribe(
+        (apiResponse: HttpResponse<QuotationListResponse[]>) => {
+          this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
+         });    }
+    else if (this.pendingQuotationCurrentPage < 1 && type === 'pending') {
+      this.pendingQuotationCurrentPage = 1;
+      this.apiService.getQuotationListsByCustomerId( this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage ).subscribe(
+        (apiResponse: HttpResponse<QuotationListResponse[]>) => {
+          this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
+         });    }
+    else if (this.completedQuotationCurrentPage < this.completedQuotationTotalPage && type === 'complete') {
+      this.completedQuotationCurrentPage++;
+      this.searchQuotation(this.onclickCustomer, this.selectedCustomer[this.onclickCustomer].customerId, this.completedQuotationCurrentPage)
+
+    }
+    else if (this.completedQuotationCurrentPage > 1 && type === 'complete') {
+      this.completedQuotationCurrentPage--;
+      this.searchQuotation(this.onclickCustomer, this.selectedCustomer[this.onclickCustomer].customerId, this.completedQuotationCurrentPage)
+
+    }
+
   }
 
   resetShowQuotationState() {
@@ -289,10 +332,10 @@ export class HistoryPageComponent implements OnInit {
   }
 
   quotationList: PartsInQuoteList[] = [];
-  searchQuotationListDetailItem(quoteNo: number, customerId: number) {
+  searchQuotationListDetailItem(quoteNo: number, customerId: number, pageNumber?: number) {
     this.showQuotationListDetailItemBoolean = 1;
     this.apiService.searchQuotationListDetailItem(quoteNo, customerId, this.quotationCurrentPage).subscribe(
-      (response : HttpResponse<QuotationPart[]>) => {
+      (response: HttpResponse<QuotationPart[]>) => {
         this.quotationList = (response.body as any).parts; // Assuming 'parts' is the array
         const pagination = response.headers.get('X-Pagination');
         const paginationData = pagination ? JSON.parse(pagination) : null;
@@ -315,9 +358,9 @@ export class HistoryPageComponent implements OnInit {
   }
 
   editQuote(quoteId: number, customerId: number) {
-    this.router.navigate(['/quotation', quoteId,customerId]);
+    this.router.navigate(['/quotation', quoteId, customerId]);
   }
-  
+
   showCustomerDetails() {
     this.showQuotationListDetailItemBoolean = 0;
     this.totalAmountOfQuotationList = 0;

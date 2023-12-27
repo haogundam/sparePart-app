@@ -13,7 +13,7 @@
   </div>
   <div class="header-row">
     <table class="customer-table">
-      <thead>
+      <thead> 
         <tr>
           <th class="span1">ID</th>
           <th class="span2">Name</th>
@@ -113,6 +113,12 @@
               </ng-container>
             </tr>
           </tbody>
+          <div class="page-selector">
+            <button *ngIf=" pendingQuotationCurrentPage>1" (click)="goToPage('prev','pending')">Previous</button>
+            <span>Page <input type="number" [(ngModel)]="pendingQuotationCurrentPage" (keyup)="goToPageInput('pending')" />
+              of {{ pendingQuotationTotalPage }}</span>
+            <button *ngIf="pendingQuotationTotalPage> pendingQuotationCurrentPage" (click)="goToPage('next','pending')">Next</button>
+          </div>
         </table>
       </div>
 

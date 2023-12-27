@@ -110,7 +110,7 @@ export class ApiService {
   ): Observable<HttpResponse<any>> {
     const headers = this.getHeaders();
     // const url = `${this.apiUrl}${customerId}${this.quotationByCustomerId}`;
-    const url = `${this.apiUrl}${customerId}/quotations?pageNumber=1`;
+    const url = `${this.apiUrl}${customerId}/quotations?pendingPageNumber=${pageNumber}`;
     return this.http.get<QuotationListResponse>(`${url}`, { observe: 'response', headers: headers });
   }
 

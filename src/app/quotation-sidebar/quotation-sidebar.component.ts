@@ -193,8 +193,8 @@ export class QuotationSidebarComponent implements OnInit {
       (dateResponse: HttpResponse<QuotationPart[]>) => {
         
             this.quotationDate = (dateResponse.body as any).parts.quoteDate as string;
-            this.quoteDetail = (dateResponse.body as any).parts.quoteDetail;
-            this.partsInQuotation = (dateResponse.body as any).parts.quoteDetail;
+            this.quoteDetail = (dateResponse.body as any).parts;
+            this.partsInQuotation = (dateResponse.body as any).parts;
             console.log('Quotation edit opened successfully', dateResponse);
           }
           ,
