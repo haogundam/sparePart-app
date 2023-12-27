@@ -24,7 +24,7 @@ export class HistoryPageComponent implements OnInit {
   selectedPaidQuotationListByCustomerId: QuotationListResponse[] = [];
   selectedPendingQuotationListByCustomerId: QuotationListResponse[] = [];
   selectedQuotationList: any;
-  pendingQuotationList: QuotationResponse[] = [];
+  pendingQuotationList: QuotationResponse[] = [{quoteNo:0,quoteDate:'123',quoteValidDate:'123'}];
   completedQuotationList: QuotationResponse[] = [];
   selectedCustomer: Customer[] = [
 
@@ -40,7 +40,7 @@ export class HistoryPageComponent implements OnInit {
   currentPage: number = 1;
   totalPageItems: number = 0;
   quotationCurrentId: number = 0;
-
+  pendingListIndicator: number = 0;
   constructor(private apiService: ApiService, private router: Router, private sharedDataService: SharedDataService) {
 
   }
@@ -61,6 +61,8 @@ export class HistoryPageComponent implements OnInit {
         console.error('Error fetching customers:', error);
       }
     );
+    console.log(this.pendingQuotationList);
+    console.log(this.pendingQuotationList.length);
   }
 
 
@@ -106,6 +108,7 @@ export class HistoryPageComponent implements OnInit {
   completedQuotationCurrentPage: number = 1;
   pendingQuotationTotalPage: number = 1;
   completedQuotationTotalPage: number = 1;
+
   searchQuotation(index: number, id: number, pageNumber?: number): void {
     this.resetShowQuotationState();
     this.selectedPaidQuotationListByCustomerId = [];
@@ -114,6 +117,7 @@ export class HistoryPageComponent implements OnInit {
     this.pendingQuotationList = [];
     this.onclickCustomer = index;
     this.showQuotationListItemBoolean = 1;
+    
     this.apiService.getQuotationListsByCustomerId(id, pageNumber ?? 1).subscribe(
       (apiResponse: HttpResponse<QuotationListResponse[]>) => {
         console.log('Paid Quotation List Pagination:', apiResponse.headers.get('Paid-Pagination'));
@@ -147,6 +151,7 @@ export class HistoryPageComponent implements OnInit {
             this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
             console.log('Pending Quotation List:', this.pendingQuotationList);
           } else {
+            this.pendingListIndicator = 1;
             console.error('Pending pagination data is null');
           }
         } else {
@@ -298,6 +303,7 @@ export class HistoryPageComponent implements OnInit {
     this.showQuotationListItemBoolean = 0;
     this.showQuotationListDetailItemBoolean = 0;
     this.totalAmountOfQuotationList = 0;
+    this.pendingListIndicator = 0;
   }
 
 

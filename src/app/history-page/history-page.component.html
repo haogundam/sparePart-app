@@ -13,7 +13,7 @@
   </div>
   <div class="header-row">
     <table class="customer-table">
-      <thead> 
+      <thead>
         <tr>
           <th class="span1">ID</th>
           <th class="span2">Name</th>
@@ -113,13 +113,20 @@
               </ng-container>
             </tr>
           </tbody>
-          <div class="page-selector">
-            <button *ngIf=" pendingQuotationCurrentPage>1" (click)="goToPage('prev','pending')">Previous</button>
-            <span>Page <input type="number" [(ngModel)]="pendingQuotationCurrentPage" (keyup)="goToPageInput('pending')" />
-              of {{ pendingQuotationTotalPage }}</span>
-            <button *ngIf="pendingQuotationTotalPage> pendingQuotationCurrentPage" (click)="goToPage('next','pending')">Next</button>
-          </div>
+          
         </table>
+        <div *ngIf="pendingListIndicator ===0">
+
+          <button *ngIf="pendingQuotationCurrentPage > 1" (click)="goToPage('prev','pending')"
+            class="pagination-btn">Previous</button>
+
+          <input type="number" [(ngModel)]="pendingQuotationCurrentPage" (keyup)="goToPageInput('pending')"
+            class="pagination-input" /> of {{ pendingQuotationTotalPage }}
+
+          <button *ngIf="pendingQuotationTotalPage > pendingQuotationCurrentPage" (click)="goToPage('next','pending')"
+            class="pagination-btn">Next</button>
+
+        </div>
       </div>
 
 
@@ -186,22 +193,14 @@
               <td>{{item.unitPrice}}</td>
               <td></td>
             </tr>
-            
+
             <tr>
               <td colspan="4"></td>
               <td>Total Price: {{totalAmountOfQuotationList.toFixed(2)}}</td>
             </tr>
-            <tr>
-              <td colspan="3"> <!-- Adjust the colspan to match the number of columns in your table -->
-                <div class="pagination-container">
-                  <button *ngIf="quotationCurrentPage > 1" (click)="goToPage('prev','quote')" class="pagination-btn">Previous</button>
-                  <span class="pagination-info">
-                    Page <input type="number" [(ngModel)]="quotationCurrentPage" (change)="goToPageInput('quote')" class="pagination-input" /> of {{ quotationTotalPage }}
-                  </span>
-                  <button *ngIf="quotationTotalPage > quotationCurrentPage" (click)="goToPage('next','quote')" class="pagination-btn">Next</button>
-                </div>
-              </td>
-            </tr> 
+
+
+
           </tbody>
         </table>
       </div>
