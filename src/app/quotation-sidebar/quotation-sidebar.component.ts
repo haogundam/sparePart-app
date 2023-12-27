@@ -23,6 +23,7 @@ import { QuotationComponent } from '../quotation/quotation.component';
 import { HttpResponse } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
 import { RegistrationDialogModule } from '../registration-dialog/registration-dialog.module';
+import { ActivatedRoute } from '@angular/router';
 
 export interface User {
   //sku: string;
@@ -54,7 +55,7 @@ interface FilteredOptions {
   imports: [CommonModule, FormsModule, MatFormFieldModule,
     MatInputModule, MatAutocompleteModule,
     ReactiveFormsModule, AsyncPipe, DialogComponent,
-    MatDialogModule, MatButtonModule,RegistrationDialogModule
+    MatDialogModule, MatButtonModule, RegistrationDialogModule
   ],
   templateUrl: './quotation-sidebar.component.html',
   styleUrls: ['./quotation-sidebar.component.scss'],
@@ -89,6 +90,15 @@ export class QuotationSidebarComponent implements OnInit {
     this.sharedDataService.currentQuotePartId.subscribe(id => {
       this.quotepartId = id ?? 0;
     });
+    this.route.params.subscribe(params => {
+      const quoteId = +params['quoteId']; // '+' converts the string 'quoteId' to a number
+      const customerId = +params['customerId'];
+      if (quoteId) {
+        this.quotationId = quoteId;
+        this.customerId = customerId;
+        this.loadQuotationDetails(quoteId, customerId);
+      }
+    });
   }
 
   //Arrays of Dummy Data
@@ -99,7 +109,7 @@ export class QuotationSidebarComponent implements OnInit {
 
   customer: Customer[] = [];
 
-  constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog) { }
+  constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog, private route: ActivatedRoute) { }
 
   searchCustomer() {
     if (this.searchCustomerName.trim() !== '') {
@@ -178,4 +188,19 @@ export class QuotationSidebarComponent implements OnInit {
       );
     }
   }
+  loadQuotationDetails(quoteId: number, customerId: number) {
+    this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
+      (dateResponse: HttpResponse<QuotationPart[]>) => {
+        
+            this.quotationDate = (dateResponse.body as any).parts.quoteDate as string;
+            this.quoteDetail = (dateResponse.body as any).parts.quoteDetail;
+            this.partsInQuotation = (dateResponse.body as any).parts.quoteDetail;
+            console.log('Quotation edit opened successfully', dateResponse);
+          }
+          ,
+          error => {
+            // Handle error
+          }
+        );
+      }
 }

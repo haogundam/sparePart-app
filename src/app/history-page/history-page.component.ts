@@ -10,6 +10,9 @@ import { Customer } from '../models/customer.model';
 import { PartsInQuoteList, QuotationListResponse, QuotationPart, QuotationResponse } from '../models/quotation.model';
 import { HttpResponse } from '@angular/common/http';
 import { Pagination } from '../models/pagination.model';
+import { routes } from '../app.routes';
+import { Router } from '@angular/router';
+import { SharedDataService } from '../shared-data.service';
 @Component({
   selector: 'app-history-page',
   standalone: true,
@@ -37,7 +40,7 @@ export class HistoryPageComponent implements OnInit {
   currentPage: number = 1;
   totalPageItems: number = 0;
   quotationCurrentId: number = 0;
-  constructor( private apiService: ApiService) {
+  constructor( private apiService: ApiService,private router: Router,private sharedDataService: SharedDataService) {
 
   }
 
@@ -180,6 +183,8 @@ export class HistoryPageComponent implements OnInit {
 
   // Function to handle page navigation
   goToPage(direction: 'prev' | 'next', type: 'quote' | 'customer'): void {
+  const currentPageProperty = type + 'CurrentPage';
+
     if (direction === 'prev' && this.currentPage > 1 && type === 'customer') {
       this.currentPage--;
       this.searchCustomer(this.searchQuery);
@@ -309,7 +314,10 @@ export class HistoryPageComponent implements OnInit {
 
   }
 
-
+  editQuote(quoteId: number, customerId: number) {
+    this.router.navigate(['/quotation', quoteId,customerId]);
+  }
+  
   showCustomerDetails() {
     this.showQuotationListDetailItemBoolean = 0;
     this.totalAmountOfQuotationList = 0;
