@@ -135,6 +135,8 @@ export class HistoryPageComponent implements OnInit {
             this.completedQuotationList = (apiResponse.body as any).paidQuotationList;
             console.log('Paid Quotation List:', this.completedQuotationList);
           } else {
+            this.completedListIndicator = 1;
+
             console.error('Paid pagination data is null');
           }
         } else {
@@ -142,7 +144,7 @@ export class HistoryPageComponent implements OnInit {
           this.completedListIndicator = 1;
           console.error('Paid-Pagination header is missing');
         }
-
+        
         const pendingPaginationHeader = apiResponse.headers.get('Pending-Pagination');
         if (pendingPaginationHeader !== null) {
           const pendingPaginationData = JSON.parse(pendingPaginationHeader);
