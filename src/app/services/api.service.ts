@@ -106,11 +106,11 @@ export class ApiService {
 
   getQuotationListsByCustomerId(
     customerId: number,
-    pageNumber: number,
+    pendingPageNumber: number,completedPageNumber: number
   ): Observable<HttpResponse<any>> {
     const headers = this.getHeaders();
     // const url = `${this.apiUrl}${customerId}${this.quotationByCustomerId}`;
-    const url = `${this.apiUrl}${customerId}/quotations?pendingPageNumber=${pageNumber}`;
+    const url = `${this.apiUrl}${customerId}/quotations?pendingPageNumber=${pendingPageNumber}&completedPageNumber=${completedPageNumber}`;
     return this.http.get<QuotationListResponse>(`${url}`, { observe: 'response', headers: headers });
   }
 

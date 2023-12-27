@@ -169,6 +169,18 @@
             </tr>
           </tbody>
         </table>
+        <div *ngIf="completedListIndicator ===0">
+
+          <button *ngIf="completedQuotationCurrentPage > 1" (click)="goToPage('prev','pending')"
+            class="pagination-btn">Previous</button>
+
+            <span>Page  <input type="number" [(ngModel)]="completedQuotationCurrentPage" (change)="goToPageInput('pending')"
+            class="pagination-input" /> of {{ completedQuotationTotalPage }} </span>
+
+          <button *ngIf="completedQuotationTotalPage > completedQuotationCurrentPage" (click)="goToPage('next','pending')"
+            class="pagination-btn">Next</button>
+
+        </div>
       </div>
       <div *ngIf="showQuotationListDetailItemBoolean === 1">
         <h4>Quotation details</h4>
