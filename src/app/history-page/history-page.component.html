@@ -120,8 +120,8 @@
           <button *ngIf="pendingQuotationCurrentPage > 1" (click)="goToPage('prev','pending')"
             class="pagination-btn">Previous</button>
 
-          <input type="number" [(ngModel)]="pendingQuotationCurrentPage" (keyup)="goToPageInput('pending')"
-            class="pagination-input" /> of {{ pendingQuotationTotalPage }}
+            <span>Page  <input type="number" [(ngModel)]="pendingQuotationCurrentPage" (change)="goToPageInput('pending')"
+            class="pagination-input" /> of {{ pendingQuotationTotalPage }} </span>
 
           <button *ngIf="pendingQuotationTotalPage > pendingQuotationCurrentPage" (click)="goToPage('next','pending')"
             class="pagination-btn">Next</button>

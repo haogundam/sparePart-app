@@ -24,7 +24,7 @@ export class HistoryPageComponent implements OnInit {
   selectedPaidQuotationListByCustomerId: QuotationListResponse[] = [];
   selectedPendingQuotationListByCustomerId: QuotationListResponse[] = [];
   selectedQuotationList: any;
-  pendingQuotationList: QuotationResponse[] = [{quoteNo:0,quoteDate:'123',quoteValidDate:'123'}];
+  pendingQuotationList: QuotationResponse[] = [{ quoteNo: 0, quoteDate: '123', quoteValidDate: '123' }];
   completedQuotationList: QuotationResponse[] = [];
   selectedCustomer: Customer[] = [
 
@@ -117,7 +117,7 @@ export class HistoryPageComponent implements OnInit {
     this.pendingQuotationList = [];
     this.onclickCustomer = index;
     this.showQuotationListItemBoolean = 1;
-    
+
     this.apiService.getQuotationListsByCustomerId(id, pageNumber ?? 1).subscribe(
       (apiResponse: HttpResponse<QuotationListResponse[]>) => {
         console.log('Paid Quotation List Pagination:', apiResponse.headers.get('Paid-Pagination'));
@@ -207,18 +207,19 @@ export class HistoryPageComponent implements OnInit {
     }
     else if (direction === 'prev' && this.pendingQuotationCurrentPage > 1 && type === 'pending') {
       this.pendingQuotationCurrentPage--;
-      this.apiService.getQuotationListsByCustomerId( this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage ).subscribe(
+      this.apiService.getQuotationListsByCustomerId(this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage).subscribe(
         (apiResponse: HttpResponse<QuotationListResponse[]>) => {
           this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
-         });
+        });
     }
 
     else if (direction === 'next' && this.pendingQuotationCurrentPage < this.pendingQuotationTotalPage && type === 'pending') {
       this.pendingQuotationCurrentPage++;
-      this.apiService.getQuotationListsByCustomerId( this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage ).subscribe(
+      this.apiService.getQuotationListsByCustomerId(this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage).subscribe(
         (apiResponse: HttpResponse<QuotationListResponse[]>) => {
           this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
-         });    }
+        });
+    }
     else if (direction === 'prev' && this.completedQuotationCurrentPage > 1 && type === 'complete') {
       this.completedQuotationCurrentPage--;
     }
@@ -270,21 +271,31 @@ export class HistoryPageComponent implements OnInit {
         }
       );
     }
-    else if (type === 'quote') {
+    if (type === 'quote') {
       this.searchQuotationListDetailItem(this.quotationCurrentId, this.selectedCustomer[this.onclickCustomer].customerId);
     }
-    else if (this.pendingQuotationCurrentPage > this.pendingQuotationTotalPage && type === 'pending') {
+
+    if (this.pendingQuotationCurrentPage > this.pendingQuotationTotalPage && type === 'pending') {
       this.pendingQuotationCurrentPage = this.pendingQuotationTotalPage;
-      this.apiService.getQuotationListsByCustomerId( this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage ).subscribe(
+      this.apiService.getQuotationListsByCustomerId(this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage).subscribe(
         (apiResponse: HttpResponse<QuotationListResponse[]>) => {
           this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
-         });    }
-    else if (this.pendingQuotationCurrentPage < 1 && type === 'pending') {
+        });
+    }
+    else if (this.pendingQuotationCurrentPage < 1 && type === 'pending')  {
       this.pendingQuotationCurrentPage = 1;
-      this.apiService.getQuotationListsByCustomerId( this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage ).subscribe(
+      this.apiService.getQuotationListsByCustomerId(this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage).subscribe(
         (apiResponse: HttpResponse<QuotationListResponse[]>) => {
           this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
-         });    }
+        });
+    }
+
+    if (type === 'pending') {
+      this.apiService.getQuotationListsByCustomerId(this.selectedCustomer[this.onclickCustomer].customerId, this.pendingQuotationCurrentPage).subscribe(
+        (apiResponse: HttpResponse<QuotationListResponse[]>) => {
+          this.pendingQuotationList = (apiResponse.body as any).pendingQuotationList;
+        });
+    }
     else if (this.completedQuotationCurrentPage < this.completedQuotationTotalPage && type === 'complete') {
       this.completedQuotationCurrentPage++;
       this.searchQuotation(this.onclickCustomer, this.selectedCustomer[this.onclickCustomer].customerId, this.completedQuotationCurrentPage)
