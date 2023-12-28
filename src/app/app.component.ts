@@ -29,7 +29,7 @@ import { ApiService } from './services/api.service';
 import { HttpClientModule, HttpResponse, HttpClient } from '@angular/common/http';
 import { AuthGuard } from './guards/auth.guard.service';
 import {MaterialModule} from './material.module';
-import { QuotationSidebarComponent } from './quotation-sidebar/quotation-sidebar.component';
+import QuotationSidebarComponent from './quotation-sidebar/quotation-sidebar.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 @Component({

@@ -210,11 +210,20 @@
               <td colspan="4"></td>
               <td>Total Price: {{totalAmountOfQuotationList.toFixed(2)}}</td>
             </tr>
-
-
-
           </tbody>
         </table>
+        <div >
+
+          <button *ngIf="completedQuotationCurrentPage > 1" (click)="goToPage('prev','pending')"
+            class="pagination-btn">Previous</button>
+
+            <span>Page  <input type="number" [(ngModel)]="completedQuotationCurrentPage" (change)="goToPageInput('pending')"
+            class="pagination-input" /> of {{ completedQuotationTotalPage }} </span>
+
+          <button *ngIf="completedQuotationTotalPage > completedQuotationCurrentPage" (click)="goToPage('next','pending')"
+            class="pagination-btn">Next</button>
+
+        </div>
       </div>
     </div>
   </div>

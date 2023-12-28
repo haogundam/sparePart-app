@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuotationSidebarComponent } from './quotation-sidebar.component';
+import QuotationSidebarComponent from './quotation-sidebar.component';
 
 describe('QuotationSidebarComponent', () => {
   let component: QuotationSidebarComponent;

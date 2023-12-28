@@ -144,7 +144,7 @@ export class HistoryPageComponent implements OnInit {
           this.completedListIndicator = 1;
           console.error('Paid-Pagination header is missing');
         }
-        
+
         const pendingPaginationHeader = apiResponse.headers.get('Pending-Pagination');
         if (pendingPaginationHeader !== null) {
           const pendingPaginationData = JSON.parse(pendingPaginationHeader);
@@ -192,7 +192,7 @@ export class HistoryPageComponent implements OnInit {
 
 
   // Function to handle page navigation
-  goToPage(direction: 'prev' | 'next', type: 'quote' | 'customer' | 'pending' | 'complete'): void {
+  goToPage(direction: 'prev' | 'next', type: 'quote' | 'customer' | 'pending' | 'complete' | 'detail'): void {
     if (direction === 'prev' && this.currentPage > 1 && type === 'customer') {
       this.currentPage--;
       this.searchCustomer(this.searchQuery);
@@ -254,7 +254,7 @@ export class HistoryPageComponent implements OnInit {
   }
 
   // Function to handle input change and navigate to the specified page
-  goToPageInput(type: 'quote' | 'customer' | 'pending' | 'complete'): void {
+  goToPageInput(type: 'quote' | 'customer' | 'pending' | 'complete' | 'detail'): void {
     if (this.currentPage < 1 && type === 'customer') {
       this.currentPage = 1;
       this.searchCustomer(this.searchQuery);
@@ -370,9 +370,10 @@ export class HistoryPageComponent implements OnInit {
   }
 
   quotationList: PartsInQuoteList[] = [];
+  detailQuotationCurrentPage: number = 1;
   searchQuotationListDetailItem(quoteNo: number, customerId: number, pageNumber?: number) {
     this.showQuotationListDetailItemBoolean = 1;
-    this.apiService.searchQuotationListDetailItem(quoteNo, customerId, this.quotationCurrentPage).subscribe(
+    this.apiService.searchQuotationListDetailItem(quoteNo, customerId, this.detailQuotationCurrentPage).subscribe(
       (response: HttpResponse<QuotationPart[]>) => {
         this.quotationList = (response.body as any).parts; // Assuming 'parts' is the array
         const pagination = response.headers.get('X-Pagination');

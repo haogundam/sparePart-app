@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { QuotationSidebarComponent } from '../quotation-sidebar/quotation-sidebar.component';
+import QuotationSidebarComponent from '../quotation-sidebar/quotation-sidebar.component';
 import { Customer } from '../models/customer.model';
 import { QuotationListResponse, QuotationPart,QuotePartAdd } from '../models/quotation.model';
 import { parts, partsResponse } from '../models/parts.model';

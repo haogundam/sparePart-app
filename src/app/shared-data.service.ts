@@ -45,5 +45,8 @@ export class SharedDataService {
   changeQuotePartId(quotePartId: number) {
     this.quotePartIdSource.next(quotePartId);
   }
-
+  clearQuotation() {
+    this.partsInQuotation = [];
+    this.partsInQuotationSubject.next(this.partsInQuotation);
+  }
 }

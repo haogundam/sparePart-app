@@ -62,7 +62,8 @@ interface FilteredOptions {
 })
 
 // implements OnInit
-export class QuotationSidebarComponent implements OnInit {
+export default class QuotationSidebarComponent implements OnInit {
+totalPrice: any;
   openModal(arg0: string) {
     throw new Error('Method not implemented.');
   }
@@ -99,6 +100,7 @@ export class QuotationSidebarComponent implements OnInit {
         this.loadQuotationDetails(quoteId, customerId);
       }
     });
+    
   }
 
   //Arrays of Dummy Data
@@ -203,4 +205,5 @@ export class QuotationSidebarComponent implements OnInit {
           }
         );
       }
+      
 }
