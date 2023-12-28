@@ -239,14 +239,15 @@ export class HistoryPageComponent implements OnInit {
       this.completedQuotationCurrentPage--;
       this.apiService.getQuotationListsByCustomerId(this.selectedCustomer[this.onclickCustomer].customerId, 1, this.completedQuotationCurrentPage).subscribe(
         (apiResponse: HttpResponse<QuotationListResponse[]>) => {
-          this.completedQuotationList = (apiResponse.body as any).completedQuotationList;
+          this.completedQuotationList = (apiResponse.body as any).paidQuotationList;
         });
     }
     else if (direction === 'next' && this.completedQuotationCurrentPage < this.completedQuotationTotalPage && type === 'complete') {
       this.completedQuotationCurrentPage++;
+      console.log('Current Page:', this.completedQuotationCurrentPage);
       this.apiService.getQuotationListsByCustomerId(this.selectedCustomer[this.onclickCustomer].customerId, 1, this.completedQuotationCurrentPage).subscribe(
         (apiResponse: HttpResponse<QuotationListResponse[]>) => {
-          this.completedQuotationList = (apiResponse.body as any).completedQuotationList;
+          this.completedQuotationList = (apiResponse.body as any).paidQuotationList;
         });
     }
     if (type === 'customer') {
@@ -263,7 +264,7 @@ export class HistoryPageComponent implements OnInit {
     else if (type === 'quote') {
       this.searchQuotationListDetailItem(this.quotationCurrentId, this.selectedCustomer[this.onclickCustomer].customerId);
     }
-     if (type ==="detail") {
+    else if (type ==="detail") {
       this.searchQuotationListDetailItem(this.quotationCurrentId, this.selectedCustomer[this.onclickCustomer].customerId);
     }
   }
@@ -325,14 +326,14 @@ export class HistoryPageComponent implements OnInit {
       this.completedQuotationCurrentPage = this.completedQuotationTotalPage;
       this.apiService.getQuotationListsByCustomerId(this.selectedCustomer[this.onclickCustomer].customerId, 1, this.completedQuotationCurrentPage).subscribe(
         (apiResponse: HttpResponse<QuotationListResponse[]>) => {
-          this.completedQuotationList = (apiResponse.body as any).completedQuotationList;
+          this.completedQuotationList = (apiResponse.body as any).paidQuotationList;
         });
     }
     else if (this.completedQuotationCurrentPage < 1 && type === 'complete') {
       this.completedQuotationCurrentPage = 1;
       this.apiService.getQuotationListsByCustomerId(this.selectedCustomer[this.onclickCustomer].customerId, 1, this.completedQuotationCurrentPage).subscribe(
         (apiResponse: HttpResponse<QuotationListResponse[]>) => {
-          this.completedQuotationList = (apiResponse.body as any).completedQuotationList;
+          this.completedQuotationList = (apiResponse.body as any).paidQuotationList;
         });
     }
     else if (type === 'detail' && this.detailQuotationCurrentPage > this.detailQuotationTotalPage) {
@@ -347,7 +348,7 @@ export class HistoryPageComponent implements OnInit {
     if (type === 'complete') {
       this.apiService.getQuotationListsByCustomerId(this.selectedCustomer[this.onclickCustomer].customerId, 1, this.completedQuotationCurrentPage).subscribe(
         (apiResponse: HttpResponse<QuotationListResponse[]>) => {
-          this.completedQuotationList = (apiResponse.body as any).completedQuotationList;
+          this.completedQuotationList = (apiResponse.body as any).paidQuotationList;
         });
     }
 

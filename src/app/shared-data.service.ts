@@ -14,19 +14,22 @@ export class SharedDataService {
   private quotePartIdSource = new BehaviorSubject<number | null>(null);
   currentQuotePartId = this.quotePartIdSource.asObservable();
   constructor(private apiService: ApiService) {
-    this.loadQuotationDetails();
+    console.log('Shared data service created',this.partsInQuotation);
+    this.loadQuotationDetails((this.currentQuotationId as unknown as number) , (this.currentCustomerId as unknown as number));
+    console.log('Shared data service edited',this.partsInQuotation);
+
   }
-  loadQuotationDetails() {
-    this.apiService.searchQuotationListDetailItem((this.currentQuotationId as unknown as number), (this.currentCustomerId as unknown as number), 1).subscribe(
+  loadQuotationDetails(quoteId: number, customerId: number) {
+    this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
       (dateResponse: HttpResponse<QuotationPart[]>) => {
         this.partsInQuotation = (dateResponse.body as any).parts;
-        this.changeCustomerId((dateResponse.body as any).customerId);
-        this.changeQuotationId((dateResponse.body as any).quotationId);
+        this.changeQuotationId(quoteId);
+        this.changeCustomerId(customerId);
         console.log('Quotation edit opened successfully', dateResponse);
       }
       ,
       error => {
-        // Handle error
+        
       }
     );
   }
@@ -36,6 +39,7 @@ export class SharedDataService {
   changeQuotationId(quotationId: number) {
     this.quotationIdSource.next(quotationId);
   }
+  
   private partsInQuotation: QuotationPart[] = [];
 
   // Observable to allow components to subscribe to changes

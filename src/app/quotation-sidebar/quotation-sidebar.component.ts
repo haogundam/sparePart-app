@@ -87,7 +87,6 @@ export default class QuotationSidebarComponent implements OnInit {
   partsInQuotation: any[] = [];
   quotepartId: number = 0;
   ngOnInit(): void {
-    this.sharedDataService.clearQuotation();
 
     this.sharedDataService.currentCustomerId.subscribe(id => {
       this.customerId = id;
@@ -185,13 +184,16 @@ export default class QuotationSidebarComponent implements OnInit {
         (response: any) => {
 
           console.log('Quotation submitted successfully', response);
+          this.openSnackBar();
         },
         (error) => {
           console.error('Error submitting quotation', error);
         }
       );
     }
+    
   }
+  
   loadQuotationDetails(quoteId: number, customerId: number) {
     this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
       (dateResponse: HttpResponse<QuotationPart[]>) => {
@@ -211,4 +213,21 @@ export default class QuotationSidebarComponent implements OnInit {
   searchPart(searchQueryPart: string) {
     this.quotationComponent.searchPart(searchQueryPart);
   };
+
+  openSnackBar() {
+    const x = document.getElementById("snackbar");
+
+    if (x) {
+      // Add the "show" class to DIV
+      x.className = "show";
+
+      // After 3 seconds, remove the show class from DIV
+      setTimeout(() => {
+        if (x) {
+          x.className = x.className.replace("show", "");
+        }
+      }, 3000);
+    }
+  }
+
 }
