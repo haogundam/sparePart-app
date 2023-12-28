@@ -101,6 +101,12 @@ export class QuotationComponent implements OnInit {
   //add part to quotation
   addPartToQuotation(customerId: number, quoteNo: number, partId: number, quantity: number, unitPrice: number, partName: string, sellingPrice: number) {
     console.log('Adding part to quotation:', quoteNo);
+
+    if (!quoteNo || quoteNo === 0) {
+      alert('Invalid quotation ID. Cannot add parts to quotation. Please create a new quotation / select an existing quotation. ');
+      return;
+  }
+
     if (unitPrice == 0 || unitPrice == null || unitPrice == undefined || Number.isNaN(unitPrice)) {
       unitPrice = sellingPrice;
       console.log('unitPrice:', unitPrice, 'selling price:', sellingPrice);
