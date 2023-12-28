@@ -171,13 +171,13 @@
         </table>
         <div *ngIf="completedListIndicator ===0">
 
-          <button *ngIf="completedQuotationCurrentPage > 1" (click)="goToPage('prev','pending')"
+          <button *ngIf="completedQuotationCurrentPage > 1" (click)="goToPage('prev','complete')"
             class="pagination-btn">Previous</button>
 
-            <span>Page  <input type="number" [(ngModel)]="completedQuotationCurrentPage" (change)="goToPageInput('pending')"
+            <span>Page  <input type="number" [(ngModel)]="completedQuotationCurrentPage" (change)="goToPageInput('complete')"
             class="pagination-input" /> of {{ completedQuotationTotalPage }} </span>
 
-          <button *ngIf="completedQuotationTotalPage > completedQuotationCurrentPage" (click)="goToPage('next','pending')"
+          <button *ngIf="completedQuotationTotalPage > completedQuotationCurrentPage" (click)="goToPage('next','complete')"
             class="pagination-btn">Next</button>
 
         </div>
@@ -214,13 +214,13 @@
         </table>
         <div >
 
-          <button *ngIf="completedQuotationCurrentPage > 1" (click)="goToPage('prev','pending')"
+          <button *ngIf="detailQuotationCurrentPage > 1" (click)="goToPage('prev','detail')"
             class="pagination-btn">Previous</button>
 
-            <span>Page  <input type="number" [(ngModel)]="completedQuotationCurrentPage" (change)="goToPageInput('pending')"
-            class="pagination-input" /> of {{ completedQuotationTotalPage }} </span>
+            <span>Page  <input type="number" [(ngModel)]="detailQuotationCurrentPage" (change)="goToPageInput('detail')"
+            class="pagination-input" /> of {{ detailQuotationTotalPage }} </span>
 
-          <button *ngIf="completedQuotationTotalPage > completedQuotationCurrentPage" (click)="goToPage('next','pending')"
+          <button *ngIf="detailQuotationTotalPage > detailQuotationCurrentPage" (click)="goToPage('next','detail')"
             class="pagination-btn">Next</button>
 
         </div>

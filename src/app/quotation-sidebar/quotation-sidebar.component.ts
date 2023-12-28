@@ -204,7 +204,7 @@ export default class QuotationSidebarComponent implements OnInit {
       }
       ,
       error => {
-        // Handle error
+        
       }
     );
   }
