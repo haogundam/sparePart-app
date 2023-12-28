@@ -17,6 +17,7 @@ export interface QuotationPart {
 
 }
 export interface PartsInQuoteList {
+  quotePartId: number;
   partId: number;
   partName: string;
   quantity: number;

@@ -12,7 +12,7 @@ import { take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import QuotationSidebarComponent from '../quotation-sidebar/quotation-sidebar.component';
 import { Customer } from '../models/customer.model';
-import { QuotationListResponse, QuotationPart,QuotePartAdd } from '../models/quotation.model';
+import { QuotationListResponse, QuotationPart, QuotePartAdd } from '../models/quotation.model';
 import { parts, partsResponse } from '../models/parts.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
@@ -20,29 +20,29 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
 
 @Injectable({
-  providedIn:'root',
+  providedIn: 'root',
 })
 
 @Component({
-    selector: 'app-quotation',
-    standalone: true,
-    templateUrl: './quotation.component.html',
-    styleUrl: './quotation.component.scss',
-    imports: [LayoutComponent, QuotationSidebarComponent,CommonModule, FormsModule]
+  selector: 'app-quotation',
+  standalone: true,
+  templateUrl: './quotation.component.html',
+  styleUrl: './quotation.component.scss',
+  imports: [LayoutComponent, QuotationSidebarComponent, CommonModule, FormsModule]
 })
-export class QuotationComponent implements OnInit{
+export class QuotationComponent implements OnInit {
 
 
-filteredproducts: partsResponse[] = [];
-selectedSKU: parts[]=[];
-similarProducts:  partsResponse[] = [];;
+  filteredproducts: partsResponse[] = [];
+  selectedSKU: parts[] = [];
+  similarProducts: partsResponse[] = [];;
 
-onSearch() {
-throw new Error('Method not implemented.');
-}
-  searchQueryPart : any;
+  onSearch() {
+    throw new Error('Method not implemented.');
+  }
+  searchQueryPart: any;
 
-  constructor(private apiService: ApiService,private sharedDataService: SharedDataService){}
+  constructor(private apiService: ApiService, private sharedDataService: SharedDataService) { }
 
 
 
@@ -52,7 +52,7 @@ throw new Error('Method not implemented.');
       (part: HttpResponse<partsResponse[]>) => {
         this.filteredproducts = part.body as partsResponse[];
         console.log('SKU:', this.filteredproducts);
-        if (searchQueryPart != null){
+        if (searchQueryPart != null) {
           this.showSameCategorySKU(searchQueryPart);
         }
       },
@@ -62,11 +62,11 @@ throw new Error('Method not implemented.');
     )
   };
   customerId!: number;
-  quotationIdd!: number ;
+  quotationIdd!: number;
   quotePartId!: number;
   ngOnInit(): void {
     this.apiService.GetAllParts().subscribe(
-      (part : HttpResponse<partsResponse[]>) => {
+      (part: HttpResponse<partsResponse[]>) => {
         this.filteredproducts = part.body as partsResponse[];
         console.log('SKU All:', this.filteredproducts);
       },
@@ -75,34 +75,46 @@ throw new Error('Method not implemented.');
       }
     )
     this.sharedDataService.currentCustomerId.subscribe(id => {
-      this.customerId = id??0;
+      this.customerId = id ?? 0;
     });
     this.sharedDataService.currentQuotationId.subscribe(id => {
-      this.quotationIdd = id??0;
+      this.quotationIdd = id ?? 0;
     });
     this.sharedDataService.currentQuotePartId.subscribe(id => {
-      this.quotePartId = id??0;
+      this.quotePartId = id ?? 0;
     });
   }
 
-  showSameCategorySKU(sku : string) {
-      return this.apiService.showSameCategorySKU(sku).subscribe(
-        (part: HttpResponse<partsResponse[]>) => {
-          this.similarProducts = part.body as partsResponse[];
-          console.log('SKU same category:', this.similarProducts);
-        },
-        (error) => {
-          console.error('Error fetching part lists:', error);
-        }
-      )
-    }
-    quoteAddPart!: QuotePartAdd;
+  showSameCategorySKU(sku: string) {
+    return this.apiService.showSameCategorySKU(sku).subscribe(
+      (part: HttpResponse<partsResponse[]>) => {
+        this.similarProducts = part.body as partsResponse[];
+        console.log('SKU same category:', this.similarProducts);
+      },
+      (error) => {
+        console.error('Error fetching part lists:', error);
+      }
+    )
+  }
+  quoteAddPart!: QuotePartAdd;
   //add part to quotation
-  addPartToQuotation(customerId:number ,quoteNo:number,partId:number,quantity : number, unitPrice : number,partName:string,sellingPrice:number) {
+  addPartToQuotation(customerId: number, quoteNo: number, partId: number, quantity: number, unitPrice: number, partName: string, sellingPrice: number) {
     console.log('Adding part to quotation:', quoteNo);
-    if (unitPrice == 0 || unitPrice == null || unitPrice == undefined || Number.isNaN(unitPrice)){
+    if (unitPrice == 0 || unitPrice == null || unitPrice == undefined || Number.isNaN(unitPrice)) {
       unitPrice = sellingPrice;
-      console.log('unitPrice:', unitPrice ,'selling price:', sellingPrice);
+      console.log('unitPrice:', unitPrice, 'selling price:', sellingPrice);
+    }
+    const product = this.filteredproducts.find(p => p.partId === partId);
+
+    // Check if the entered quantity exceeds the available quantity
+    if (product && quantity > product.totalQuantity) {
+      // Display an error message or a prompt
+      alert(`Cannot add item to quotation. Entered quantity (${quantity}) exceeds available quantity (${product.totalQuantity}).`);
+      return;
+    }
+    else if ( unitPrice < sellingPrice) {
+      alert(`Cannot add item to quotation. Entered price (${unitPrice}) is less than selling price (${sellingPrice}).`);
+      return;
     }
     this.quoteAddPart = {
       partId: partId,
@@ -112,9 +124,9 @@ throw new Error('Method not implemented.');
     const partToAdd = { partId, quantity, unitPrice, partName };
     this.sharedDataService.addPartToQuotation(partToAdd);
     console.log('Adding part to quotation:', this.quoteAddPart);
-    this.apiService.addPartToQuotation(customerId,quoteNo,this.quoteAddPart).subscribe(
+    this.apiService.addPartToQuotation(customerId, quoteNo, this.quoteAddPart).subscribe(
       (part: HttpResponse<number>) => { // Fix: Change the type of the parameter to HttpResponse<number>
-        console.log( part);
+        console.log(part);
         this.quotePartId = part.body as number; // Access the body of the HttpResponse
         this.sharedDataService.changeQuotePartId(this.quotePartId);
       },

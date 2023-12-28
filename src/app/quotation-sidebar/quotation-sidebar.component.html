@@ -40,6 +40,7 @@
             <th>Part Name</th>
             <th>Part ID</th>
             <th>Unit Price</th>
+            <th>Qty</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -49,8 +50,9 @@
             <td>{{ part.partName }}</td>
             <td>{{ part.partId }}</td>
             <td>{{ part.unitPrice }}</td>
+            <td>{{ part.quantity }}</td>
             <td>
-              <button class="button" (click)="onDeleteClick(i,part.partId)">Del</button>
+              <button class="button" (click)="onDeleteClick(i,part.quotePartId)">Del</button>
             </td>
           </tr>
         </tbody>        

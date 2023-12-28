@@ -41,6 +41,8 @@ export class LoginComponent {
         }
       },
       (error) => {
+        alert(`Login Failed ! Wrong Email or Password`);
+
         console.error('Login failed:', error);
 
         // const dialogRef = this.dialog.open(FailLoginComponent, {

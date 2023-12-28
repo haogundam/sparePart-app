@@ -103,11 +103,6 @@ totalPrice: any;
     
   }
 
-  //Arrays of Dummy Data
-  quotationList: QuotationListItem[] = [
-  ];
-
-  option = this.quotationList;
 
   customer: Customer[] = [];
 
@@ -163,10 +158,10 @@ totalPrice: any;
       console.log('The dialog was closed');
     });
   }
-  onDeleteClick(index: number, partId: number) {
+  onDeleteClick(index: number,quotePartId: number) {
     this.sharedDataService.removePartFromQuotation(index);
     if (this.customerId !== null && this.quotationId !== null) {
-      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, this.quotepartId).subscribe(
+      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, quotePartId).subscribe(
         (response: any) => {
           console.log(response);
         },
