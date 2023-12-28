@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {HostListener,  Component, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModel } from '@angular/forms';
@@ -61,8 +61,17 @@ interface FilteredOptions {
   styleUrls: ['./quotation-sidebar.component.scss'],
 })
 
+
 // implements OnInit
 export default class QuotationSidebarComponent implements OnInit {
+
+  @HostListener('window:beforeunload', ['$event'])
+unloadNotification($event: any) {
+  this.sharedDataService.clearQuotation();
+    $event.returnValue = true;
+  
+} 
+
 totalPrice: any;
   openModal(arg0: string) {
     throw new Error('Method not implemented.');
@@ -79,6 +88,8 @@ totalPrice: any;
   partsInQuotation: any[] = [];
   quotepartId: number = 0;
   ngOnInit(): void {
+    this.sharedDataService.clearQuotation();
+
     this.sharedDataService.currentCustomerId.subscribe(id => {
       this.customerId = id;
     });
@@ -102,8 +113,6 @@ totalPrice: any;
     });
     
   }
-
-
   customer: Customer[] = [];
 
   constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog, private route: ActivatedRoute) { }

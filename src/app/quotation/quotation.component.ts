@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
 import { LayoutComponent } from '../layout/layout.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -32,6 +32,26 @@ import { SharedDataService } from '../shared-data.service';
 })
 export class QuotationComponent implements OnInit {
 
+  ngOnInit(): void {
+    this.apiService.GetAllParts().subscribe(
+      (part: HttpResponse<partsResponse[]>) => {
+        this.filteredproducts = part.body as partsResponse[];
+        console.log('SKU All:', this.filteredproducts);
+      },
+      (error) => {
+        console.error('Error fetching parts sku:', error);
+      }
+    )
+    this.sharedDataService.currentCustomerId.subscribe(id => {
+      this.customerId = id ?? 0;
+    });
+    this.sharedDataService.currentQuotationId.subscribe(id => {
+      this.quotationIdd = id ?? 0;
+    });
+    this.sharedDataService.currentQuotePartId.subscribe(id => {
+      this.quotePartId = id ?? 0;
+    });
+  }
 
   filteredproducts: partsResponse[] = [];
   selectedSKU: parts[] = [];
@@ -64,26 +84,7 @@ export class QuotationComponent implements OnInit {
   customerId!: number;
   quotationIdd!: number;
   quotePartId!: number;
-  ngOnInit(): void {
-    this.apiService.GetAllParts().subscribe(
-      (part: HttpResponse<partsResponse[]>) => {
-        this.filteredproducts = part.body as partsResponse[];
-        console.log('SKU All:', this.filteredproducts);
-      },
-      (error) => {
-        console.error('Error fetching parts sku:', error);
-      }
-    )
-    this.sharedDataService.currentCustomerId.subscribe(id => {
-      this.customerId = id ?? 0;
-    });
-    this.sharedDataService.currentQuotationId.subscribe(id => {
-      this.quotationIdd = id ?? 0;
-    });
-    this.sharedDataService.currentQuotePartId.subscribe(id => {
-      this.quotePartId = id ?? 0;
-    });
-  }
+
 
   showSameCategorySKU(sku: string) {
     return this.apiService.showSameCategorySKU(sku).subscribe(
@@ -112,15 +113,24 @@ export class QuotationComponent implements OnInit {
       alert(`Cannot add item to quotation. Entered quantity (${quantity}) exceeds available quantity (${product.totalQuantity}).`);
       return;
     }
-    else if ( unitPrice < sellingPrice) {
+    else if (unitPrice < sellingPrice) {
       alert(`Cannot add item to quotation. Entered price (${unitPrice}) is less than selling price (${sellingPrice}).`);
       return;
     }
+
     this.quoteAddPart = {
       partId: partId,
       unitPrice: unitPrice,
       quantity: quantity,
     };
+
+    // Check if the part is already in the quotation
+    const partAlreadyAdded = this.sharedDataService.getPartsInQuotation().some(part => part.partId === partId);
+    if (partAlreadyAdded) {
+      alert(`This part (ID: ${partName}) has already been added to the quotation. Please remove it from the quotation before adding it again.`);
+      return;
+    }
+
     const partToAdd = { partId, quantity, unitPrice, partName };
     this.sharedDataService.addPartToQuotation(partToAdd);
     console.log('Adding part to quotation:', this.quoteAddPart);
