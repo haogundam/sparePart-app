@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
+import { ApiService } from './services/api.service';
+import { QuotationPart } from './models/quotation.model';
+import { HttpResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,8 +13,23 @@ export class SharedDataService {
   currentQuotationId = this.quotationIdSource.asObservable();
   private quotePartIdSource = new BehaviorSubject<number | null>(null);
   currentQuotePartId = this.quotePartIdSource.asObservable();
-  constructor() { }
-
+  constructor(private apiService:ApiService) {
+    this.loadQuotationDetails();
+   }
+   loadQuotationDetails() {
+    this.apiService.searchQuotationListDetailItem((this.currentQuotationId as unknown as number),(this.currentCustomerId as unknown as number), 1).subscribe(
+      (dateResponse: HttpResponse<QuotationPart[]>) => {
+        this.partsInQuotation = (dateResponse.body as any).parts;
+        this.changeCustomerId((dateResponse.body as any).customerId);
+        this.changeQuotationId((dateResponse.body as any).quotationId);
+        console.log('Quotation edit opened successfully', dateResponse);
+      }
+      ,
+      error => {
+        // Handle error
+      }
+    );
+  }
   changeCustomerId(customerId: number) {
     this.customerIdSource.next(customerId);
   }

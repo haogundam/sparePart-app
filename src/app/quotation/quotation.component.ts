@@ -103,7 +103,7 @@ export class QuotationComponent implements OnInit {
     console.log('Adding part to quotation:', quoteNo);
 
     if (!quoteNo || quoteNo === 0) {
-      alert('Invalid quotation ID. Cannot add parts to quotation. Please create a new quotation / select an existing quotation. ');
+      alert('Invalid quotation ID. Cannot add parts to quotation. Please create a new quotation in search bar / select an existing quotation. ');
       return;
   }
 

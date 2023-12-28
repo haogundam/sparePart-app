@@ -47,7 +47,7 @@
         <div class="divider"></div>
         <tbody class="quotation-table-item">
           <tr *ngFor="let part of partsInQuotation; let i = index">
-            <td>{{ part.partName }}</td>
+            <td (click)="searchPart(part.sku)"> {{part.partName }}</td>
             <td>{{ part.partId }}</td>
             <td>{{ part.unitPrice }}</td>
             <td>{{ part.quantity }}</td>
@@ -70,7 +70,10 @@
         <button (click)="openModal('cancel')" class="cancel-button">Cancel</button>
 
         <button mat-button (click)="openRegistrationForm()" class="register-button">Register</button>
+        <div id="snackbar">Success!</div>
       </div>
      </div>
     </div>
+    
   </div> 
+

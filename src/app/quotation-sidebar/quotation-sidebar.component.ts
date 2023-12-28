@@ -1,4 +1,4 @@
-import {HostListener,  Component, OnInit, OnDestroy } from '@angular/core';
+import { HostListener, Component, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModel } from '@angular/forms';
@@ -24,7 +24,6 @@ import { HttpResponse } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
 import { RegistrationDialogModule } from '../registration-dialog/registration-dialog.module';
 import { ActivatedRoute } from '@angular/router';
-
 export interface User {
   //sku: string;
   name: string;
@@ -66,13 +65,13 @@ interface FilteredOptions {
 export default class QuotationSidebarComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event'])
-unloadNotification($event: any) {
-  this.sharedDataService.clearQuotation();
+  unloadNotification($event: any) {
+    this.sharedDataService.clearQuotation();
     $event.returnValue = true;
-  
-} 
 
-totalPrice: any;
+  }
+
+  totalPrice: any;
   openModal(arg0: string) {
     throw new Error('Method not implemented.');
   }
@@ -111,11 +110,11 @@ totalPrice: any;
         this.loadQuotationDetails(quoteId, customerId);
       }
     });
-    
+
   }
   customer: Customer[] = [];
 
-  constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog, private route: ActivatedRoute) { }
+  constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog, private route: ActivatedRoute, private quotationComponent: QuotationComponent) { }
 
   searchCustomer() {
     if (this.searchCustomerName.trim() !== '') {
@@ -146,7 +145,6 @@ totalPrice: any;
           (dateResponse: HttpResponse<QuotationPart[]>) => {
             this.quotationDate = (dateResponse.body as any).parts.quoteDate as string;
             this.quoteDetail = (dateResponse.body as any).parts.quoteDetail;
-
             console.log('Quotation created successfully', dateResponse);
           }
         );
@@ -167,7 +165,7 @@ totalPrice: any;
       console.log('The dialog was closed');
     });
   }
-  onDeleteClick(index: number,quotePartId: number) {
+  onDeleteClick(index: number, quotePartId: number) {
     this.sharedDataService.removePartFromQuotation(index);
     if (this.customerId !== null && this.quotationId !== null) {
       this.apiService.removePartFromQuotation(this.customerId, this.quotationId, quotePartId).subscribe(
@@ -178,7 +176,6 @@ totalPrice: any;
           console.error('Error removing part', error);
         }
       );
-
     }
   }
 
@@ -186,6 +183,7 @@ totalPrice: any;
     if (this.customerId !== null && this.quotationId !== null) {
       this.apiService.submitQuotation(this.customerId, this.quotationId).subscribe(
         (response: any) => {
+
           console.log('Quotation submitted successfully', response);
         },
         (error) => {
@@ -197,17 +195,20 @@ totalPrice: any;
   loadQuotationDetails(quoteId: number, customerId: number) {
     this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
       (dateResponse: HttpResponse<QuotationPart[]>) => {
-        
-            this.quotationDate = (dateResponse.body as any).parts.quoteDate as string;
-            this.quoteDetail = (dateResponse.body as any).parts;
-            this.partsInQuotation = (dateResponse.body as any).parts;
-            console.log('Quotation edit opened successfully', dateResponse);
-          }
-          ,
-          error => {
-            // Handle error
-          }
-        );
+        this.quotationDate = (dateResponse.body as any).parts.quoteDate as string;
+        this.quoteDetail = (dateResponse.body as any).parts;
+        this.partsInQuotation = (dateResponse.body as any).parts;
+        this.sharedDataService.changeQuotationId(quoteId);
+        this.sharedDataService.changeCustomerId(customerId);
+        console.log('Quotation edit opened successfully', dateResponse);
       }
-      
+      ,
+      error => {
+        // Handle error
+      }
+    );
+  }
+  searchPart(searchQueryPart: string) {
+    this.quotationComponent.searchPart(searchQueryPart);
+  };
 }

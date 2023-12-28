@@ -32,11 +32,12 @@ import {MaterialModule} from './material.module';
 import QuotationSidebarComponent from './quotation-sidebar/quotation-sidebar.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
+import { SharedDataService } from './shared-data.service';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, HttpClientModule, RouterOutlet,MaterialModule],
-  providers: [ApiService, AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [ApiService, AuthGuard, SharedDataService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
