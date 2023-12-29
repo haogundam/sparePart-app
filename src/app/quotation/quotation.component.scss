@@ -1,7 +1,7 @@
 body {
     margin-left : 14.5%;
     margin-right :30%;
-    width : 57.5%;
+    width : 57vw;
     height: 93.85vh;
 }
 
@@ -18,7 +18,7 @@ body {
 }
 
 .searchBar input {
-    width :81%;
+    width :80%;
     margin-left: 1.35%;
     border:none;
     border-radius: 8px;
@@ -31,8 +31,8 @@ body {
     border: none;
     border-radius: 10px;
     background-color: #52abfc;
-    width: 100px;
-    height: 30px;
+    width: 12.5%;
+    height: 4.5vh;
     margin-left: 10px;
     color:white;
     font-weight: bold;
@@ -63,8 +63,9 @@ body {
 }
 
 .searchResults th,td {
-    width: 100px;
+    width: 6.05vw;
     color: black;
+    background-color: pink;
 }
 
 .searchResults tbody, thead{
@@ -72,16 +73,16 @@ body {
 }
 
 .searchResults td input {
-    width: 60px;    
+    width: 4vw;    
 }
 
 .blankspace {
     background-color: #52abfc;
-    width: 75px;
+    width: 5vw;
 }
 
 .blankspace-button{
-    width: 40px;
+    width: 100%;
 }
 
 .addQuote {
@@ -89,7 +90,7 @@ body {
     background-color: #52abfc;
     border:none;
     border-radius: 12px;
-    width:60px;
+    width:75%;
     height: 30px;
     color: white;
     font-size:16px;

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
-import { Customer } from '../models/customer.model';
+import { Customer, createCustomerRequest, registerCustomerProfile } from '../models/customer.model';
 import { CreateQuotationResponse, QuotationListResponse, QuotationPart,QuotePartAdd } from '../models/quotation.model';
 import { environment } from '../../environments/environment';
 import { parts, partsResponse } from '../models/parts.model';
@@ -86,10 +86,23 @@ export class ApiService {
     return this.http.post<string>(url, body, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
   }
     
+<<<<<<< Updated upstream
 
   // registerCustomer(reqBody:createCustomerRequest) :Observable<createCustomerRequest> {
   //   const url = `https://localhost:7047/api/customers`;
   //   return this.http.post<createCustomerRequest>(url,reqBody);
   // }
+=======
+  removePartFromQuotation( customerId: number, quotationNo: number, quotePartId: number): Observable<HttpResponse<string>> {
+    const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/quoteparts/${quotePartId}`;
+    const headers = this.getHeaders();
+    return this.http.delete<string>(url, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
+  }
+  registerCustomer(reqBody:registerCustomerProfile) :Observable<HttpResponse<registerCustomerProfile[]>> {
+    const url = `https://localhost:7047/api/customers`;
+    const headers = this.getHeaders();
+    return this.http.post<registerCustomerProfile[]>(url,reqBody , { observe: 'response', headers: headers});
+  }
+>>>>>>> Stashed changes
 
 }

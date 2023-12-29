@@ -1,63 +1,56 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { DataService } from '../services/data.services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { ApiService } from '../services/api.service';
-import { Customer, createCustomerRequest, registerCustomerProfile } from '../models/customer.model';
-import { MatDialog, MatDialogActions,
-  MatDialogClose,MatDialogContent,MatDialogTitle,} from '@angular/material/dialog';
+import { createCustomerRequest, registerCustomerProfile } from '../models/customer.model';
+import { HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-registration-dialog',
   templateUrl: './registration-dialog.component.html',
   styleUrls: ['./registration-dialog.component.scss'],
 })
 
+export class RegistrationDialogComponent {
+  registrationForm: FormGroup = this.fb.group({
+    name: ['', Validators.required],
+    contact: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    address1: ['', Validators.required],
+    address2: [''],
+  });
 
-export class RegistrationDialogComponent{
-
-  constructor(private fb: FormBuilder, private apiService: ApiService) {
-    this.registrationForm = this.fb.group({
-      name: ['', Validators.required],
-      contact: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      address1: ['', Validators.required],
-      address2: [''],
-    });
-  }
-
-  registrationForm: FormGroup;
+  constructor(private fb: FormBuilder, private apiService: ApiService) {}
 
 
-  ngOnInit(): void {
-    
-  }
-
+  
   registerCustomer(): void {
     if (this.registrationForm.valid) {
-      const address1 = this.registrationForm.get('address1')?.value || '';
-      const address2 = this.registrationForm.get('address2')?.value || '';
-      
-      const combinedAddress = `${address1} ${address2}`.trim();
+      const { name, contact, email, address1, address2 } = this.registrationForm.value;
+      const formattedAddress = `${address1} ${address2}`.trim();
 
-      const requestData: createCustomerRequest = {
-        ...this.registrationForm.value,
-        address: combinedAddress,
-      }
-      // Assuming ApiService has a method named registerCustomer
-    //   this.apiService.registerCustomer(requestData).subscribe(
-    //     (response: createCustomerRequest) => {
-    //       console.log('Registration successful:', response);
-    //       // Handle success (e.g., show a success message)
-    //     },
-    //     (error) => {
-    //       console.error('Registration failed:', error);
-    //       // Handle error (e.g., show an error message)
-    //     }
-    //   );
-    // } else {
-      // Form is not valid, handle accordingly (e.g., show validation errors)
+      const requestData: registerCustomerProfile = {
+        CustomerName : name,
+        CustomerContact: contact,
+        CustomerEmail: email,
+        CustomerAddress: formattedAddress,
+        
+      };
+      console.log(requestData)
+      
+
+      this.apiService.registerCustomer(requestData).subscribe(
+        (response: HttpResponse<registerCustomerProfile[]>) => {
+          console.log('Registration successful:', response);
+          // Handle success (e.g., show a success message)
+        },
+        (error) => {
+          console.error('Registration failed:', error);
+          // Handle error (e.g., show an error message using MatSnackBar)
+        }
+      );
+    } else {
+      // Form is invalid, handle accordingly (optional)
     }
   }
-  
 }

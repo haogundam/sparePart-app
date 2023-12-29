@@ -6,7 +6,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
 import { ReactiveFormsModule } from '@angular/forms';
+<<<<<<< Updated upstream
 
+=======
+import { AppModule } from '../app.module';
+import { QuotationSidebarComponent } from '../quotation-sidebar/quotation-sidebar.component';
+import { Observable } from 'rxjs';
+>>>>>>> Stashed changes
 
 
 @NgModule({

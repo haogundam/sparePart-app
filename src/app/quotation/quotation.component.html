@@ -95,6 +95,7 @@
                     <th>Warehouse</th>
                     <th><div></div></th>
                     <th><div></div></th>
+                    <th><div></div></th>
                 </tr>
                         </thead>
             </span>
@@ -107,6 +108,7 @@
                 <td>{{product.totalQuantity}}</td>
                 <td>{{product.sellingPrice}}</td>
                 <td>{{product.WarehouseName}}</td>
+<<<<<<< Updated upstream
                 <!-- <td>[SKU]</td>
                 <td>[partName]</td>
                 <td>[manufacturer]</td>
@@ -116,6 +118,16 @@
                 <td><input type="text"   tabindex="4" [placeholder]="'Quantity...'" ></td>
                 <td><input type="text"   tabindex="4" [placeholder]="'Price...'"></td>
                 <td><button class="addQuote" >+</button></td>
+=======
+                <td>
+                    <input type="number" tabindex="4" [placeholder]="'Qty...'" [max]="product.totalQuantity" #quantityInput>
+                </td>
+                <td>
+                    <input type="number" tabindex="4" [placeholder]="'Price...'" [(ngModel)]="product.NewPrice" #priceInput >
+                </td>
+                <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,product.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber,product.partName,product.sellingPrice)">+</button></td>
+
+>>>>>>> Stashed changes
             </tr>
         </tbody>
         </table>

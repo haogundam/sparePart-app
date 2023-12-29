@@ -2,36 +2,39 @@
     background-color:#F1F0F0;
     margin-right: 2px;
     float:right;    
-    width: 27.95%;
-    height: 93.85vh;
+    width: 57.1vh;
+    height: 94.6vh;
     flex-direction: column;
     display: flex;
 }
 
 .sidebar h2 {
-    margin-left: 15px;  
+    margin-left: 20vh; 
+    padding-top: 15px;
+    font-weight: bold;
+    font-size: 28px;
 }
 
 .customer-id {
-    height: 50px;
-    width : 400px;
+    // height: 50px;
+    width : 55vh;
     margin-left: 13px;
-    display: flex;
+    display: inline-block;
     align-items: center;
 }
 
-.customer-id input {
+.example-form {
     width: 100%;
-    height: 25px;
+    height: 10vh;
     border: none;
     border-radius: 8px;
     outline-color: grey;
+    margin-bottom: 5px;
 }
 
-mat-form-field {
+form mat-form-field {
     padding-top: 15px;
-    width: 95%;
-    
+    width: 53.5vh;
 }
 
 .quotation-info {
@@ -64,24 +67,24 @@ mat-form-field {
 
 .buttons-box {
     // background-color:#52abfc ;
-    height: 20%;
-    width: 100%;
+    height: auto;
+    max-width: 50vw;
     text-align: center;
     display : flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-}
+    }
 
 .submit-button {
     background-color: #52abfc;
-    margin:10px;
+    margin:1vh;
     border:none;
     border-radius: 8px;
     color: white;
     font-weight: bold;
-    width: 120px;
-    height: 40px;
+    width: 15vh;
+    height: 5vh;
 }
 
 .cancel-button {
@@ -90,23 +93,27 @@ mat-form-field {
     background-color: #c30e0e;
     color:white;
     font-weight: bold;
-    width:90px;
-    height: 20px;
+    width:11vh;
+    height: 4vh;
 }
 
-.register-button {
-    width:150px;
-    height: 35px;
-    border-radius: 8px;
-    background-color: limegreen;
-}
+// .register-button {
+//     width:150px;
+//     height: 35px;
+//     border-radius: 8px;
+//     background-color: limegreen;
+// }
 
 .column-container {
     position: fixed;
     bottom:0;
-    left:73.5%;
-    width: 25%;
+    right: 0;
+    width: 52.5vw;
+    max-width: 380px;    
+    margin-right: 1.5vw;
 }
+
+
 
 .searchCustomerForm {
     min-width: 150px;
@@ -116,4 +123,8 @@ mat-form-field {
   
   .example-full-width {
     width: 100%;
+  }
+
+  .mat-option.mat-selected {
+    background-color: #F1F0F0;
   }
