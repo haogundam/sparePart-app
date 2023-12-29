@@ -47,7 +47,6 @@ export class HistoryPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Call your API service method here
     this.apiService.fetchAllCustomerListByPage(1, '').subscribe(
       (customers: HttpResponse<Customer[]>) => {
         this.selectedCustomer = customers.body as Customer[];
@@ -164,21 +163,6 @@ export class HistoryPageComponent implements OnInit {
           console.error('Pending-Pagination header is missing');
         }
 
-
-        // for (let i = 0; i < this.selectedQuotationListByCustomerId.length; i++) {
-        //   if (this.selectedQuotationListByCustomerId[i].status === 0) {
-        //     console.log("Current: ", this.selectedQuotationListByCustomerId[i]);
-        //     this.pendingQuotationList = [...this.pendingQuotationList, this.selectedQuotationListByCustomerId[i]];
-        //     console.log('This is equal 0', this.pendingQuotationList);
-        //   } else if (this.selectedQuotationListByCustomerId[i].status === 1) {
-        //     console.log("Current: ", this.selectedQuotationListByCustomerId[i]);
-        //     this.completedQuotationList = [...this.completedQuotationList, this.selectedQuotationListByCustomerId[i]];
-        //     console.log('This is equal 1:', this.completedQuotationList);
-        //   } else {
-        //     console.log('This is equal nothing:',);
-        //     console.log('Quotation List:', this.selectedQuotationListByCustomerId[i].status);
-        //   }
-        // }
         this.onclickCustomer = index;
         this.showQuotationListItemBoolean = 1;
         console.log('Complete List:', this.completedQuotationList, 'pending List:', this.pendingQuotationList);
@@ -355,7 +339,6 @@ export class HistoryPageComponent implements OnInit {
   }
 
   resetShowQuotationState() {
-    // Reset the boolean state to 0
     this.showQuotationListItemBoolean = 0;
     this.showQuotationListDetailItemBoolean = 0;
     this.totalAmountOfQuotationList = 0;

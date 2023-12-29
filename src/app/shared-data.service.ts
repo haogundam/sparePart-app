@@ -15,23 +15,24 @@ export class SharedDataService {
   currentQuotePartId = this.quotePartIdSource.asObservable();
   constructor(private apiService: ApiService) {
     console.log('Shared data service created',this.partsInQuotation);
-    this.loadQuotationDetails((this.currentQuotationId as unknown as number) , (this.currentCustomerId as unknown as number));
-    console.log('Shared data service edited',this.partsInQuotation);
-
   }
   loadQuotationDetails(quoteId: number, customerId: number) {
-    this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
-      (dateResponse: HttpResponse<QuotationPart[]>) => {
-        this.partsInQuotation = (dateResponse.body as any).parts;
-        this.changeQuotationId(quoteId);
-        this.changeCustomerId(customerId);
-        console.log('Quotation edit opened successfully', dateResponse);
-      }
-      ,
-      error => {
-        
-      }
-    );
+    // Check for valid IDs before making API call
+    if (quoteId && customerId) {
+      this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
+        (dateResponse: HttpResponse<QuotationPart[]>) => {
+          this.partsInQuotation = (dateResponse.body as any).parts;
+          this.changeQuotationId(quoteId);
+          this.changeCustomerId(customerId);
+          console.log('Quotation edit opened successfully', dateResponse);
+        },
+        error => {
+          console.error('Error loading quotation details', error);
+        }
+      );
+    } else {
+      console.error('Invalid IDs for loading quotation details');
+    }
   }
   changeCustomerId(customerId: number) {
     this.customerIdSource.next(customerId);
