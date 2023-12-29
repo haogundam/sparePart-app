@@ -64,12 +64,7 @@ interface FilteredOptions {
 // implements OnInit
 export default class QuotationSidebarComponent implements OnInit {
 
-  @HostListener('window:beforeunload', ['$event'])
-  unloadNotification($event: any) {
-    this.sharedDataService.clearQuotation();
-    $event.returnValue = true;
-
-  }
+ 
 
   totalPrice: any;
   openModal(arg0: string) {
@@ -179,7 +174,6 @@ export default class QuotationSidebarComponent implements OnInit {
         }
       );
     }
-    console.log('Delete button clicked', this.sharedDataService.getPartsInQuotation());
   }
 
   submitQuotation() {
@@ -189,13 +183,15 @@ export default class QuotationSidebarComponent implements OnInit {
 
           console.log('Quotation submitted successfully', response);
           this.openSnackBar();
+          alert("Quotation Submitted Successfully");
+          location.reload();
+
         },
         (error) => {
           console.error('Error submitting quotation', error);
         }
       );
     }
-
   }
   clearQuotation() {
     this.apiService.clearQuotation(this.customerId ?? 0, this.quotationId).subscribe(
