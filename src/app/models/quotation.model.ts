@@ -44,6 +44,7 @@ export interface CreateQuotationResponse {
 
 export interface QuotePartAdd {
   partId: number,
+  warehouseName:string,
   unitPrice: number,
   quantity: number
 }

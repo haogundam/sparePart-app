@@ -134,7 +134,7 @@ export class ApiService {
     return this.http.post<number>(url, body, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
   }
     
-  removePartFromQuotation( customerId: number, quotationNo: number, quotePartId: number): Observable<HttpResponse<string>> {
+  removePartFromQuotation( customerId: number, quotationNo: number, quotePartId: number, warehouseName: string): Observable<HttpResponse<string>> {
     const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/quoteparts/${quotePartId}`;
     const headers = this.getHeaders();
     return this.http.delete<string>(url, { observe: 'response', headers: headers, responseType: 'text' as 'json' });

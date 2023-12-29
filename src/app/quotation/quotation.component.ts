@@ -99,7 +99,7 @@
     }
     quoteAddPart!: QuotePartAdd;
     //add part to quotation
-    addPartToQuotation(customerId: number, quoteNo: number, partId: number, quantity: number, unitPrice: number, partName: string, sellingPrice: number) {
+    addPartToQuotation(customerId: number, quoteNo: number, partId: number, quantity: number, unitPrice: number, partName: string, sellingPrice: number,warehouseName:string) {
       console.log('Adding part to quotation:', quoteNo);
 
       if (!quoteNo || quoteNo === 0) {
@@ -126,6 +126,7 @@
 
       this.quoteAddPart = {
         partId: partId,
+        warehouseName: warehouseName,
         unitPrice: unitPrice,
         quantity: quantity,
       };
@@ -144,6 +145,7 @@
         (part: HttpResponse<number>) => { // Fix: Change the type of the parameter to HttpResponse<number>
           console.log(part);
           this.quotePartId = part.body as number; // Access the body of the HttpResponse
+          console.log('Quote Part ID:', this.quotePartId);
           this.sharedDataService.changeQuotePartId(this.quotePartId);
         },
         (error) => {

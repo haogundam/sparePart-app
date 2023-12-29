@@ -66,7 +66,7 @@
                     <td>
                         <input type="number" tabindex="3" [placeholder]="part.sellingPrice"   #priceInput >
                     </td>
-                    <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,part.partId, quantityInput.valueAsNumber, priceInput.valueAsNumber,part.partName,part.sellingPrice)">+</button></td>
+                    <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,part.partId, quantityInput.valueAsNumber, priceInput.valueAsNumber,part.partName,part.sellingPrice,part.warehouseName)">+</button></td>
                 </tr>
             </tbody>
             
@@ -119,7 +119,7 @@
                 <td>
                     <input type="number" tabindex="4" [placeholder]="product.sellingPrice" [(ngModel)]="product.NewPrice" #priceInput >
                 </td>
-                <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,product.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber,product.partName,product.sellingPrice)">+</button></td>
+                <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,product.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber,product.partName,product.sellingPrice,product.warehouseName)">+</button></td>
 
             </tr>
         </tbody>

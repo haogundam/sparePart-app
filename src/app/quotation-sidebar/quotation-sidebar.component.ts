@@ -164,10 +164,10 @@ export default class QuotationSidebarComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-  onDeleteClick(index: number, quotePartId: number) {
+  onDeleteClick(index: number, quotePartId: number,warehouseName:string) {
     this.sharedDataService.removePartFromQuotation(index);
     if (this.customerId !== null && this.quotationId !== null) {
-      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, quotePartId).subscribe(
+      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, this.quotepartId,warehouseName).subscribe(
         (response: any) => {
           console.log(response);
         },
