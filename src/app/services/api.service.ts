@@ -149,4 +149,10 @@ export class ApiService {
     const headers = this.getHeaders();
     return this.http.patch<string>(url, {}, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
   }
+
+  clearQuotation(customerId: number, quotationNo: number): Observable<HttpResponse<any>> {
+    const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/clear`;
+    const headers = this.getHeaders();
+    return this.http.delete<any>(url, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
+  }
 }

@@ -16,31 +16,45 @@ export class SharedDataService {
   constructor(private apiService: ApiService) {
     console.log('Shared data service created',this.partsInQuotation);
   }
-  loadQuotationDetails(quoteId: number, customerId: number) {
-    // Check for valid IDs before making API call
-    if (quoteId && customerId) {
-      this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
-        (dateResponse: HttpResponse<QuotationPart[]>) => {
-          this.partsInQuotation = (dateResponse.body as any).parts;
-          this.changeQuotationId(quoteId);
-          this.changeCustomerId(customerId);
-          console.log('Quotation edit opened successfully', dateResponse);
-        },
-        error => {
-          console.error('Error loading quotation details', error);
-        }
-      );
-    } else {
-      console.error('Invalid IDs for loading quotation details');
-    }
-  }
+  // loadQuotationDetails(quoteId: number, customerId: number) {
+  //   // Check for valid IDs before making API call
+  //   if (quoteId && customerId) {
+  //     this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
+  //       (dateResponse: HttpResponse<QuotationPart[]>) => {
+  //         this.partsInQuotation = (dateResponse.body as any).parts;
+  //         this.changeQuotationId(quoteId);
+  //         this.changeCustomerId(customerId);
+  //         console.log('Quotation edit opened successfully', dateResponse);
+  //       },
+  //       error => {
+  //         console.error('Error loading quotation details', error);
+  //       }
+  //     );
+  //   } else {
+  //     console.error('Invalid IDs for loading quotation details');
+  //   }
+  // }
   changeCustomerId(customerId: number) {
     this.customerIdSource.next(customerId);
   }
   changeQuotationId(quotationId: number) {
     this.quotationIdSource.next(quotationId);
   }
-  
+   loadInitialData(quoteId: number, customerId: number): void {
+    if (this.partsInQuotation.length === 0) {
+      // Load data only if it hasn't been loaded yet
+      this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
+        (dateResponse: HttpResponse<QuotationPart[]>) => {
+          this.partsInQuotation = (dateResponse.body as any).parts;
+          this.partsInQuotationSubject.next(this.partsInQuotation);
+        },
+        error => {
+          console.error('Error loading initial data', error);
+        }
+      );
+    }
+  }
+
   private partsInQuotation: QuotationPart[] = [];
 
   // Observable to allow components to subscribe to changes
@@ -50,12 +64,11 @@ export class SharedDataService {
   // Method to add a part to the quotation
   addPartToQuotation(part: any) {
     console.log('Adding part to quotation:', part);
-    // Part does not exist, add it
+    console.log('Parts in quotation before:', this.partsInQuotation);
     this.partsInQuotation = [...this.partsInQuotation, part];
-    // Emit the updated array
     this.partsInQuotationSubject.next(this.partsInQuotation);
 
-    console.log('Parts in quotation:', this.partsInQuotation);
+    console.log('Parts in quotation after:', this.partsInQuotation);
     console.log('Parts in quotation subject:', this.partsInQuotationSubject);
   }
   // Method to get the parts in the quotation

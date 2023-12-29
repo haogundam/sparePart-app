@@ -88,6 +88,11 @@ export default class QuotationSidebarComponent implements OnInit {
   quotepartId: number = 0;
   ngOnInit(): void {
 
+
+  }
+  customer: Customer[] = [];
+
+  constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog, private route: ActivatedRoute, private quotationComponent: QuotationComponent) {
     this.sharedDataService.currentCustomerId.subscribe(id => {
       this.customerId = id;
     });
@@ -109,11 +114,7 @@ export default class QuotationSidebarComponent implements OnInit {
         this.loadQuotationDetails(quoteId, customerId);
       }
     });
-
   }
-  customer: Customer[] = [];
-
-  constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog, private route: ActivatedRoute, private quotationComponent: QuotationComponent) { }
 
   searchCustomer() {
     if (this.searchCustomerName.trim() !== '') {
@@ -164,10 +165,10 @@ export default class QuotationSidebarComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-  onDeleteClick(index: number, quotePartId: number,warehouseName:string) {
+  onDeleteClick(index: number, quotePartId: number, warehouseName: string) {
     this.sharedDataService.removePartFromQuotation(index);
     if (this.customerId !== null && this.quotationId !== null) {
-      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, this.quotepartId,warehouseName).subscribe(
+      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, this.quotepartId, warehouseName).subscribe(
         (response: any) => {
           console.log(response);
         },
@@ -191,9 +192,19 @@ export default class QuotationSidebarComponent implements OnInit {
         }
       );
     }
-    
+
   }
-  
+  clearQuotation() {
+    this.apiService.clearQuotation(this.customerId ?? 0, this.quotationId).subscribe(
+      (response: any) => {
+        console.log('Quotation cleared successfully', response);
+        this.sharedDataService.clearQuotation();
+      },
+      (error) => {
+        console.error('Error clearing quotation', error);
+      }
+    );
+  }
   loadQuotationDetails(quoteId: number, customerId: number) {
     this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
       (dateResponse: HttpResponse<QuotationPart[]>) => {
@@ -206,7 +217,7 @@ export default class QuotationSidebarComponent implements OnInit {
       }
       ,
       error => {
-        
+
       }
     );
   }
