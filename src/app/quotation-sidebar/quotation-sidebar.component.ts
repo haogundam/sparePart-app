@@ -166,10 +166,12 @@ export default class QuotationSidebarComponent implements OnInit {
     });
   }
   onDeleteClick(index: number, quotePartId: number, warehouseName: string) {
-    this.sharedDataService.removePartFromQuotation(index);
+    console.log(quotePartId);
     if (this.customerId !== null && this.quotationId !== null) {
-      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, this.quotepartId, warehouseName).subscribe(
+      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, quotePartId, warehouseName).subscribe(
         (response: any) => {
+          this.sharedDataService.removePartFromQuotation(index);
+
           console.log(response);
         },
         (error) => {
@@ -177,6 +179,7 @@ export default class QuotationSidebarComponent implements OnInit {
         }
       );
     }
+    console.log('Delete button clicked', this.sharedDataService.getPartsInQuotation());
   }
 
   submitQuotation() {

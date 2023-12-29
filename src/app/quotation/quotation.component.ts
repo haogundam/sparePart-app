@@ -34,7 +34,7 @@ export class QuotationComponent implements OnInit {
 
   ngOnInit(): void {
     this.sharedDataService.loadInitialData(this.quotationIdd ?? 0, this.customerId ?? 0);
-
+    this.sharedDataService.clearQuotation();
   }
 
   filteredproducts: partsResponse[] = [];

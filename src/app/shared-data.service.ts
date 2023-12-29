@@ -14,7 +14,7 @@ export class SharedDataService {
   private quotePartIdSource = new BehaviorSubject<number | null>(null);
   currentQuotePartId = this.quotePartIdSource.asObservable();
   constructor(private apiService: ApiService) {
-    console.log('Shared data service created',this.partsInQuotation);
+    console.log('Shared data service created', this.partsInQuotation);
   }
   // loadQuotationDetails(quoteId: number, customerId: number) {
   //   // Check for valid IDs before making API call
@@ -40,7 +40,7 @@ export class SharedDataService {
   changeQuotationId(quotationId: number) {
     this.quotationIdSource.next(quotationId);
   }
-   loadInitialData(quoteId: number, customerId: number): void {
+  loadInitialData(quoteId: number, customerId: number): void {
     if (this.partsInQuotation.length === 0) {
       // Load data only if it hasn't been loaded yet
       this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
@@ -78,9 +78,15 @@ export class SharedDataService {
 
   // Method to remove a part from the quotation
   removePartFromQuotation(index: number) {
-    this.partsInQuotation.splice(index, 1);
-    this.partsInQuotationSubject.next(this.partsInQuotation);
+    console.log('Removing part from quotation:', index);
 
+    // Create a new array that excludes the item at the given index
+    const updatedParts = this.partsInQuotation.filter((_, i) => i !== index);
+
+    // Update the BehaviorSubject with the new array
+    this.partsInQuotationSubject.next(updatedParts);
+
+    console.log('Updated parts in quotation:', updatedParts);
   }
   changeQuotePartId(quotePartId: number) {
     this.quotePartIdSource.next(quotePartId);
