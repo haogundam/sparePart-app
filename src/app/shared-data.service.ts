@@ -85,7 +85,8 @@ export class SharedDataService {
     // console.log('Parts in quotation after:', this.partsInQuotation);
     // Create a new array that excludes the item at the given index
     // const updatedParts = this.partsInQuotation.filter((_, i) => i !== index);
-    this.partsInQuotation.splice(index, 1)
+    const updatedParts = this.partsInQuotation.filter((_, i) => i !== index);
+    this.partsInQuotation = updatedParts;
     // Update the BehaviorSubject with the new array
     this.partsInQuotationSubject.next(this.partsInQuotation);
 
