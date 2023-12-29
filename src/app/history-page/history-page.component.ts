@@ -13,7 +13,7 @@ import { Pagination } from '../models/pagination.model';
 @Component({
   selector: 'app-history-page',
   standalone: true,
-  imports: [DetailSidebarComponent, LayoutComponent, FormsModule, CommonModule, KeyValuePipe],
+  imports: [LayoutComponent,DetailSidebarComponent, FormsModule, CommonModule, KeyValuePipe],
   templateUrl: './history-page.component.html',
   styleUrl: './history-page.component.scss'
 })
@@ -43,7 +43,7 @@ export class HistoryPageComponent implements OnInit {
 
   ngOnInit(): void {
     // Call your API service method here
-    this.apiService.fetchAllCustomerListByPage(1).subscribe(
+    this.apiService.fetchAllCustomerListByPage(1,"").subscribe(
       (customers: HttpResponse<Customer[]>) => {
         this.selectedCustomer = customers.body as Customer[];
         console.log('Customers:', this.selectedCustomer);
@@ -63,7 +63,7 @@ export class HistoryPageComponent implements OnInit {
   filteredCustomers: Customer[] = [];
   searchCustomer(customerName: string) {
     this.resetShowQuotationState();
-    this.apiService.searchCustomerByName(customerName).subscribe(
+    this.apiService.searchCustomerByName(customerName,1).subscribe(
       (response: HttpResponse<Customer[]>) => {
         this.selectedCustomer = response.body as Customer[];
         const pagination = response.headers.get('X-Pagination');
@@ -92,7 +92,7 @@ export class HistoryPageComponent implements OnInit {
     this.pendingQuotationList = [];
     this.onclickCustomer = index;
     this.showQuotationListItemBoolean = 1;
-    this.apiService.getQuotationListsByCustomerId(id, this.quotationCurrentPage).subscribe(
+    this.apiService.getQuotationListsByCustomerId(id, this.quotationCurrentPage,1).subscribe(
       (apiResponse: HttpResponse<QuotationListResponse[]>) => {
         console.log('Paid Quotation List Pagination:', apiResponse.headers.get('Paid-Pagination'));
         console.log('Pending Quotation List Pagination:', apiResponse.headers.get('Pending-Pagination'));
@@ -177,7 +177,7 @@ export class HistoryPageComponent implements OnInit {
 
     }
     if (type === 'customer') {
-      this.apiService.fetchAllCustomerListByPage(this.currentPage).subscribe(
+      this.apiService.fetchAllCustomerListByPage(this.currentPage,"").subscribe(
         (customers: HttpResponse<Customer[]>) => {
           this.selectedCustomer = customers.body as Customer[];
           console.log('Customers:', this.selectedCustomer);
@@ -206,7 +206,7 @@ export class HistoryPageComponent implements OnInit {
       this.quotationCurrentPage = this.quotationTotalPage;
     }
     if (type === 'customer') {
-      this.apiService.fetchAllCustomerListByPage(this.currentPage).subscribe(
+      this.apiService.fetchAllCustomerListByPage(this.currentPage,"").subscribe(
         (customers: HttpResponse<Customer[]>) => {
           this.selectedCustomer = customers.body as Customer[];
           console.log('Customers:', this.selectedCustomer);

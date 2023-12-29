@@ -23,12 +23,8 @@ import { QuotationPart } from '../models/quotation.model';
 import { QuotationComponent } from '../quotation/quotation.component';
 import { HttpResponse } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
-<<<<<<< Updated upstream
-=======
-import { RegistrationDialogModule } from '../registration-dialog/registration-dialog.module';
 import { __values } from 'tslib';
 import { MatOptionSelectionChange } from '@angular/material/core';
->>>>>>> Stashed changes
 
 export interface User {
   //sku: string;
@@ -72,19 +68,6 @@ export class QuotationSidebarComponent implements OnInit {
   openModal(arg0: string) {
     throw new Error('Method not implemented.');
   }
-<<<<<<< Updated upstream
-  onDeleteClick() {
-    throw new Error('Method not implemented.');
-  }
-
-  filteredOption: FilteredOptions[] = [
-    { sku: 1234, name: "Joseph", partId: 1234, unitPrice: 22.32 },]
-
-    ;
-  searchCustomerName: string = '';
-  customerId: number | null = 0;
-  quotationIdd: number | null = 0;
-=======
 
   // filteredOption: FilteredOptions[] = [
   //   { sku: 1234, name: "Joseph", partId: 1234, unitPrice: 22.32 },];
@@ -99,22 +82,19 @@ export class QuotationSidebarComponent implements OnInit {
   filteredOptions!: Observable<User[]>;
 
 
->>>>>>> Stashed changes
   ngOnInit(): void {
-    this.sharedDataService.currentCustomerId.subscribe(id => {
-      this.customerId = id;
-    });
-    this.sharedDataService.currentQuotationId.subscribe(id => {
-      this.quotationIdd = id;
-    });
-<<<<<<< Updated upstream
-=======
-    this.sharedDataService.partsInQuotation$.subscribe(parts => {
-      this.partsInQuotation = parts;
-    });
-    this.sharedDataService.currentQuotePartId.subscribe(id => {
-      this.quotepartId = id ?? 0;
-    });
+    // this.sharedDataService.currentCustomerId.subscribe(id => {
+    //   this.customerId = id;
+    // });
+    // this.sharedDataService.currentQuotationId.subscribe(id => {
+    //   this.quotationIdd = id;
+    // });
+    // this.sharedDataService.partsInQuotation$.subscribe(parts => {
+    //   this.partsInQuotation = parts;
+    // });
+    // this.sharedDataService.currentQuotePartId.subscribe(id => {
+    //   this.quotepartId = id ?? 0;
+    // });
 
     this.fetchCustomerDetails();
     this.searchControl.valueChanges
@@ -127,7 +107,6 @@ export class QuotationSidebarComponent implements OnInit {
       console.log("searching...",this.searchControl.value);
       this.fetchCustomerDetails();
     });
->>>>>>> Stashed changes
   }
   //Arrays of Dummy Data
   quotationList: QuotationListItem[] = [
@@ -143,10 +122,6 @@ export class QuotationSidebarComponent implements OnInit {
   }
   customerName:string = "";
 
-<<<<<<< Updated upstream
-  constructor(private apiService: ApiService, private sharedDataService: SharedDataService) { }
-=======
->>>>>>> Stashed changes
 
   //fetch all customer data
   fetchCustomerDetails(): void {
@@ -174,7 +149,7 @@ export class QuotationSidebarComponent implements OnInit {
   //search function
   searchCustomer(){
     if (this.searchCustomerName.trim() !== '') {
-      this.apiService.searchCustomerByName(this.searchCustomerName).subscribe(
+      this.apiService.searchCustomerByName(this.searchCustomerName,1).subscribe(
         (response: HttpResponse<Customer[]>) => {
           this.customerQuery = response.body as Customer[],
           console.log('Customer Name:', this.customerQuery);
@@ -223,10 +198,6 @@ export class QuotationSidebarComponent implements OnInit {
 
   //register customer
   openRegistrationForm(): void {
-<<<<<<< Updated upstream
-
-  }
-=======
     const dialogRef = this.dialog.open(RegistrationDialogComponent, {
       width: '700px',
       height: '500px',
@@ -236,31 +207,29 @@ export class QuotationSidebarComponent implements OnInit {
     });
   }
 
-  onDeleteClick(index: number, partId: number) {
-    this.sharedDataService.removePartFromQuotation(index);
-    if (this.customerId !== null && this.quotationId !== null) {
-      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, this.quotepartId).subscribe(
-        (response: any) => {
-          console.log(response);
-        },
-        (error) => {
-          console.error('Error removing part', error);
-        }
-      );
-    }
+  // onDeleteClick(index: number, partId: number) {
+  //   this.sharedDataService.removePartFromQuotation(index);
+  //   if (this.customerId !== null && this.quotationId !== null) {
+  //     this.apiService.removePartFromQuotation(this.customerId, this.quotationId, this.quotepartId).subscribe(
+  //       (response: any) => {
+  //         console.log(response);
+  //       },
+  //       (error) => {
+  //         console.error('Error removing part', error);
+  //       }
+  //     );
+  //   }
   }
 
-  submitQuotation() {
-    if (this.customerId !== null && this.quotationId !== null) {
-      this.apiService.submitQuotation(this.customerId, this.quotationId).subscribe(
-        (response: any) => {
-          console.log('Quotation submitted successfully', response);
-        },
-        (error) => {
-          console.error('Error submitting quotation', error);
-        }
-      );
-    }
-  }  
->>>>>>> Stashed changes
-}
+  // submitQuotation() {
+  //   if (this.customerId !== null && this.quotationId !== null) {
+  //     this.apiService.submitQuotation(this.customerId, this.quotationId).subscribe(
+  //       (response: any) => {
+  //         console.log('Quotation submitted successfully', response);
+  //       },
+  //       (error) => {
+  //         console.error('Error submitting quotation', error);
+  //       }
+  //     );
+  //   }
+  // }  

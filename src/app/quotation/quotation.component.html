@@ -41,7 +41,7 @@
                     <tr class="product-list">
                         <th>SKU</th>
                         <th>Name</th>
-                        <th>Manu.</th>
+                        <th>Manufacturer</th>
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Warehouse</th>
@@ -80,7 +80,7 @@
     <!-- Alternative Results similar to Search Results-->
     <div class="alternateText">
         <!-- <h1 >Alternative Products Similar to {{productdetails[0].partName}}...</h1> -->
-        <h1 >Alternative Products Similar to ...     </h1>
+        <h1 >Alternative Products Similar to {{filteredproducts[0].sku}}     </h1>
     </div>
     <div class="alternateTable">
         <table>
@@ -108,26 +108,14 @@
                 <td>{{product.totalQuantity}}</td>
                 <td>{{product.sellingPrice}}</td>
                 <td>{{product.WarehouseName}}</td>
-<<<<<<< Updated upstream
-                <!-- <td>[SKU]</td>
-                <td>[partName]</td>
-                <td>[manufacturer]</td>
-                <td>[quantityLeft]</td>
-                <td>[Price]</td>
-                <td>[Warehouse]</td> -->
-                <td><input type="text"   tabindex="4" [placeholder]="'Quantity...'" ></td>
-                <td><input type="text"   tabindex="4" [placeholder]="'Price...'"></td>
-                <td><button class="addQuote" >+</button></td>
-=======
                 <td>
                     <input type="number" tabindex="4" [placeholder]="'Qty...'" [max]="product.totalQuantity" #quantityInput>
                 </td>
                 <td>
                     <input type="number" tabindex="4" [placeholder]="'Price...'" [(ngModel)]="product.NewPrice" #priceInput >
                 </td>
-                <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,product.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber,product.partName,product.sellingPrice)">+</button></td>
+                <td><button class="addQuote">+</button></td>
 
->>>>>>> Stashed changes
             </tr>
         </tbody>
         </table>

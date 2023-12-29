@@ -65,7 +65,6 @@ body {
 .searchResults th,td {
     width: 6.05vw;
     color: black;
-    background-color: pink;
 }
 
 .searchResults tbody, thead{
@@ -131,7 +130,7 @@ body {
     }
 
     .alternateTable th,td {
-        width: 100px;
+        width: 6.05vw;
         color: black;
     }
 
@@ -140,5 +139,5 @@ body {
     }
 
     .alternateTable td input {
-        width: 60px;
+        width: 4vw;
     }
