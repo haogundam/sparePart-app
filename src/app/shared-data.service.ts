@@ -78,15 +78,18 @@ export class SharedDataService {
 
   // Method to remove a part from the quotation
   removePartFromQuotation(index: number) {
-    console.log('Removing part from quotation:', index);
-
+    // console.log('Removing part from quotation:', index);
+    // console.log('Parts in quotation before:', this.partsInQuotation);
+    // this.partsInQuotation.splice(index, 1);
+    // this.partsInQuotationSubject.next(this.partsInQuotation);
+    // console.log('Parts in quotation after:', this.partsInQuotation);
     // Create a new array that excludes the item at the given index
-    const updatedParts = this.partsInQuotation.filter((_, i) => i !== index);
-
+    // const updatedParts = this.partsInQuotation.filter((_, i) => i !== index);
+    this.partsInQuotation.splice(index, 1)
     // Update the BehaviorSubject with the new array
-    this.partsInQuotationSubject.next(updatedParts);
+    this.partsInQuotationSubject.next(this.partsInQuotation);
 
-    console.log('Updated parts in quotation:', updatedParts);
+    console.log('Updated parts in quotation:', this.partsInQuotation);
   }
   changeQuotePartId(quotePartId: number) {
     this.quotePartIdSource.next(quotePartId);
