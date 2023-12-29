@@ -82,7 +82,6 @@ export default class QuotationSidebarComponent implements OnInit {
     ;
   searchCustomerName: string = '';
   customerId: number | null = 0;
-  quotationIdd: number | null = 0;
   partsInQuotation: any[] = [];
   quotepartId: number = 0;
   ngOnInit(): void {
@@ -96,7 +95,7 @@ export default class QuotationSidebarComponent implements OnInit {
       this.customerId = id;
     });
     this.sharedDataService.currentQuotationId.subscribe(id => {
-      this.quotationIdd = id;
+      this.quotationId = id;
     });
     this.sharedDataService.partsInQuotation$.subscribe(parts => {
       this.partsInQuotation = parts;
@@ -104,15 +103,16 @@ export default class QuotationSidebarComponent implements OnInit {
     this.sharedDataService.currentQuotePartId.subscribe(id => {
       this.quotepartId = id ?? 0;
     });
-    this.route.params.subscribe(params => {
-      const quoteId = +params['quoteId']; // '+' converts the string 'quoteId' to a number
-      const customerId = +params['customerId'];
-      if (quoteId) {
-        this.quotationId = quoteId;
-        this.customerId = customerId;
-        this.loadQuotationDetails(quoteId, customerId);
-      }
-    });
+    this.loadQuotationDetails(this.quotationId ?? 0, this.customerId ?? 0);
+    // this.route.params.subscribe(params => {
+    //   const quoteId = +params['quoteId']; // '+' converts the string 'quoteId' to a number
+    //   const customerId = +params['customerId'];
+    //   if (quoteId) {
+    //     this.quotationId = quoteId;
+    //     this.customerId = customerId;
+    //     this.loadQuotationDetails(quoteId, customerId);
+    //   }
+    // });
   }
 
   searchCustomer() {
@@ -129,7 +129,7 @@ export default class QuotationSidebarComponent implements OnInit {
       );
     }
   }
-  quotationId: number = 0;
+  quotationId: number | null = 0;
   quoteDetail: QuotationPart[] = [];
   quotationDate: string = '';
   createQuotation(id: number) {
@@ -200,7 +200,7 @@ export default class QuotationSidebarComponent implements OnInit {
     }
   }
   clearQuotation() {
-    this.apiService.clearQuotation(this.customerId ?? 0, this.quotationId).subscribe(
+    this.apiService.clearQuotation(this.customerId ?? 0, this.quotationId ?? 0).subscribe(
       (response: any) => {
         console.log('Quotation cleared successfully', response);
         this.sharedDataService.clearQuotation();

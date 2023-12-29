@@ -405,7 +405,7 @@ export class HistoryPageComponent implements OnInit {
 
   editQuote(quoteId: number, customerId: number) {
 
-    this.router.navigate(['/quotation', quoteId, customerId]);
+    this.router.navigate(['/quotation']);
     this.sharedDataService.changeQuotationId(quoteId);
     console.log('Quotation edit :', quoteId, customerId);
     this.sharedDataService.changeCustomerId(customerId);
