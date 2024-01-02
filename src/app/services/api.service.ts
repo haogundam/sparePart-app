@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { Customer, registerCustomerProfile } from '../models/customer.model';
-import { CreateQuotationResponse, QuotationListResponse, QuotationPart,QuotePartAdd } from '../models/quotation.model';
+import { CreateQuotationResponse, QuotationListResponse, QuotationPart, QuotePartAdd } from '../models/quotation.model';
 import { environment } from '../../environments/environment';
 import { parts, partsResponse } from '../models/parts.model';
 
@@ -17,18 +17,18 @@ import { UserDto } from '../models/auth.model';
   providedIn: 'root',
 })
 export class ApiService {
-  
+
 
   private apiUrl = `${environment.apiUrl}customers/`;
   private baseUrl: string = `${environment.apiUrl}auth`;
   private userPayload: any;
-  constructor(private http: HttpClient,private router:Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   register(email: string, password: string): Observable<any> {
     const user: UserDto = { Email: email, Password: password };
     return this.http.post<any>(`${this.baseUrl}/register`, user);
   }
-  
+
   login(email: string, password: string): Observable<string> {
     const headers = { 'Content-Type': 'application/json' };
     const user: UserDto = { Email: email, Password: password };
@@ -40,7 +40,7 @@ export class ApiService {
   }
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
-   isTokenValid(token: string): boolean {
+  isTokenValid(token: string): boolean {
     // Check if the token is not expired
     return !this.jwtHelper.isTokenExpired(token);
   }
@@ -54,11 +54,11 @@ export class ApiService {
   }
   getHeaders() {
     return new HttpHeaders({
-   
+
       Authorization: "Bearer " + this.getAuthToken(),
     });
   }
-  
+
   signOut() {
     localStorage.clear();
     this.router.navigate([''])
@@ -68,7 +68,7 @@ export class ApiService {
   //   return this.http.post<any>(`${this.baseUrl}/register`, user);
   // }
 
-  fetchAllCustomerListByPage(pageNumber: number,customerName: string): Observable<HttpResponse<Customer[]>> {
+  fetchAllCustomerListByPage(pageNumber: number, customerName: string): Observable<HttpResponse<Customer[]>> {
     const url = `${this.apiUrl}?name=${customerName}&pageNumber=${pageNumber}`;
     const headers = this.getHeaders();
     console.log('Headers:', headers);
@@ -84,7 +84,7 @@ export class ApiService {
     return this.http.get<partsResponse[]>(url, { observe: 'response', headers: headers });
   }
 
-  searchCustomerByName(customerName: string,pageNumber: number): Observable<HttpResponse<Customer[]>> {
+  searchCustomerByName(customerName: string, pageNumber: number): Observable<HttpResponse<Customer[]>> {
     const headers = this.getHeaders();
     const url = `${this.apiUrl}?name=${customerName}&pageNumber=${pageNumber}`;
     return this.http.get<Customer[]>(url, { observe: 'response', headers: headers });
@@ -107,7 +107,7 @@ export class ApiService {
 
   getQuotationListsByCustomerId(
     customerId: number,
-    pendingPageNumber: number,completedPageNumber: number
+    pendingPageNumber: number, completedPageNumber: number
   ): Observable<HttpResponse<any>> {
     const headers = this.getHeaders();
     // const url = `${this.apiUrl}${customerId}${this.quotationByCustomerId}`;
@@ -134,8 +134,8 @@ export class ApiService {
     const body = quotePartAdd;
     return this.http.post<number>(url, body, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
   }
-    
-  removePartFromQuotation( customerId: number, quotationNo: number, quotePartId: number, warehouseName: string): Observable<HttpResponse<string>> {
+
+  removePartFromQuotation(customerId: number, quotationNo: number, quotePartId: number, warehouseName: string): Observable<HttpResponse<string>> {
     const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/quoteparts/${quotePartId}`;
     const headers = this.getHeaders();
     return this.http.delete<string>(url, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
@@ -156,9 +156,19 @@ export class ApiService {
     const headers = this.getHeaders();
     return this.http.delete<any>(url, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
   }
-  registerCustomer(reqBody:registerCustomerProfile) :Observable<HttpResponse<registerCustomerProfile[]>> {
+  registerCustomer(reqBody: registerCustomerProfile): Observable<HttpResponse<registerCustomerProfile[]>> {
     const url = `${this.apiUrl}`;
     const headers = this.getHeaders();
-    return this.http.post<registerCustomerProfile[]>(url,reqBody , { observe: 'response', headers: headers, responseType: 'text' as 'json' });
+    return this.http.post<registerCustomerProfile[]>(url, reqBody, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
+  }
+  updateQuotation(customerId: number, quotationNo: number, quotePartId: number, quantity: number, unitPrice: number): Observable<HttpResponse<string>> {
+    const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/quoteparts/${quotePartId}`;
+    const headers = this.getHeaders();
+    const body = {
+     
+      quantity: quantity,
+      unitPrice: unitPrice
+    };
+    return this.http.patch<string>(url, body, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
   }
 }

@@ -17,7 +17,7 @@
               [ngModel]="customerQuery" matInput [formControl]="searchControl" [matAutocomplete]="auto">
 
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option (onSelectionChange)="handleOptionSelection($event)"> 
+              <mat-option (onSelectionChange)="handleOptionSelection($event)">
                 Register New Customer...
               </mat-option>
               <mat-option *ngFor="let option of options , let i = index;" [value]="option"
@@ -34,12 +34,14 @@
 
 
 
-        
-        <div class="quotation-info" >
-          <p> Quotation ID : <input type="string" *ngIf="quotationId=== null"  placeholder="Search Quotation ID"> 
-            <input type="string" *ngIf="quotationId!== null"  [placeholder]="quotationId" [ngModel]="searchQuotationId" (keyup.enter)="searchQuotationById()"></p> 
-           <!-- <p> Quotation Date : {{quotationDate}}</p> -->
-                    <!-- <mat-form-field class="custom-input-size">
+
+        <div class="quotation-info">
+          <p> Quotation ID : <input type="string" *ngIf="quotationId=== null" placeholder="Search Quotation ID">
+            <input type="number" *ngIf="quotationId!== null" [placeholder]="quotationId"
+              (keyup.enter)="searchQuotationById(searchQuotationId.valueAsNumber )" #searchQuotationId>
+          </p>
+          <!-- <p> Quotation Date : {{quotationDate}}</p> -->
+          <!-- <mat-form-field class="custom-input-size">
             <mat-label>Input</mat-label>
             <input  type="text"  matInput   >
           </mat-form-field>
@@ -64,8 +66,14 @@
             <tr *ngFor="let part of partsInQuotation; let i = index">
               <td (click)="searchPart(part.sku)"> {{part.partName }}</td>
               <td>{{ part.partId }}</td>
-              <td><input type="edit" [(ngModel)]="part.unitPrice"></td>
-              <td><input type="edit" [(ngModel)]="part.quantity"></td>
+              <td>
+                <input type="number" [(ngModel)]="part.overridePrice" [placeholder]="part.unitPrice" #overridePrice
+                  (keyup.enter)="updateQuotationPart(part.overridePrice || part.unitPrice,'price',part.quantity,part.unitPrice,part.quotePartId)">
+              </td>
+              <td>
+                <input type="number" [(ngModel)]="part.overrideQuantity" [placeholder]="part.quantity" #overrideQuantity
+                  (keyup.enter)="updateQuotationPart(part.overrideQuantity || part.quantity,'quantity',part.quantity,part.unitPrice,part.quotePartId)">
+              </td>
               <td>
                 <button class="button" (click)="onDeleteClick(i,part.quotePartId,part.warehouseName)">Del</button>
               </td>
