@@ -30,13 +30,15 @@ import { SharedDataService } from '../shared-data.service';
   styleUrl: './quotation.component.scss',
   imports: [LayoutComponent, QuotationSidebarComponent, CommonModule, FormsModule]
 })
-export class QuotationComponent implements OnInit {
+export class QuotationComponent implements OnInit , OnDestroy {
 
   ngOnInit(): void {
     this.sharedDataService.loadInitialData(this.quotationIdd ?? 0, this.customerId ?? 0);
     this.sharedDataService.clearQuotation();
   }
-
+  ngOnDestroy(): void {
+    this.sharedDataService.clearQuotation();
+  }
   filteredproducts: partsResponse[] = [];
   selectedSKU: parts[] = [];
   similarProducts: partsResponse[] = [];;
