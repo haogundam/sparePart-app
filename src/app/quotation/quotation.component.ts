@@ -31,6 +31,7 @@ import { SharedDataService } from '../shared-data.service';
   imports: [LayoutComponent, QuotationSidebarComponent, CommonModule, FormsModule]
 })
 export class QuotationComponent implements OnInit , OnDestroy {
+quantityPlaceholder= 1;
 
   ngOnInit(): void {
     this.sharedDataService.loadInitialData(this.quotationIdd ?? 0, this.customerId ?? 0);
@@ -106,7 +107,10 @@ export class QuotationComponent implements OnInit , OnDestroy {
   //add part to quotation
   addPartToQuotation(customerId: number, quoteNo: number, partId: number, quantity: number, unitPrice: number, partName: string, sellingPrice: number, warehouseName: string) {
     console.log('Adding part to quotation:', quoteNo);
-
+    if (quantity ==0 || quantity == null || quantity == undefined || Number.isNaN(quantity))
+    {
+      quantity = 1;
+    }
     if (!quoteNo || quoteNo === 0) {
       alert('Invalid quotation ID. Cannot add parts to quotation. Please create a new quotation in search bar / select an existing quotation. ');
       return;

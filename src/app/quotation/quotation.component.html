@@ -45,8 +45,8 @@
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Warehouse</th>
-                        <th><div class="blankspace"></div></th>
-                        <th><div class="blankspace"></div></th>
+                        <th>Quantity</th>
+                        <th>Override Price</th>
                         <th><div class="blankspace"></div></th>
                     </tr>
                 </thead>
@@ -61,7 +61,7 @@
                     <td>{{part.sellingPrice}}</td>
                     <td>{{part.warehouseName}}</td>
                     <td>
-                        <input type="number" tabindex="3" [placeholder]="'Qty...'" [max]="part.totalQuantity" #quantityInput>
+                        <input type="number" tabindex="3" [placeholder]="quantityPlaceholder" [max]="part.totalQuantity" #quantityInput>
                     </td>
                     <td>
                         <input type="number" tabindex="3" [placeholder]="part.sellingPrice"   #priceInput >
@@ -80,7 +80,7 @@
     <!-- Alternative Results similar to Search Results-->
     <div class="alternateText">
         <!-- <h1 >Alternative Products Similar to {{productdetails[0].partName}}...</h1> -->
-        <h1 >Alternative Products Similar to {{filteredproducts[0].sku}}     </h1>
+        <h1 >Alternative Products Similar to {{filteredproducts[0]?.sku}}    </h1>
     </div>
     <div class="alternateTable">
         <table>

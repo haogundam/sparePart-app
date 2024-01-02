@@ -201,6 +201,7 @@ export default class QuotationSidebarComponent implements OnInit {
         }
       );
     }
+    
   }
 
   submitQuotation() {
