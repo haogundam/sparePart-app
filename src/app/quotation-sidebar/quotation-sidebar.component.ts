@@ -299,7 +299,7 @@ export default class QuotationSidebarComponent implements OnInit {
     calculateTotalPrice(): number {
       let totalPrice = 0;
       this.partsInQuotation.forEach(option => {
-        totalPrice += option.unitPrice * option.quantity;
+        totalPrice +=( option.overridePrice || option.unitPrice) * (option.overrideQuantity ||option.quantity);
       });
       return (totalPrice.toFixed(2) as unknown as number);
     }
