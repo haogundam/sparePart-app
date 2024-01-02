@@ -3,14 +3,14 @@
 
 <header class="app-header">
   <div class="app-title">
-    <span>Quotation History</span>
+    <span>{{componentName}}</span>
   </div>
 </header>
 
 <div class="sidebar">
   <div class="company-info" >
 
-    <span class="company-name">Company Name</span>
+    <span class="company-name" (click)="navigateToHomepage()">Company Name</span>
   </div>
 
   <div class="sidebar-item" (click)="quotation()">

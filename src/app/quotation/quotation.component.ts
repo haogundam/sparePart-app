@@ -40,7 +40,7 @@ quantityPlaceholder= 1;
   ngOnDestroy(): void {
     this.sharedDataService.clearQuotation();
   }
-  filteredproducts: partsResponse[] = [];
+  filteredproducts: partsResponse[] = [] || null;
   selectedSKU: parts[] = [];
   similarProducts: partsResponse[] = [];;
 

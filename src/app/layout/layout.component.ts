@@ -20,8 +20,18 @@ import { ApiService } from '../services/api.service';
 
 
 export class LayoutComponent {
-   userEmail = localStorage.getItem('userEmail');
-  constructor(private router: Router, private apiService: ApiService) {}
+  
+  userEmail = localStorage.getItem('userEmail');
+  componentName: string = '';
+  constructor(private router: Router, private apiService: ApiService) {
+    if (this.router.url == '/quotation') {
+      this.componentName = 'Quotation';
+    }
+    else if (this.router.url == '/history') {
+      this.componentName = 'History';
+    }
+  }
+
   quotation() {
     this.router.navigate(['/quotation']);
   }
@@ -33,9 +43,12 @@ export class LayoutComponent {
   onHistory() {
     this.router.navigate(['/history']);
   }
-  
-  empty(){
-    
-  }
 
+  empty() {
+
+  }
+  navigateToHomepage() {
+
+    this.router.navigate(['/quotation']);
+  }
 }
