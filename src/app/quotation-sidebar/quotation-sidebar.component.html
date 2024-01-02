@@ -36,7 +36,8 @@
 
 
         <div class="quotation-info">
-          <p> Quotation ID : <input type="string" *ngIf="quotationId=== null" placeholder="Search Quotation ID">
+          <p> Quotation ID : 
+            <input type="text" *ngIf="quotationId=== null" placeholder="Search Quotation ID">
             <input type="number" *ngIf="quotationId!== null" [placeholder]="quotationId"
               (keyup.enter)="searchQuotationById(searchQuotationId.valueAsNumber )" #searchQuotationId>
           </p>
