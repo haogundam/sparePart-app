@@ -157,8 +157,8 @@ export class ApiService {
     return this.http.delete<any>(url, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
   }
   registerCustomer(reqBody:registerCustomerProfile) :Observable<HttpResponse<registerCustomerProfile[]>> {
-    const url = `https://localhost:7047/api/customers`;
+    const url = `${this.apiUrl}`;
     const headers = this.getHeaders();
-    return this.http.post<registerCustomerProfile[]>(url,reqBody , { observe: 'response', headers: headers});
+    return this.http.post<registerCustomerProfile[]>(url,reqBody , { observe: 'response', headers: headers, responseType: 'text' as 'json' });
   }
 }

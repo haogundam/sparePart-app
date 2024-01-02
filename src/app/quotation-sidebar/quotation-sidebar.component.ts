@@ -6,7 +6,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AsyncPipe } from '@angular/common';
-import { Observable, of } from 'rxjs';
+import { Observable, debounceTime, of } from 'rxjs';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ApiService } from '../services/api.service';
@@ -24,6 +24,8 @@ import { HttpResponse } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
 import { RegistrationDialogModule } from '../registration-dialog/registration-dialog.module';
 import { ActivatedRoute } from '@angular/router';
+import { __values } from 'tslib';
+import { MatOptionSelectionChange } from '@angular/material/core';
 export interface User {
   //sku: string;
   name: string;
@@ -76,10 +78,7 @@ export default class QuotationSidebarComponent implements OnInit {
   }
 
 
-  filteredOption: FilteredOptions[] = [
-    { sku: 1234, name: "Joseph", partId: 1234, unitPrice: 22.32 },]
 
-    ;
   searchCustomerName: string = '';
   customerId: number | null = 0;
   partsInQuotation: any[] = [];
@@ -88,6 +87,11 @@ export default class QuotationSidebarComponent implements OnInit {
 
 
   }
+
+  myControl = new FormControl<string | User>('');
+  // options: User[] = [{name: 'Mary'}, {name: 'Shelley'}, {name: 'Igor'}];
+  filteredOptions!: Observable<User[]>;
+
   customer: Customer[] = [];
 
   constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog, private route: ActivatedRoute, private quotationComponent: QuotationComponent) {
@@ -113,8 +117,27 @@ export default class QuotationSidebarComponent implements OnInit {
     //     this.loadQuotationDetails(quoteId, customerId);
     //   }
     // });
+    this.fetchCustomerDetails();
+    this.searchControl.valueChanges
+      .pipe(debounceTime(100))
+      .subscribe((value) => {
+        this.customerName = this.searchControl.value;
+        // this.filteredOption = value.toLowerCase().includes(this.customerName.toLowerCase())
+        // ? [this.customerName]
+        // : [] ;
+        console.log("searching...", this.searchControl.value);
+        this.fetchCustomerDetails();
+      });
   }
 
+
+  filteredOption: string[] = []
+  searchControl = new FormControl();
+  // placeholder: Customer[] = [];
+  options: string[] = []; 
+  customerName: string = "";
+
+  customerQuery: string = '';
   searchCustomer() {
     if (this.searchCustomerName.trim() !== '') {
       this.apiService.searchCustomerByName(this.searchCustomerName, 1).subscribe(
@@ -253,5 +276,55 @@ export default class QuotationSidebarComponent implements OnInit {
     return (totalPrice.toFixed(2) as unknown as number);
   }
 
+  searchReturnCustomerId:number = 0;
+  optionSelected(option: string, event: MatOptionSelectionChange): void {
+    if (event.isUserInput) {
+      // Assuming you have a method to fetch customer ID from the name
+      const customerId = this.apiService.searchCustomerByName(option,1).subscribe(
+        (response: HttpResponse<Customer[]>) => {
+          // Assuming response.body contains the array of customers
+          
+          this.searchReturnCustomerId = (response.body || []).map((customer) => customer.customerId)[0] || 0;
+          // this.options = this.placeholder[0].customerName;
+          console.log('Fetched customer id:', this.searchReturnCustomerId);
+          this.createQuotation(this.searchReturnCustomerId);
+        },
+        (error) => {
+          console.error('Error Fetching Customer id: ', error);
+        }
+      );
+     
+    }
+  }
+
+  //j
+
+  //fetch all customer data
+  fetchCustomerDetails(): void {
+    this.apiService.searchCustomerByName(this.customerName, 1).subscribe(
+      (response: HttpResponse<Customer[]>) => {
+        // Assuming response.body contains the array of customers
+        console.log("response: ",response);
+        this.options = (response.body || []).map((customer) => customer.customerName) || [];
+        // this.options = this.placeholder[0].customerName;
+        console.log('Fetched customer data:', this.options);
+      },
+      (error) => {
+        console.error('Error Fetching Customer Data: ', error);
+      });
+  }
+
+  //filter options based on user's input
+  filterOptions(value: string): void {
+    this.filteredOption = this.options.filter((option: string) =>
+      option.toLowerCase().includes(value.toLowerCase())
+    );
+  }
+
+  handleOptionSelection(event: MatOptionSelectionChange): void {
+    if (event.isUserInput) {
+      this.openRegistrationForm();
+    }
+  }
 
 }

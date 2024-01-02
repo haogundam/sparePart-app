@@ -1,205 +1,218 @@
 .sidebar {
-    background-color:#F1F0F0;
-    margin-right: 2px;
-    float:right;    
-    width: 27.95%;
-    height: 93.85vh;
-    flex-direction: column;
-    display: flex;
+  background-color:#F1F0F0;
+  margin-right: 2px;
+  float:right;    
+  width: 57.1vh;
+  height: 94.6vh;
+  flex-direction: column;
+  display: flex;
 }
 
 .sidebar h2 {
-    margin-left: 15px;  
+  margin-left: 20vh; 
+  padding-top: 15px;
+  font-weight: bold;
+  font-size: 28px;
 }
 
 .customer-id {
-    height: 50px;
-    width : 400px;
-    margin-left: 13px;
-    display: flex;
-    align-items: center;
+  // height: 50px;
+  width : 55vh;
+  margin-left: 13px;
+  display: inline-block;
+  align-items: center;
 }
 
-.customer-id input {
-    width: 100%;
-    height: 25px;
-    border: none;
-    border-radius: 8px;
-    outline-color: grey;
+.example-form {
+  width: 100%;
+  height: 10vh;
+  border: none;
+  border-radius: 8px;
+  outline-color: grey;
+  margin-bottom: 5px;
 }
 
-mat-form-field {
-    padding-top: 15px;
-    width: 95%;
-    
+form mat-form-field {
+  padding-top: 15px;
+  width: 53.5vh;
 }
 
 .quotation-info {
-    display: flex;
-    text-align: center;
-    width: 100%;
+  display: flex;
+  text-align: center;
+  width: 100%;
 }
 
 .quotation-id {
-    flex:0.5;
+  flex:0.5;
 }
 
 .date {
-    flex:0.5;
+  flex:0.5;
 }
 
-    .quotation-table tr{
-        display : flex;
-        width: 100%;
-        overflow-y: auto;
-        min-height: 20%;
-        max-height: 30%;
-    }
+  .quotation-table tr{
+      display : flex;
+      width: 100%;
+      overflow-y: auto;
+      min-height: 20%;
+      max-height: 30%;
+  }
 
-    .quotation-table th,td {
-        width:80px;
-        text-align: center;
-        white-space: nowrap;
-    }
+  .quotation-table th,td {
+      width:80px;
+      text-align: center;
+      white-space: nowrap;
+  }
 
 .buttons-box {
-    // background-color:#52abfc ;
-    height: 20%;
-    width: 100%;
-    text-align: center;
-    display : flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-}
+  // background-color:#52abfc ;
+  height: auto;
+  max-width: 50vw;
+  text-align: center;
+  display : flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  }
 
 .submit-button {
-    background-color: #52abfc;
-    margin:10px;
-    border:none;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    width: 120px;
-    height: 40px;
+  background-color: #52abfc;
+  margin:1vh;
+  border:none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  width: 15vh;
+  height: 5vh;
 }
 
 .cancel-button {
-    border:none;
-    border-radius: 8px;
-    background-color: #c30e0e;
-    color:white;
-    font-weight: bold;
-    width:90px;
-    height: 20px;
+  border:none;
+  border-radius: 8px;
+  background-color: #c30e0e;
+  color:white;
+  font-weight: bold;
+  width:11vh;
+  height: 4vh;
+  margin-bottom: 1vh;
 }
 
-.register-button {
-    width:150px;
-    height: 35px;
-    border-radius: 8px;
-    background-color: limegreen;
-}
+// .register-button {
+//     width:150px;
+//     height: 35px;
+//     border-radius: 8px;
+//     background-color: limegreen;
+// }
 
 .column-container {
-    position: fixed;
-    bottom:0;
-    left:73.5%;
-    width: 25%;
+  position: fixed;
+  bottom:0;
+  right: 0;
+  width: 52.5vw;
+  max-width: 380px;    
+  margin-right: 1.5vw;
 }
 
+
+
 .searchCustomerForm {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.mat-option.mat-selected {
+  background-color: #F1F0F0;
+}
+
   
 #snackbar {
-    visibility: hidden;
-    /* Hidden by default. Visible on click */
-    min-width: 250px;
-    /* Set a default minimum width */
-    margin-left: -125px;
-    /* Divide value of min-width by 2 */
-    background-color: #333;
-    /* Black background color */
-    color: #fff;
-    /* White text color */
-    text-align: center;
-    /* Centered text */
-    border-radius: 2px;
-    /* Rounded borders */
-    padding: 16px;
-    /* Padding */
-    position: fixed;
-    /* Sit on top of the screen */
-    z-index: 1;
-    /* Add a z-index if needed */
-    left: 50%;
-    /* Center the snackbar */
+  visibility: hidden;
+  /* Hidden by default. Visible on click */
+  min-width: 250px;
+  /* Set a default minimum width */
+  margin-left: -125px;
+  /* Divide value of min-width by 2 */
+  background-color: #333;
+  /* Black background color */
+  color: #fff;
+  /* White text color */
+  text-align: center;
+  /* Centered text */
+  border-radius: 2px;
+  /* Rounded borders */
+  padding: 16px;
+  /* Padding */
+  position: fixed;
+  /* Sit on top of the screen */
+  z-index: 1;
+  /* Add a z-index if needed */
+  left: 50%;
+  /* Center the snackbar */
+  bottom: 30px;
+  /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible;
+  /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
     bottom: 30px;
-    /* 30px from the bottom */
+    opacity: 1;
   }
-  
-  /* Show the snackbar when clicking on a button (class added with JavaScript) */
-  #snackbar.show {
-    visibility: visible;
-    /* Show the snackbar */
-    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
-      However, delay the fade out process for 2.5 seconds */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
   }
-  
-  /* Animations to fade the snackbar in and out */
-  @-webkit-keyframes fadein {
-    from {
-      bottom: 0;
-      opacity: 0;
-    }
-  
-    to {
-      bottom: 30px;
-      opacity: 1;
-    }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
   }
-  
-  @keyframes fadein {
-    from {
-      bottom: 0;
-      opacity: 0;
-    }
-  
-    to {
-      bottom: 30px;
-      opacity: 1;
-    }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
   }
-  
-  @-webkit-keyframes fadeout {
-    from {
-      bottom: 30px;
-      opacity: 1;
-    }
-  
-    to {
-      bottom: 0;
-      opacity: 0;
-    }
+
+  to {
+    bottom: 0;
+    opacity: 0;
   }
-  
-  @keyframes fadeout {
-    from {
-      bottom: 30px;
-      opacity: 1;
-    }
-  
-    to {
-      bottom: 0;
-      opacity: 0;
-    }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
   }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
