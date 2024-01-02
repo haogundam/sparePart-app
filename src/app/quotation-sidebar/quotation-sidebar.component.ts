@@ -298,7 +298,7 @@ export default class QuotationSidebarComponent implements OnInit {
     this.apiService.searchCustomerByName(this.customerName, 1).subscribe(
       (response: HttpResponse<Customer[]>) => {
         console.log("response: ",response);
-        const combinedOptions = response.body?.map(customer => `${customer.customerName} ( ${customer.customerContact} )`) || [];
+        const combinedOptions = response.body?.map(customer => `${customer.customerName}  - ${customer.customerContact} `) || [];
         this.options = combinedOptions;
 
         // this.options = this.placeholder[0].customerName;

@@ -1,83 +1,84 @@
 <div class="sidebar">
-    <div class="container">
-      <div class="title">
-        <h2>Quotations</h2>
-      </div>
-      <hr width="93%;" color="#d9d9d9" size="1">
-  
-      <div class="customer-details">
-        
-        <div class="customer-id">
-         
-            <form class="example-form">
-              <mat-form-field class="example-full-width">
-                <mat-label>Search for a Customer</mat-label>
-                <!--  -->
-                <input type="text" placeholder="Customer Name..." (input)="filterOptions(searchControl.value)"
-                [ngModel]="customerQuery" matInput [formControl]="searchControl" [matAutocomplete]="auto" >
+  <div class="container">
+    <div class="title">
+      <h2>Quotations</h2>
+    </div>
+    <hr width="93%;" color="#d9d9d9" size="1">
 
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of options , let i = index;" [value]="option" (onSelectionChange)="optionSelected(option, $event)">
-                      {{option}}
-                    </mat-option>  
-                    <mat-option (onSelectionChange)="handleOptionSelection($event)">                      Register New Customer...
-                    </mat-option>              
-                </mat-autocomplete>
-              </mat-form-field>
-            </form>
+    <div class="customer-details">
 
-          <!-- <input type="text" [(ngModel)]="searchCustomerName" placeholder="Search for customer name.."
+      <div class="customer-id">
+
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Search for a Customer</mat-label>
+            <!--  -->
+            <input type="text" placeholder="Customer Name..." (input)="filterOptions(searchControl.value)"
+              [ngModel]="customerQuery" matInput [formControl]="searchControl" [matAutocomplete]="auto">
+
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option (onSelectionChange)="handleOptionSelection($event)"> Register New Customer...
+              </mat-option>
+              <mat-option *ngFor="let option of options , let i = index;" [value]="option"
+                (onSelectionChange)="optionSelected(option, $event)">
+                {{option}}
+              </mat-option>
+
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+
+        <!-- <input type="text" [(ngModel)]="searchCustomerName" placeholder="Search for customer name.."
               (keyup)="searchCustomer()" (keyup.enter)="createQuotation(customer[0].customerId)"/> -->
 
-        
+
         <div class="quotation-info">
           <p class="quotation-id">Quotation ID : {{quotationId}}</p>
           <!-- <p class="date">Date : {{quotationDate}}</p> -->
         </div>
       </div>
-  
+
       <div>
-      <table  class="quotation-table">
-        <thead>
-          <tr >
-            <!-- <th>SKU</th> -->
-            <th>Part Name</th>
-            <th>Part ID</th>
-            <th>Unit Price</th>
-            <th>Qty</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <div class="divider"></div>
-        <tbody class="quotation-table-item">
-          <tr *ngFor="let part of partsInQuotation; let i = index">
-            <td (click)="searchPart(part.sku)"> {{part.partName }}</td>
-            <td>{{ part.partId }}</td>
-            <td><input type="edit" [(ngModel)]="part.unitPrice"></td>
-            <td><input type="edit" [(ngModel)]="part.quantity" ></td>
-            <td>
-              <button class="button" (click)="onDeleteClick(i,part.quotePartId,part.warehouseName)">Del</button>
-            </td>
-          </tr>
-        </tbody>        
-      </table>
-    </div>
+        <table class="quotation-table">
+          <thead>
+            <tr>
+              <!-- <th>SKU</th> -->
+              <th>Part Name</th>
+              <th>Part ID</th>
+              <th>Unit Price</th>
+              <th>Qty</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <div class="divider"></div>
+          <tbody class="quotation-table-item">
+            <tr *ngFor="let part of partsInQuotation; let i = index">
+              <td (click)="searchPart(part.sku)"> {{part.partName }}</td>
+              <td>{{ part.partId }}</td>
+              <td><input type="edit" [(ngModel)]="part.unitPrice"></td>
+              <td><input type="edit" [(ngModel)]="part.quantity"></td>
+              <td>
+                <button class="button" (click)="onDeleteClick(i,part.quotePartId,part.warehouseName)">Del</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <div class="column-container">
-          <hr width="100%;" color="#d9d9d9" size="1" margin-left="15px">  
+        <hr width="100%;" color="#d9d9d9" size="1" margin-left="15px">
         <div class="buttons-box">
 
-          <p>Total Price: RM {{calculateTotalPrice()}}</p> 
-          
+          <p>Total Price: RM {{calculateTotalPrice()}}</p>
 
-        <button (click)="submitQuotation()" class="submit-button">Submit Quotation</button>
-  
-        <button (click)="clearQuotation()" class="cancel-button">Cancel</button>
 
-        <div id="snackbar">Quotation Successfully Submitted!</div>
+          <button (click)="submitQuotation()" class="submit-button">Submit Quotation</button>
+
+          <button (click)="clearQuotation()" class="cancel-button">Cancel</button>
+
+          <div id="snackbar">Quotation Successfully Submitted!</div>
+        </div>
       </div>
-     </div> 
     </div>
-    
-  </div> 
 
+  </div>
