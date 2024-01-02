@@ -17,7 +17,8 @@
               [ngModel]="customerQuery" matInput [formControl]="searchControl" [matAutocomplete]="auto">
 
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option (onSelectionChange)="handleOptionSelection($event)"> Register New Customer...
+              <mat-option (onSelectionChange)="handleOptionSelection($event)"> 
+                Register New Customer...
               </mat-option>
               <mat-option *ngFor="let option of options , let i = index;" [value]="option"
                 (onSelectionChange)="optionSelected(option, $event)">
@@ -32,9 +33,16 @@
               (keyup)="searchCustomer()" (keyup.enter)="createQuotation(customer[0].customerId)"/> -->
 
 
-        <div class="quotation-info">
-          <p class="quotation-id">Quotation ID : {{quotationId}}</p>
-          <!-- <p class="date">Date : {{quotationDate}}</p> -->
+
+        
+        <div class="quotation-info" >
+          <p> Quotation ID : <input type="string" *ngIf="quotationId=== null"  placeholder="Search Quotation ID"> <input type="string" *ngIf="quotationId!== null"  [placeholder]="quotationId"></p> 
+           <!-- <p> Quotation Date : {{quotationDate}}</p> -->
+                    <!-- <mat-form-field class="custom-input-size">
+            <mat-label>Input</mat-label>
+            <input  type="text"  matInput   >
+          </mat-form-field>
+          <p class="date">Date : {{quotationDate}}</p> -->
         </div>
       </div>
 

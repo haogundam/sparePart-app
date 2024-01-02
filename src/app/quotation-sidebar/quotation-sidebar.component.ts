@@ -155,13 +155,15 @@ export default class QuotationSidebarComponent implements OnInit {
         this.sharedDataService.changeQuotationId(this.quotationId);
         console.log('Quotation created successfully', response);
         this.sharedDataService.changeCustomerId(id);
-        this.apiService.searchQuotationListDetailItem(response as unknown as number, this.customer[0].customerId, 1).subscribe(
-          (dateResponse: HttpResponse<QuotationPart[]>) => {
-            this.quotationDate = (dateResponse.body as any).parts.quoteDate as string;
-            this.quoteDetail = (dateResponse.body as any).parts.quoteDetail;
-            console.log('Quotation created successfully', dateResponse);
-          }
-        );
+        // this.sharedDataService.currentCustomerId.subscribe(customerId => {
+        //   this.apiService.searchQuotationListDetailItem(response as unknown as number, customerId ?? 0, 1).subscribe(
+        //     (dateResponse: HttpResponse<QuotationPart[]>) => {
+        //       this.quotationDate = (dateResponse.body as any).parts.quoteDate ;
+        //       this.quoteDetail = (dateResponse.body as any).parts.quoteDetail;
+        //       console.log('Quotation created successfully', dateResponse,'ID',customerId,'date',this.quotationDate);
+        //     }
+        //   );
+        // });
       },
       (error) => {
         console.error('Error creating quotation', error);
@@ -298,11 +300,10 @@ export default class QuotationSidebarComponent implements OnInit {
     this.apiService.searchCustomerByName(this.customerName, 1).subscribe(
       (response: HttpResponse<Customer[]>) => {
         console.log("response: ",response);
-        const combinedOptions = response.body?.map(customer => `${customer.customerName}  - ${customer.customerContact} `) || [];
+        const combinedOptions = response.body?.map(customer => `${customer.customerName}  ( ${customer.customerContact} )`) || [];
         this.options = combinedOptions;
-
         // this.options = this.placeholder[0].customerName;
-        console.log('Fetched customer data:', this.options);
+        console.log('Fetched customer data:', this.options ,'name ',this.customerName);
       },
       (error) => {
         console.error('Error Fetching Customer Data: ', error);
