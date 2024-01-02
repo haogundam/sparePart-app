@@ -1,8 +1,8 @@
 body {
-    margin-left : 14.5%;
+    margin-left : 14%;
     margin-right :30%;
-    width : 57vw;
-    height: 93.85vh;
+    width : 58vw;
+    height: 94.5vh;
 }
 
 // .search-history {
@@ -43,7 +43,8 @@ body {
 
 //search results table
 .searchResults {
-    height: 30%;
+    min-height: 30%;
+    max-height: 40%;
     width: 100%;
     margin-left: 1%;    
     text-align: center;  

@@ -2,7 +2,7 @@
     background-color:#F1F0F0;
     margin-right: 2px;
     float:right;    
-    width: 57.1vh;
+    width: 28vw;
     height: 94.6vh;
     flex-direction: column;
     display: flex;
@@ -109,18 +109,18 @@ form mat-form-field {
     position: fixed;
     bottom:0;
     right: 0;
-    width: 52.5vw;
-    max-width: 380px;    
+    width: 26vw;
     margin-right: 1.5vw;
+    background-color: plum;
 }
 
 
 
-.searchCustomerForm {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
+// .searchCustomerForm {
+//     min-width: 150px;
+//     max-width: 500px;
+//     width: 100%;
+//   }
   
   .example-full-width {
     width: 100%;

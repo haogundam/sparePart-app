@@ -7,18 +7,23 @@
 
 /* Header Styles */
 .app-header {
-  padding: 10px;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #2894fc;
+  box-sizing: border-box;
 }
 
 .app-title {
   font-family: 'Outfit';
   color: #fff;
   font-size: 22px;
+  float: left;
+  width: 25%;
 }
 
 /* Sidebar Styles */
@@ -80,35 +85,43 @@
   background-color: #e5e7eb;
 }
 
+
 .user-info {
   margin-top: auto;
-  background-color: #b0b7bc;
-  width: 90%;
-  padding: 12px;
+  // background-color: #b0b7bc;
+  background-color: transparent;
   display: flex;
   align-items: center;
+  width: 12.5%;
+  padding-left:0.5vw; 
+  padding-right: 0.5vw;
 }
+
+
 
 .user-info .user-details {
   display: flex;
-  flex-direction: column;
-  
+  flex-direction: row;
+  float: right;
 }
 
-.user-info .user-email {
+ .user-email {
   font-family: 'Plus Jakarta Sans';
   color: black;
   font-size: 18px;
   font-weight: 500;
-  margin-bottom: 4px;
+  margin-right: 5px;
 }
 
 .logout-label {
   font-family: 'Plus Jakarta Sans';
   color: #b33c3c;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
+  float: right;
 }
+
+
 
 /* Content Styles */
 .content {
