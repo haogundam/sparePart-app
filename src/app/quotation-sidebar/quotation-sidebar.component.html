@@ -36,7 +36,8 @@
 
         
         <div class="quotation-info" >
-          <p> Quotation ID : <input type="string" *ngIf="quotationId=== null"  placeholder="Search Quotation ID"> <input type="string" *ngIf="quotationId!== null"  [placeholder]="quotationId"></p> 
+          <p> Quotation ID : <input type="string" *ngIf="quotationId=== null"  placeholder="Search Quotation ID"> 
+            <input type="string" *ngIf="quotationId!== null"  [placeholder]="quotationId" [ngModel]="searchQuotationId" (keyup.enter)="searchQuotationById()"></p> 
            <!-- <p> Quotation Date : {{quotationDate}}</p> -->
                     <!-- <mat-form-field class="custom-input-size">
             <mat-label>Input</mat-label>

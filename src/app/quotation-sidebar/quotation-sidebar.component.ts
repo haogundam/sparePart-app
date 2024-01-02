@@ -65,6 +65,10 @@ interface FilteredOptions {
 
 // implements OnInit
 export default class QuotationSidebarComponent implements OnInit {
+  searchQuotationId: number = 0; 
+searchQuotationById() {
+throw new Error('Method not implemented.');
+}
   // @HostListener('window:beforeunload', ['$event'])
   // unloadNotification($event: any) {
   //   this.sharedDataService.clearQuotation();
