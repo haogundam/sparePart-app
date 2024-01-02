@@ -18,7 +18,7 @@ export interface createCustomerRequest {
 }
 
 export interface registerCustomerProfile {
-  CustomerId: number;
+  
   CustomerName: string;
   CustomerContact: string;
   CustomerEmail: string;

@@ -7,8 +7,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppModule } from '../app.module';
-import QuotationSidebarComponent from '../quotation-sidebar/quotation-sidebar.component';
-
+import { Observable } from 'rxjs';
 
 
 @NgModule({
@@ -18,11 +17,11 @@ import QuotationSidebarComponent from '../quotation-sidebar/quotation-sidebar.co
   imports: [
     CommonModule,
     HttpClientModule,
-    MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatIconModule, ReactiveFormsModule,QuotationSidebarComponent
+    MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatIconModule, ReactiveFormsModule
   ],
   providers: [
-    ApiService
-    
+    ApiService,
+    HttpClient
   ]
 })
 export class RegistrationDialogModule { }

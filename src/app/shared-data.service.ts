@@ -16,24 +16,6 @@ export class SharedDataService {
   constructor(private apiService: ApiService) {
     console.log('Shared data service created', this.partsInQuotation);
   }
-  // loadQuotationDetails(quoteId: number, customerId: number) {
-  //   // Check for valid IDs before making API call
-  //   if (quoteId && customerId) {
-  //     this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
-  //       (dateResponse: HttpResponse<QuotationPart[]>) => {
-  //         this.partsInQuotation = (dateResponse.body as any).parts;
-  //         this.changeQuotationId(quoteId);
-  //         this.changeCustomerId(customerId);
-  //         console.log('Quotation edit opened successfully', dateResponse);
-  //       },
-  //       error => {
-  //         console.error('Error loading quotation details', error);
-  //       }
-  //     );
-  //   } else {
-  //     console.error('Invalid IDs for loading quotation details');
-  //   }
-  // }
   changeCustomerId(customerId: number) {
     this.customerIdSource.next(customerId);
   }
@@ -49,7 +31,6 @@ export class SharedDataService {
           this.partsInQuotationSubject.next(this.partsInQuotation);
         },
         error => {
-          console.error('Error loading initial data', error);
         }
       );
     }
@@ -78,13 +59,7 @@ export class SharedDataService {
 
   // Method to remove a part from the quotation
   removePartFromQuotation(index: number) {
-    // console.log('Removing part from quotation:', index);
-    // console.log('Parts in quotation before:', this.partsInQuotation);
-    // this.partsInQuotation.splice(index, 1);
-    // this.partsInQuotationSubject.next(this.partsInQuotation);
-    // console.log('Parts in quotation after:', this.partsInQuotation);
-    // Create a new array that excludes the item at the given index
-    // const updatedParts = this.partsInQuotation.filter((_, i) => i !== index);
+   
     const updatedParts = this.partsInQuotation.filter((_, i) => i !== index);
     this.partsInQuotation = updatedParts;
     // Update the BehaviorSubject with the new array

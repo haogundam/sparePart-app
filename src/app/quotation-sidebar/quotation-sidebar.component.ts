@@ -68,7 +68,7 @@ export default class QuotationSidebarComponent implements OnInit {
   //   this.sharedDataService.clearQuotation();
   //   $event.returnValue = true;
   // }
- 
+
 
   totalPrice: any;
   openModal(arg0: string) {
@@ -245,11 +245,13 @@ export default class QuotationSidebarComponent implements OnInit {
       }, 3000);
     }
   }
-calculateTotalPrice(): number {
-  let totalPrice = 0;
-  this.partsInQuotation.forEach(option => {
-    totalPrice += option.unitPrice * option.quantity;
-  });
-  return (totalPrice.toFixed(2) as unknown as number);
-}
+  calculateTotalPrice(): number {
+    let totalPrice = 0;
+    this.partsInQuotation.forEach(option => {
+      totalPrice += option.unitPrice * option.quantity;
+    });
+    return (totalPrice.toFixed(2) as unknown as number);
+  }
+
+
 }

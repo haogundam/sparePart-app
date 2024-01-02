@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
-import { Customer } from '../models/customer.model';
+import { Customer, registerCustomerProfile } from '../models/customer.model';
 import { CreateQuotationResponse, QuotationListResponse, QuotationPart,QuotePartAdd } from '../models/quotation.model';
 import { environment } from '../../environments/environment';
 import { parts, partsResponse } from '../models/parts.model';
@@ -17,6 +17,7 @@ import { UserDto } from '../models/auth.model';
   providedIn: 'root',
 })
 export class ApiService {
+  
 
   private apiUrl = `${environment.apiUrl}customers/`;
   private baseUrl: string = `${environment.apiUrl}auth`;
@@ -154,5 +155,10 @@ export class ApiService {
     const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/clear`;
     const headers = this.getHeaders();
     return this.http.delete<any>(url, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
+  }
+  registerCustomer(reqBody:registerCustomerProfile) :Observable<HttpResponse<registerCustomerProfile[]>> {
+    const url = `https://localhost:7047/api/customers`;
+    const headers = this.getHeaders();
+    return this.http.post<registerCustomerProfile[]>(url,reqBody , { observe: 'response', headers: headers});
   }
 }
