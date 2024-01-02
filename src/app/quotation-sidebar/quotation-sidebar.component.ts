@@ -272,6 +272,7 @@ export default class QuotationSidebarComponent implements OnInit {
   searchReturnCustomerId:number = 0;
   optionSelected(option: string, event: MatOptionSelectionChange): void {
     if (event.isUserInput) {
+
       option = option.split('(')[0].trim();
       const customerId = this.apiService.searchCustomerByName(option,1).subscribe(
         (response: HttpResponse<Customer[]>) => {
@@ -280,6 +281,7 @@ export default class QuotationSidebarComponent implements OnInit {
           // this.options = this.placeholder[0].customerName;
           console.log('Fetched customer id:', this.searchReturnCustomerId);
           this.createQuotation(this.searchReturnCustomerId);
+          this.sharedDataService.clearQuotation();
         },
         (error) => {
           console.error('Error Fetching Customer id: ', error);
