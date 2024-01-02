@@ -53,8 +53,8 @@
           <tr *ngFor="let part of partsInQuotation; let i = index">
             <td (click)="searchPart(part.sku)"> {{part.partName }}</td>
             <td>{{ part.partId }}</td>
-            <td>{{ part.unitPrice }}</td>
-            <td>{{ part.quantity }}</td>
+            <td><input type="edit" [(ngModel)]="part.unitPrice"></td>
+            <td><input type="edit" [(ngModel)]="part.quantity" ></td>
             <td>
               <button class="button" (click)="onDeleteClick(i,part.quotePartId,part.warehouseName)">Del</button>
             </td>

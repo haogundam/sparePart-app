@@ -1,7 +1,7 @@
 .sidebar {
-  background-color:#F1F0F0;
+  background-color: #F1F0F0;
   margin-right: 2px;
-  float:right;    
+  float: right;
   width: 57.1vh;
   height: 94.6vh;
   flex-direction: column;
@@ -9,7 +9,7 @@
 }
 
 .sidebar h2 {
-  margin-left: 20vh; 
+  margin-left: 20vh;
   padding-top: 15px;
   font-weight: bold;
   font-size: 28px;
@@ -17,7 +17,7 @@
 
 .customer-id {
   // height: 50px;
-  width : 55vh;
+  width: 55vh;
   margin-left: 13px;
   display: inline-block;
   align-items: center;
@@ -44,42 +44,49 @@ form mat-form-field {
 }
 
 .quotation-id {
-  flex:0.5;
+  flex: 0.5;
 }
 
 .date {
-  flex:0.5;
+  flex: 0.5;
 }
 
-  .quotation-table tr{
-      display : flex;
-      width: 100%;
-      overflow-y: auto;
-      min-height: 20%;
-      max-height: 30%;
-  }
+.quotation-table tr {
+  display: flex;
+  width: 100%;
+  overflow-y: auto;
+  min-height: 20%;
+  max-height: 30%;
+}
 
-  .quotation-table th,td {
-      width:80px;
-      text-align: center;
-      white-space: nowrap;
-  }
+.quotation-table th,
+td {
+  width: 80px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.quotation-table input {
+  width: 50px;
+  text-align: center;
+  white-space: nowrap;
+}
 
 .buttons-box {
   // background-color:#52abfc ;
   height: auto;
   max-width: 50vw;
   text-align: center;
-  display : flex;
+  display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  }
+}
 
 .submit-button {
   background-color: #52abfc;
-  margin:1vh;
-  border:none;
+  margin: 1vh;
+  border: none;
   border-radius: 8px;
   color: white;
   font-weight: bold;
@@ -88,12 +95,12 @@ form mat-form-field {
 }
 
 .cancel-button {
-  border:none;
+  border: none;
   border-radius: 8px;
   background-color: #c30e0e;
-  color:white;
+  color: white;
   font-weight: bold;
-  width:11vh;
+  width: 11vh;
   height: 4vh;
   margin-bottom: 1vh;
 }
@@ -107,10 +114,10 @@ form mat-form-field {
 
 .column-container {
   position: fixed;
-  bottom:0;
+  bottom: 0;
   right: 0;
   width: 52.5vw;
-  max-width: 380px;    
+  max-width: 380px;
   margin-right: 1.5vw;
 }
 
@@ -130,7 +137,7 @@ form mat-form-field {
   background-color: #F1F0F0;
 }
 
-  
+
 #snackbar {
   visibility: hidden;
   /* Hidden by default. Visible on click */

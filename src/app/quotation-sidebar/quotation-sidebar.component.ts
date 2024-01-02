@@ -6,7 +6,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AsyncPipe } from '@angular/common';
-import { Observable, debounceTime, of } from 'rxjs';
+import { Observable, concatAll, debounceTime, of } from 'rxjs';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ApiService } from '../services/api.service';
@@ -108,15 +108,7 @@ export default class QuotationSidebarComponent implements OnInit {
       this.quotepartId = id ?? 0;
     });
     this.loadQuotationDetails(this.quotationId ?? 0, this.customerId ?? 0);
-    // this.route.params.subscribe(params => {
-    //   const quoteId = +params['quoteId']; // '+' converts the string 'quoteId' to a number
-    //   const customerId = +params['customerId'];
-    //   if (quoteId) {
-    //     this.quotationId = quoteId;
-    //     this.customerId = customerId;
-    //     this.loadQuotationDetails(quoteId, customerId);
-    //   }
-    // });
+   
     this.fetchCustomerDetails();
     this.searchControl.valueChanges
       .pipe(debounceTime(100))
@@ -280,10 +272,9 @@ export default class QuotationSidebarComponent implements OnInit {
   searchReturnCustomerId:number = 0;
   optionSelected(option: string, event: MatOptionSelectionChange): void {
     if (event.isUserInput) {
-      // Assuming you have a method to fetch customer ID from the name
+      option = option.split('(')[0].trim();
       const customerId = this.apiService.searchCustomerByName(option,1).subscribe(
         (response: HttpResponse<Customer[]>) => {
-          // Assuming response.body contains the array of customers
           
           this.searchReturnCustomerId = (response.body || []).map((customer) => customer.customerId)[0] || 0;
           // this.options = this.placeholder[0].customerName;
@@ -304,9 +295,10 @@ export default class QuotationSidebarComponent implements OnInit {
   fetchCustomerDetails(): void {
     this.apiService.searchCustomerByName(this.customerName, 1).subscribe(
       (response: HttpResponse<Customer[]>) => {
-        // Assuming response.body contains the array of customers
         console.log("response: ",response);
-        this.options = (response.body || []).map((customer) => customer.customerName) || [];
+        const combinedOptions = response.body?.map(customer => `${customer.customerName} ( ${customer.customerContact} )`) || [];
+        this.options = combinedOptions;
+
         // this.options = this.placeholder[0].customerName;
         console.log('Fetched customer data:', this.options);
       },
