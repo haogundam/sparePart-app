@@ -157,7 +157,6 @@ export default class QuotationSidebarComponent implements OnInit {
   }
 
   myControl = new FormControl<string | User>('');
-  // options: User[] = [{name: 'Mary'}, {name: 'Shelley'}, {name: 'Igor'}];
   filteredOptions!: Observable<User[]>;
 
   customer: Customer[] = [];
@@ -167,7 +166,6 @@ export default class QuotationSidebarComponent implements OnInit {
 
   filteredOption: string[] = []
   searchControl = new FormControl();
-  // placeholder: Customer[] = [];
   options: string[] = [];
   customerName: string = "";
 

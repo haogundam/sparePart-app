@@ -130,7 +130,7 @@
                         <input type="number" tabindex="4" [placeholder]="product.sellingPrice"
                             [(ngModel)]="product.NewPrice" #priceInput>
                     </td>
-                    <td ><button class="addQuote"
+                    <td ><button class="addQuote" tabindex="4"
                             (click)="addPartToQuotation(customerId,quotationIdd,product.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber,product.partName,product.sellingPrice,product.warehouseName)">+</button>
                     </td>
 
