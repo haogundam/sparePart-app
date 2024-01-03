@@ -18,7 +18,7 @@ import {
 import { RegistrationDialogComponent } from '../registration-dialog/registration-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { startWith, map } from 'rxjs';
-import { QuotationPart } from '../models/quotation.model';
+import { PartsInQuoteListForIdSearch, QuotationPart, QuotePardIdSearch } from '../models/quotation.model';
 import { QuotationComponent } from '../quotation/quotation.component';
 import { HttpResponse } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
@@ -65,6 +65,7 @@ interface FilteredOptions {
 
 // implements OnInit
 export default class QuotationSidebarComponent implements OnInit {
+
   constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog, private route: ActivatedRoute, private quotationComponent: QuotationComponent) {
     this.sharedDataService.currentCustomerId.subscribe(id => {
       this.customerId = id;
@@ -130,8 +131,25 @@ export default class QuotationSidebarComponent implements OnInit {
 
 
   searchQuotationId: number = 0;
+  completedQuotion: number = 0;
+  quoteDetailById: PartsInQuoteListForIdSearch[] = [];
   searchQuotationById(quotationId: number) {
-    throw new Error('Method not implemented.');
+    this.resetQuotationId();
+    this.apiService.searchQuotationListDetailItemByQuotationId(quotationId, 1).subscribe(
+      (dateResponse: HttpResponse<QuotePardIdSearch[]>) => {
+        this.sharedDataService.changeQuotationId(quotationId);
+        this.sharedDataService.changeCustomerId((dateResponse.body as any).customersInfo.customerId);
+        this.partsInQuotation = (dateResponse.body as any).parts;
+        if ((dateResponse.body as any).status === 1) {
+          this.completedQuotion = 1;
+        }
+        console.log('Quotation edit opened successfully', dateResponse);
+      }
+      ,
+      error => {
+
+      }
+    );
   }
   // @HostListener('window:beforeunload', ['$event'])
   // unloadNotification($event: any) {
@@ -285,6 +303,7 @@ export default class QuotationSidebarComponent implements OnInit {
     );
   }
   searchPart(searchQueryPart: string) {
+    
     this.quotationComponent.searchPart(searchQueryPart);
   };
 
@@ -342,7 +361,6 @@ export default class QuotationSidebarComponent implements OnInit {
         console.log("response: ", response);
         const combinedOptions = response.body?.map(customer => `${customer.customerName}  ( ${customer.customerContact} )`) || [];
         this.options = combinedOptions;
-        // this.options = this.placeholder[0].customerName;
         console.log('Fetched customer data:', this.options, 'name ', this.customerName);
       },
       (error) => {
@@ -362,5 +380,7 @@ export default class QuotationSidebarComponent implements OnInit {
       this.openRegistrationForm();
     }
   }
-
+  resetQuotationId() {
+    this.completedQuotion = 0;
+  }
 }

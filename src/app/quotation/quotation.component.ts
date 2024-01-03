@@ -139,21 +139,13 @@ quantityPlaceholder= 1;
       unitPrice: unitPrice,
       quantity: quantity,
     };
-
-    // Check if the part is already in the quotation
-    // const partAlreadyAdded = this.sharedDataService.getPartsInQuotation().some(part => part.partId === partId);
-    // if (partAlreadyAdded) {
-    //   alert(`This part (ID: ${partName}) has already been added to the quotation. Please remove it from the quotation before adding it again.`);
-    //   return;
-    // }
-
    
     console.log('Adding part to quotation:', this.quoteAddPart);
     this.apiService.addPartToQuotation(customerId, quoteNo, this.quoteAddPart).subscribe(
-      (part: HttpResponse<number>) => { // Fix: Change the type of the parameter to HttpResponse<number>
+      (part: HttpResponse<number>) => {
         
         console.log(part);
-        this.quotePartId = part.body as number; // Access the body of the HttpResponse
+        this.quotePartId = part.body as number; 
         console.log('Quote Part ID:', this.quotePartId);
         this.sharedDataService.addPartToQuotation({ quotePartId: this.quotePartId, partId: partId, partName: partName, quantity: quantity, unitPrice: unitPrice, warehouseName: warehouseName });
         this.sharedDataService.changeQuotePartId(this.quotePartId);
@@ -166,10 +158,7 @@ quantityPlaceholder= 1;
     )
     console.log('Selected SKU:', this.selectedSKU);
   }
-  //reset visibility of parts list
-  resetShowPartList() {
 
-  }
 }
 
 

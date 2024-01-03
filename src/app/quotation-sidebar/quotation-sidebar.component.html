@@ -37,8 +37,8 @@
 
         <div class="quotation-info">
           <p> Quotation ID : 
-            <input type="text" *ngIf="quotationId=== null" placeholder="Search Quotation ID">
-            <input type="number" *ngIf="quotationId!== null" [placeholder]="quotationId"
+            <input type="number" *ngIf="quotationId=== null" placeholder="Search Quotation ID"  (keyup.enter)="searchQuotationById(searchQuotationId.valueAsNumber )" #searchQuotationId>
+            <input type="number" *ngIf="quotationId!== null" [placeholder]="quotationId" 
               (keyup.enter)="searchQuotationById(searchQuotationId.valueAsNumber )" #searchQuotationId>
           </p>
           <!-- <p> Quotation Date : {{quotationDate}}</p> -->
@@ -51,7 +51,7 @@
       </div>
 
       <div>
-        <table class="quotation-table">
+        <table  *ngIf="completedQuotion === 0" class="quotation-table">
           <thead>
             <tr>
               <!-- <th>SKU</th> -->
@@ -63,8 +63,9 @@
             </tr>
           </thead>
           <div class="divider"></div>
-          <tbody class="quotation-table-item">
-            <tr *ngFor="let part of partsInQuotation; let i = index">
+          <tbody  class="quotation-table-item">
+
+            <tr  *ngFor="let part of partsInQuotation; let i = index">
               <td (click)="searchPart(part.sku)"> {{part.partName }}</td>
               <td>{{ part.partId }}</td>
               <td>
@@ -81,9 +82,37 @@
             </tr>
           </tbody>
         </table>
+
+        <table  *ngIf="completedQuotion === 1" class="quotation-table">
+          <thead>
+            <tr>
+              <!-- <th>SKU</th> -->
+              <th>Part Name</th>
+              <th>Part ID</th>
+              <th>Unit Price</th>
+              <th>Qty</th>
+            </tr>
+          </thead>
+          <div class="divider"></div>
+          <tbody  class="quotation-table-item">
+
+            <tr  *ngFor="let part of partsInQuotation; let i = index">
+              <td (click)="searchPart(part.sku)"> {{part.partName }}</td>
+              <td>{{ part.partId }}</td>
+              <td>
+              {{part.unitPrice}}
+              </td>
+              <td>
+              {{part.quantity}}
+              </td>
+              <td>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="column-container">
+      <div class="column-container" *ngIf="completedQuotion === 0">
         <hr width="100%;" color="#d9d9d9" size="1" margin-left="15px">
         <div class="buttons-box">
 

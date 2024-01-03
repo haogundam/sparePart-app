@@ -48,3 +48,21 @@ export interface QuotePartAdd {
   unitPrice: number,
   quantity: number
 }
+
+import { Customer} from './customer.model';
+export interface QuotePardIdSearch {
+  customerInfo: Customer,
+  status: number,
+  quoteNo: number,
+  quoteDate: string,
+  totalAmount: number,
+  parts: PartsInQuoteList[]
+}
+export interface PartsInQuoteListForIdSearch {
+  quotePartId: number;
+  partId: number;
+  sku: string;
+  partName: string;
+  quantity: number;
+  unitPrice: number;
+}

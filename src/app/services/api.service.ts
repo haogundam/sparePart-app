@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { Customer, registerCustomerProfile } from '../models/customer.model';
-import { CreateQuotationResponse, QuotationListResponse, QuotationPart, QuotePartAdd } from '../models/quotation.model';
+import { CreateQuotationResponse, QuotationListResponse, QuotationPart, QuotePardIdSearch, QuotePartAdd } from '../models/quotation.model';
 import { environment } from '../../environments/environment';
 import { parts, partsResponse } from '../models/parts.model';
 
@@ -120,7 +120,11 @@ export class ApiService {
     const headers = this.getHeaders();
     return this.http.get<QuotationPart[]>(url, { observe: 'response', headers: headers });
   }
-
+  searchQuotationListDetailItemByQuotationId(quotationNo: number, pageNumber: number): Observable<HttpResponse<QuotePardIdSearch[]>> {
+    const url = `${environment.apiUrl}quotations/${quotationNo}?pageNumber=${pageNumber}`;
+    const headers = this.getHeaders();
+    return this.http.get<QuotePardIdSearch[]>(url, { observe: 'response', headers: headers });
+  } 
   createQuotation(customerId: number): Observable<string> {
     const url = `${this.apiUrl}${customerId}/quotations`;
     const headers = this.getHeaders();
