@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
@@ -20,8 +18,18 @@ import { ApiService } from '../services/api.service';
 
 
 export class LayoutComponent {
-   
-  constructor(private router: Router,private apiService:ApiService) {}
+  
+  userEmail = localStorage.getItem('userEmail');
+  componentName: string = '';
+  constructor(private router: Router, private apiService: ApiService) {
+    if (this.router.url == '/quotation') {
+      this.componentName = 'Quotation';
+    }
+    else if (this.router.url == '/history') {
+      this.componentName = 'History';
+    }
+  }
+
   quotation() {
     this.router.navigate(['/quotation']);
   }
@@ -33,9 +41,12 @@ export class LayoutComponent {
   onHistory() {
     this.router.navigate(['/history']);
   }
-  
-  empty(){
-    
-  }
 
+  empty() {
+
+  }
+  navigateToHomepage() {
+
+    this.router.navigate(['/quotation']);
+  }
 }

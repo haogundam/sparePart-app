@@ -160,4 +160,15 @@ registerCustomer(reqBody: registerCustomerProfile) : Observable < HttpResponse <
   return this.http.post<registerCustomerProfile[]>(url, reqBody, { observe: 'response', headers: headers });
 }
 
+updateQuotation(customerId: number, quotationNo: number, quotePartId: number, quantity: number, unitPrice: number): Observable<HttpResponse<string>> {
+  const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/quoteparts/${quotePartId}`;
+  const headers = this.getHeaders();
+  const body = {
+   
+    quantity: quantity,
+    unitPrice: unitPrice
+  };
+  return this.http.patch<string>(url, body, { observe: 'response', headers: headers, responseType: 'text' as 'json' });
 }
+}
+

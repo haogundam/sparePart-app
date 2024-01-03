@@ -65,9 +65,51 @@ interface FilteredOptions {
 // implements OnInit
 export class QuotationSidebarComponent implements OnInit {
 
-  openModal(arg0: string) {
-    throw new Error('Method not implemented.');
-  }
+  overrideQuantity: number = 0;
+  overridePrice: number = 0;
+  updateQuotationPart(priceOrQuantity: number, type: 'price' | 'quantity', originalQuantity: number, originalPrice: number, quotePartId: number) {
+    if (this.customerId !== null && this.quotationId !== null) {
+      console.log('Updating quotation part', quotePartId, 'with', priceOrQuantity, type, originalQuantity, originalPrice);
+      if (type === 'quantity') {
+         this.overrideQuantity = priceOrQuantity;
+        this.apiService.updateQuotation(this.customerId, this.quotationId, quotePartId, this.overrideQuantity, originalPrice).subscribe(
+          (response: any) => {
+            console.log('Quotation part quantity updated successfully', response);
+          },
+          (error) => {
+            console.error('Error updating quotation part quantity', error);
+          }
+        );
+      }
+      else if (type === 'price') {
+        this.overridePrice = priceOrQuantity;
+
+        this.apiService.updateQuotation(this.customerId, this.quotationId, quotePartId, originalQuantity, this.overridePrice).subscribe(
+          (response: any) => {
+            console.log('Quotation part price updated successfully', response);
+          },
+          (error) => {
+            console.error('Error updating quotation part price', error);
+          }
+        );
+      }}
+    }
+    searchQuotationId: number = 0;
+    searchQuotationById(quotationId: number) {
+      throw new Error('Method not implemented.');
+    }
+    // @HostListener('window:beforeunload', ['$event'])
+    // unloadNotification($event: any) {
+    //   this.sharedDataService.clearQuotation();
+    //   $event.returnValue = true;
+    // }
+
+
+    totalPrice: any;
+    openModal(arg0: string) {
+      throw new Error('Method not implemented.');
+    }
+
 
   // filteredOption: FilteredOptions[] = [
   //   { sku: 1234, name: "Joseph", partId: 1234, unitPrice: 22.32 },];
@@ -83,18 +125,20 @@ export class QuotationSidebarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.sharedDataService.currentCustomerId.subscribe(id => {
-    //   this.customerId = id;
-    // });
-    // this.sharedDataService.currentQuotationId.subscribe(id => {
-    //   this.quotationIdd = id;
-    // });
-    // this.sharedDataService.partsInQuotation$.subscribe(parts => {
-    //   this.partsInQuotation = parts;
-    // });
-    // this.sharedDataService.currentQuotePartId.subscribe(id => {
-    //   this.quotepartId = id ?? 0;
-    // });
+    this.sharedDataService.currentCustomerId.subscribe(id => {
+      this.customerId = id;
+    });
+    this.sharedDataService.currentQuotationId.subscribe(id => {
+      this.quotationId = id;
+    });
+    this.sharedDataService.partsInQuotation$.subscribe(parts => {
+      this.partsInQuotation = parts;
+    });
+    this.sharedDataService.currentQuotePartId.subscribe(id => {
+      this.quotepartId = id ?? 0;
+    });
+    this.loadQuotationDetails(this.quotationId ?? 0, this.customerId ?? 0);
+
 
     this.fetchCustomerDetails();
     this.searchControl.valueChanges
@@ -118,7 +162,7 @@ export class QuotationSidebarComponent implements OnInit {
   searchControl = new FormControl();
   // placeholder: Customer[] = [];
   options:string[] = [];
-  constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog) { 
+  constructor(private apiService: ApiService, private sharedDataService: SharedDataService, private dialog: MatDialog,private quotationComponent: QuotationComponent) { 
   }
   customerName:string = "";
 
@@ -170,7 +214,7 @@ export class QuotationSidebarComponent implements OnInit {
   }
   
 
-  quotationId: number = 0;
+  quotationId: number | null = 0;
   quoteDetail: QuotationPart[] = [];
   quotationDate: string = '';
 
@@ -206,30 +250,115 @@ export class QuotationSidebarComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+  onDeleteClick(index: number, quotePartId: number, warehouseName: string) {
+    console.log(quotePartId);
+    if (this.customerId !== null && this.quotationId !== null) {
+      this.apiService.removePartFromQuotation(this.customerId, this.quotationId, quotePartId, warehouseName).subscribe(
+        (response: any) => {
+          this.sharedDataService.removePartFromQuotation(index);
 
-  // onDeleteClick(index: number, partId: number) {
-  //   this.sharedDataService.removePartFromQuotation(index);
-  //   if (this.customerId !== null && this.quotationId !== null) {
-  //     this.apiService.removePartFromQuotation(this.customerId, this.quotationId, this.quotepartId).subscribe(
-  //       (response: any) => {
-  //         console.log(response);
-  //       },
-  //       (error) => {
-  //         console.error('Error removing part', error);
-  //       }
-  //     );
-  //   }
+          console.log(response);
+        },
+        (error) => {
+          console.error('Error removing part', error);
+        }
+      );
+    }
+
   }
 
-  // submitQuotation() {
-  //   if (this.customerId !== null && this.quotationId !== null) {
-  //     this.apiService.submitQuotation(this.customerId, this.quotationId).subscribe(
-  //       (response: any) => {
-  //         console.log('Quotation submitted successfully', response);
-  //       },
-  //       (error) => {
-  //         console.error('Error submitting quotation', error);
-  //       }
-  //     );
-  //   }
-  // }  
+  submitQuotation() {
+    if (this.customerId !== null && this.quotationId !== null) {
+      this.apiService.submitQuotation(this.customerId, this.quotationId).subscribe(
+        (response: any) => {
+
+          console.log('Quotation submitted successfully', response);
+          this.openSnackBar();
+          alert("Quotation Submitted Successfully");
+          this.sharedDataService.clearQuotation();
+
+          location.reload();
+          console.log('Quotation ', this.sharedDataService.getPartsInQuotation());
+        },
+        (error) => {
+          console.error('Error submitting quotation', error);
+        }
+      );
+    }
+  }
+  clearQuotation() {
+    this.apiService.clearQuotation(this.customerId ?? 0, this.quotationId ?? 0).subscribe(
+      (response: any) => {
+        console.log('Quotation cleared successfully', response);
+        this.sharedDataService.clearQuotation();
+      },
+      (error) => {
+        console.error('Error clearing quotation', error);
+      }
+    );
+  }
+  loadQuotationDetails(quoteId: number, customerId: number) {
+    this.apiService.searchQuotationListDetailItem(quoteId, customerId, 1).subscribe(
+      (dateResponse: HttpResponse<QuotationPart[]>) => {
+        this.quotationDate = (dateResponse.body as any).parts.quoteDate as string;
+        this.quoteDetail = (dateResponse.body as any).parts;
+        this.partsInQuotation = (dateResponse.body as any).parts;
+        this.sharedDataService.changeQuotationId(quoteId);
+        this.sharedDataService.changeCustomerId(customerId);
+        console.log('Quotation edit opened successfully', dateResponse);
+      }
+      ,
+      error => {
+
+      }
+    );
+  }
+  searchPart(searchQueryPart: string) {
+    this.quotationComponent.searchPart(searchQueryPart);
+  };
+
+  openSnackBar() {
+    const x = document.getElementById("snackbar");
+
+    if (x) {
+      // Add the "show" class to DIV
+      x.className = "show";
+
+      // After 3 seconds, remove the show class from DIV
+      setTimeout(() => {
+        if (x) {
+          x.className = x.className.replace("show", "");
+        }
+      }, 3000);
+    }
+  }
+  calculateTotalPrice(): number {
+    let totalPrice = 0;
+    this.partsInQuotation.forEach(option => {
+      totalPrice += option.unitPrice * option.quantity;
+    });
+    return (totalPrice.toFixed(2) as unknown as number);
+  }
+
+  searchReturnCustomerId: number = 0;
+  optionSelected(option: string, event: MatOptionSelectionChange): void {
+    if(event.isUserInput) {
+
+    option = option.split('(')[0].trim();
+    const customerId = this.apiService.searchCustomerByName(option, 1).subscribe(
+      (response: HttpResponse<Customer[]>) => {
+
+        this.searchReturnCustomerId = (response.body || []).map((customer) => customer.customerId)[0] || 0;
+        // this.options = this.placeholder[0].customerName;
+        console.log('Fetched customer id:', this.searchReturnCustomerId);
+        this.createQuotation(this.searchReturnCustomerId);
+        this.sharedDataService.clearQuotation();
+      },
+      (error) => {
+        console.error('Error Fetching Customer id: ', error);
+      }
+    );
+
+  }
+}
+}

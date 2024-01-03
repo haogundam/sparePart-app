@@ -37,19 +37,21 @@
     <div class="searchResults">
             <table> 
                 <span>
-                <thead>
-                    <tr class="product-list">
-                        <th>SKU</th>
-                        <th>Name</th>
-                        <th>Manufacturer</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Warehouse</th>
-                        <th><div class="blankspace"></div></th>
-                        <th><div class="blankspace"></div></th>
-                        <th><div class="blankspace"></div></th>
-                    </tr>
-                </thead>
+                    <thead>
+                        <tr class="product-list">
+                            <th>SKU</th>
+                            <th>Name</th>
+                            <th>Manu.</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Warehouse</th>
+                            <th>Quantity</th>
+                            <th>Override Price</th>
+                            <th>
+                                <div class="blankspace"></div>
+                            </th>
+                        </tr>
+                    </thead>
             </span>
 
             <tbody>
@@ -59,14 +61,17 @@
                     <td>{{part.supplierName}}</td>
                     <td>{{part.totalQuantity}}</td>
                     <td>{{part.sellingPrice}}</td>
-                    <td>{{part.WarehouseName}}</td>
+                    <td>{{part.warehouseName}}</td>
                     <td>
-                        <input type="number" tabindex="3" [placeholder]="'Qty...'" [max]="part.totalQuantity" #quantityInput>
+                        <input type="number" tabindex="3" [placeholder]="quantityPlaceholder" [max]="part.totalQuantity"
+                            #quantityInput>
                     </td>
                     <td>
-                        <input type="number" tabindex="3" [placeholder]="'Price...'" #priceInput >
+                        <input type="number" tabindex="3" [placeholder]="part.sellingPrice" #priceInput>
                     </td>
-                    <td><button class="addQuote" (click)="addPartToQuotation(customerId,quotationIdd,part.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber)">+</button></td>
+                    <td><button class="addQuote"tabindex="3"
+                            (click)="addPartToQuotation(customerId,quotationIdd,part.partId, quantityInput.valueAsNumber, priceInput.valueAsNumber,part.partName,part.sellingPrice,part.warehouseName)">+</button>
+                    </td>
                 </tr>
             </tbody>
             
@@ -99,25 +104,35 @@
                 </tr>
                         </thead>
             </span>
-        <tbody>
-            <tr *ngFor="let product of similarProducts;let i = index;" class="product-info">
-              
-                <td>{{product.sku}}</td>
-                <td>{{product.partName}}</td>
-                <td>{{product.supplierName}}</td>
-                <td>{{product.totalQuantity}}</td>
-                <td>{{product.sellingPrice}}</td>
-                <td>{{product.WarehouseName}}</td>
-                <td>
-                    <input type="number" tabindex="4" [placeholder]="'Qty...'" [max]="product.totalQuantity" #quantityInput>
-                </td>
-                <td>
-                    <input type="number" tabindex="4" [placeholder]="'Price...'" [(ngModel)]="product.NewPrice" #priceInput >
-                </td>
-                <td><button class="addQuote">+</button></td>
+            <tbody>
+                <tr *ngFor="let product of similarProducts;let i = index;" class="product-info">
 
-            </tr>
-        </tbody>
+                    <td>{{product.sku}}</td>
+                    <td>{{product.partName}}</td>
+                    <td>{{product.supplierName}}</td>
+                    <td>{{product.totalQuantity}}</td>
+                    <td>{{product.sellingPrice}}</td>
+                    <td>{{product.warehouseName}}</td>
+                    <!-- <td>[SKU]</td>
+                <td>[partName]</td>
+                <td>[manufacturer]</td>
+                <td>[quantityLeft]</td>
+                <td>[Price]</td>
+                <td>[Warehouse]</td> -->
+                    <td>
+                        <input type="number" tabindex="4" [placeholder]="quantityPlaceholder" [max]="product.totalQuantity"
+                            #quantityInput>
+                    </td>
+                    <td>
+                        <input type="number" tabindex="4" [placeholder]="product.sellingPrice"
+                            [(ngModel)]="product.NewPrice" #priceInput>
+                    </td>
+                    <td ><button class="addQuote"
+                            (click)="addPartToQuotation(customerId,quotationIdd,product.partId, quantityInput.valueAsNumber , priceInput.valueAsNumber,product.partName,product.sellingPrice,product.warehouseName)">+</button>
+                    </td>
+
+                </tr>
+            </tbody>
         </table>
     </div>
 
