@@ -5,8 +5,7 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RegistrationDialogModule } from './registration-dialog/registration-dialog.module';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpResponse } from '@angular/common/http';
-import { AuthInterceptor } from './auth.interceptor';
-import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { appConfig } from './app.config';
 
 @NgModule({
   declarations: [
@@ -15,7 +14,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     HttpClientModule,
     ReactiveFormsModule, FormsModule, MatDialogModule
   ],
-  providers: [HttpClientModule,HttpClient,HttpResponse, { provide: HTTP_INTERCEPTORS, useClass:  AuthInterceptorService, multi: true },],
+  providers: [],
   bootstrap: [],
 })
 export class AppModule {}
