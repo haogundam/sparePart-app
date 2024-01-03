@@ -96,37 +96,37 @@ export default class QuotationSidebarComponent implements OnInit {
   overrideQuantity: number = 0;
   overridePrice: number = 0;
   updateQuotationPart(priceOrQuantity: number, type: 'price' | 'quantity', originalQuantity: number, originalPrice: number, quotePartId: number) {
-      if (this.customerId !== null && this.quotationId !== null) {
-        console.log('Updating quotation part', quotePartId, 'with', priceOrQuantity, type, originalQuantity, originalPrice);
-        if (type === 'quantity') {
-          this.overrideQuantity = priceOrQuantity;
-          this.apiService.updateQuotation(this.customerId, this.quotationId, quotePartId, this.overrideQuantity, originalPrice).subscribe(
-            (response: any) => {
-              console.log('Quotation part quantity updated successfully', response);
-            },
-            (error) => {
-              alert(`Invalid Quantity , please enter again`);
-              console.error('Error updating quotation part quantity', error);
-            }
-          );
-        }
-        else if (type === 'price') {
-          this.overridePrice = priceOrQuantity;
+    if (this.customerId !== null && this.quotationId !== null) {
+      console.log('Updating quotation part', quotePartId, 'with', priceOrQuantity, type, originalQuantity, originalPrice);
+      if (type === 'quantity') {
+        this.overrideQuantity = priceOrQuantity;
+        this.apiService.updateQuotation(this.customerId, this.quotationId, quotePartId, this.overrideQuantity, originalPrice).subscribe(
+          (response: any) => {
+            console.log('Quotation part quantity updated successfully', response);
+          },
+          (error) => {
+            alert(`Invalid Quantity , please enter again`);
+            console.error('Error updating quotation part quantity', error);
+          }
+        );
+      }
+      else if (type === 'price') {
+        this.overridePrice = priceOrQuantity;
 
-          this.apiService.updateQuotation(this.customerId, this.quotationId, quotePartId, originalQuantity, this.overridePrice).subscribe(
-            (response: any) => {
-              console.log('Quotation part price updated successfully', response);
-            },
-            (error) => {
-              alert(`Invalid Price , please enter again`);
-              console.error('Error updating quotation part price', error);
-            }
-          );
-        }
+        this.apiService.updateQuotation(this.customerId, this.quotationId, quotePartId, originalQuantity, this.overridePrice).subscribe(
+          (response: any) => {
+            console.log('Quotation part price updated successfully', response);
+          },
+          (error) => {
+            alert(`Invalid Price , please enter again`);
+            console.error('Error updating quotation part price', error);
+          }
+        );
       }
     }
-   
-  
+  }
+
+
 
 
   searchQuotationId: number = 0;
