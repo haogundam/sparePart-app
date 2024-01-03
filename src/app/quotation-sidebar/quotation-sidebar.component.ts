@@ -25,7 +25,7 @@ import { HttpResponse } from '@angular/common/http';
 import { SharedDataService } from '../shared-data.service';
 import { __values } from 'tslib';
 import { MatOptionSelectionChange } from '@angular/material/core';
-
+import { MatIconModule } from '@angular/material/icon';
 export interface User {
   //sku: string;
   name: string;
@@ -56,7 +56,7 @@ interface FilteredOptions {
   imports: [CommonModule, FormsModule, MatFormFieldModule,
     MatInputModule, MatAutocompleteModule,
     ReactiveFormsModule, AsyncPipe, DialogComponent,
-    MatDialogModule, MatButtonModule, RegistrationDialogModule
+    MatDialogModule, MatButtonModule, RegistrationDialogModule, MatIconModule
   ],
   templateUrl: './quotation-sidebar.component.html',
   styleUrls: ['./quotation-sidebar.component.scss'],

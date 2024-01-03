@@ -2,6 +2,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <header class="app-header">
+  <div class="company-info" >
+
+    <span class="company-name">Company Name</span>
+  </div>
+
   <div class="app-title">
     <span>{{componentName}}</span>
   </div>
@@ -16,26 +21,17 @@
 </header>
 
 <div class="sidebar">
-  <div class="company-info" >
-
-    <span class="company-name">Company Name</span>
-  </div>
+  
 
   <div class="sidebar-item" (click)="quotation()">
 
-    <span class="item-label">Quoting Items</span>
+    <span class="item-label"><mat-icon>reorder</mat-icon> Quoting Items</span>
   </div>
 
   <div class="sidebar-item"(click)="onHistory()">
 
-    <span class="item-label"  >History</span>
+    <span class="item-label"><mat-icon>receipt</mat-icon> History</span>
   </div>
-
-  <div class="sidebar-item" (click)="empty()">
-
-    <span class="item-label">PlaceHolder</span>
-  </div>
-
   <!-- <div class="user-info">
     <div class="user-details">
       <span class="user-email">userEmail</span>

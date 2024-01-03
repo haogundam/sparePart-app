@@ -12,7 +12,7 @@
   padding-bottom: 5px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  // justify-content: space-between;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #2894fc;
   box-sizing: border-box;
@@ -23,7 +23,7 @@
   color: #fff;
   font-size: 22px;
   float: left;
-  width: 25%;
+  width: 72.5%;
 }
 
 /* Sidebar Styles */
@@ -41,10 +41,11 @@
 }
 
 .company-info {
-  display: flex;
   align-items: center;
-  margin-bottom: 20px;
   cursor: pointer;
+  width: 15%;
+  float: left;
+  margin-left: 1vw;
 }
 
 .company-info .icon {
@@ -53,11 +54,12 @@
   margin-right: 12px;
 }
 
-.company-info .company-name {
+.company-name {
   font-family: 'Outfit';
   color: #15161e;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 500;
+  
 }
 
 .sidebar-item {
@@ -70,6 +72,7 @@
   align-items: center;
   padding: 4px;
   height: 5%;
+  align-items: center;
 }
 
 

@@ -14,7 +14,7 @@ body {
 .searchCard {
     width: 100%;
     height: 45px;
-    
+    margin-left: 1vw;
 }
 
 .searchBar input {
@@ -25,6 +25,7 @@ body {
     height: 30px;
     margin-top: 8px;
     background-color: #F1F0F0;
+    outline-color: grey;
 }
 
 .searchBar button {
@@ -36,7 +37,7 @@ body {
     margin-left: 10px;
     color:white;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 100%;
 }
 
 
