@@ -1,5 +1,3 @@
-// api.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -8,7 +6,6 @@ import { Customer, registerCustomerProfile } from '../models/customer.model';
 import { CreateQuotationResponse, QuotationListResponse, QuotationPart, QuotePardIdSearch, QuotePartAdd } from '../models/quotation.model';
 import { environment } from '../../environments/environment';
 import { parts, partsResponse } from '../models/parts.model';
-
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserDto } from '../models/auth.model';
@@ -16,6 +13,7 @@ import { UserDto } from '../models/auth.model';
 @Injectable({
   providedIn: 'root',
 })
+
 export class ApiService {
 
 
@@ -61,10 +59,6 @@ export class ApiService {
     localStorage.clear();
     this.router.navigate([''])
   }
-  // register(email: string, password: string): Observable<any> {
-  //   const user: UserDto = { Email: email, Password: password };
-  //   return this.http.post<any>(`${this.baseUrl}/register`, user);
-  // }
 
   fetchAllCustomerListByPage(pageNumber: number, customerName: string): Observable<HttpResponse<Customer[]>> {
     const url = `${this.apiUrl}?name=${customerName}&pageNumber=${pageNumber}`;
@@ -131,10 +125,6 @@ export class ApiService {
     const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/quoteparts/${quotePartId}`;
     return this.http.delete<string>(url, { observe: 'response',responseType: 'text' as 'json' });
   }
-  // registerCustomer(reqBody:createCustomerRequest) :Observable<createCustomerRequest> {
-  //   const url = `https://localhost:7047/api/customers`;
-  //   return this.http.post<createCustomerRequest>(url,reqBody);
-  // }
 
   submitQuotation(customerId: number, quotationNo: number): Observable<HttpResponse<string>> {
     const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/submit`;

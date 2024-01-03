@@ -5,10 +5,10 @@ import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth.interceptor';
-import { noopInterceptorProvider } from './interceptors/noop-provider';
+import { tokenInterceptorProvider } from './interceptors/token-provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideAnimations(), provideHttpClient(withInterceptors(
     [authInterceptor],
-  )), importProvidersFrom(HttpClientModule),noopInterceptorProvider]
+  )), importProvidersFrom(HttpClientModule),tokenInterceptorProvider]
 };

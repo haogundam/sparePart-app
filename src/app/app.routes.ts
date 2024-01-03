@@ -8,11 +8,6 @@ export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'history', component: HistoryPageComponent , canActivate: [AuthGuard] },
   { path: 'quotation', component: QuotationComponent},
-  // {
-  //   path: 'quotation/:quoteId/:customerId',
-  //   component: QuotationComponent
-  // },
-  // other routes...
 ];
 
 @NgModule({
