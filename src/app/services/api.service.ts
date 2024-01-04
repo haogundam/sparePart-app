@@ -142,7 +142,6 @@ export class ApiService {
   updateQuotation(customerId: number, quotationNo: number, quotePartId: number, quantity: number, unitPrice: number): Observable<HttpResponse<string>> {
     const url = `${this.apiUrl}${customerId}/quotations/${quotationNo}/quoteparts/${quotePartId}`;
     const body = {
-     
       quantity: quantity,
       unitPrice: unitPrice
     };

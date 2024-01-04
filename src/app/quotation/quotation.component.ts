@@ -128,10 +128,11 @@ quantityPlaceholder= 1;
       alert(`Cannot add item to quotation. Entered quantity (${quantity}) exceeds available quantity (${product.totalQuantity}).`);
       return;
     }
-    else if (unitPrice < sellingPrice) {
-      alert(`Cannot add item to quotation. Entered price (${unitPrice}) is less than selling price (${sellingPrice}).`);
-      return;
-    }
+    // Prevent adding a part to quotation if the entered price is less than the selling price 
+    // else if (unitPrice < sellingPrice) {
+    //   alert(`Cannot add item to quotation. Entered price (${unitPrice}) is less than selling price (${sellingPrice}).`);
+    //   return;
+    // } 
 
     this.quoteAddPart = {
       partId: partId,
@@ -152,7 +153,7 @@ quantityPlaceholder= 1;
       },
       (error) => {
         console.error('Error adding part to quotation:', error);
-        alert(`This part (ID: ${partName}) has already been added to the quotation. Please remove it from the quotation before adding it again.`);
+        alert(`This part (ID: ${partName}) has already been added to the quotation. Please remove it from the quotation before adding it again. OR Override Price is Lower than buying price`);
 
       }
     )
