@@ -1,30 +1,36 @@
 .sidebar {
     background-color:#F1F0F0;
-    margin-right: 2px;
     float:right;    
-    width: 28vw;
-    height: 94.6vh;
+    width: 29.5vw;
+    height: 90.6vh;
     flex-direction: column;
     display: flex;
+    box-shadow:3px 3px 3px 5px grey;
+    margin-right: 2vw;
+}
+
+.title {
+  width:100% ;
+  align-items: center;
 }
 
 .sidebar h2 {
-    margin-left: 20vh; 
-    padding-top: 15px;
+  padding-top: 1.5vh;
+  padding-left: 1vw;
     font-weight: bold;
     font-size: 28px;
 }
 
 .customer-id {
     // height: 50px;
-    width : 55vh;
+    width : 95%;
     margin-left: 13px;
     display: inline-block;
     align-items: center;
 }
 
 .example-form {
-    width: 100%;
+    width: 99%;
     height: 10vh;
     border: none;
     border-radius: 8px;
@@ -34,7 +40,7 @@
 
 form mat-form-field {
     padding-top: 15px;
-    width: 53.5vh;
+    width: 100%;
 }
 
 .quotation-info {
@@ -51,6 +57,10 @@ form mat-form-field {
     flex:0.5;
 }
 
+.quotation-table{
+  margin-left: 1vw;
+}
+
     .quotation-table tr{
         display : flex;
         width: 100%;
@@ -60,7 +70,7 @@ form mat-form-field {
     }
 
     .quotation-table th,td {
-        width:80px;
+        width:5.25vw;
         text-align: center;
         white-space: nowrap;
     }
@@ -106,11 +116,12 @@ form mat-form-field {
 // }
 
 .column-container {
-    position: fixed;
+    position: absolute;
     bottom:0;
     right: 0;
     width: 26vw;
-    margin-right: 1.5vw;
+    margin-right: 3.25vw;
+    margin-bottom: 1.5%;
 }
 
 
@@ -143,92 +154,4 @@ form mat-form-field {
     box-sizing: border-box;
     margin-bottom: 10px;
     /* Add any additional styles you want */
-  }
-  
-  
-  
-  #snackbar {
-    visibility: hidden;
-    /* Hidden by default. Visible on click */
-    min-width: 250px;
-    /* Set a default minimum width */
-    margin-left: -125px;
-    /* Divide value of min-width by 2 */
-    background-color: #333;
-    /* Black background color */
-    color: #fff;
-    /* White text color */
-    text-align: center;
-    /* Centered text */
-    border-radius: 2px;
-    /* Rounded borders */
-    padding: 16px;
-    /* Padding */
-    position: fixed;
-    /* Sit on top of the screen */
-    z-index: 1;
-    /* Add a z-index if needed */
-    left: 50%;
-    /* Center the snackbar */
-    bottom: 30px;
-    /* 30px from the bottom */
-  }
-  
-  /* Show the snackbar when clicking on a button (class added with JavaScript) */
-  #snackbar.show {
-    visibility: visible;
-    /* Show the snackbar */
-    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
-      However, delay the fade out process for 2.5 seconds */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  }
-  
-  /* Animations to fade the snackbar in and out */
-  @-webkit-keyframes fadein {
-    from {
-      bottom: 0;
-      opacity: 0;
-    }
-  
-    to {
-      bottom: 30px;
-      opacity: 1;
-    }
-  }
-  
-  @keyframes fadein {
-    from {
-      bottom: 0;
-      opacity: 0;
-    }
-  
-    to {
-      bottom: 30px;
-      opacity: 1;
-    }
-  }
-  
-  @-webkit-keyframes fadeout {
-    from {
-      bottom: 30px;
-      opacity: 1;
-    }
-  
-    to {
-      bottom: 0;
-      opacity: 0;
-    }
-  }
-  
-  @keyframes fadeout {
-    from {
-      bottom: 30px;
-      opacity: 1;
-    }
-  
-    to {
-      bottom: 0;
-      opacity: 0;
-    }
   }

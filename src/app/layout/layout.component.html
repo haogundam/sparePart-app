@@ -2,21 +2,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <header class="app-header">
-  <div class="company-info" >
+    
+      <span class="company-name">Company Name</span>
+    
+      <span class="app-title">{{componentName}}</span>
 
-    <span class="company-name">Company Name</span>
-  </div>
-
-  <div class="app-title">
-    <span>{{componentName}}</span>
-  </div>
-
-  <div class="user-info">
-    <div class="user-details">
-      <span class="user-email">{{userEmail}}</span>
-      <button class="logout-label" (click)="logout()">Logout</button>
+    <div class="user-info">
+        <span class="user-email">{{userEmail}}</span>
+        
+        <button class="logout-label" (click)="logout()"><mat-icon>input</mat-icon></button>
     </div>
-  </div>
   
 </header>
 
@@ -25,12 +20,12 @@
 
   <div class="sidebar-item" (click)="quotation()">
 
-    <span class="item-label"><mat-icon>reorder</mat-icon> Quoting Items</span>
+    <span class="item-label"><mat-icon>reorder</mat-icon></span>
   </div>
 
   <div class="sidebar-item"(click)="onHistory()">
 
-    <span class="item-label"><mat-icon>receipt</mat-icon> History</span>
+    <span class="item-label"><mat-icon>receipt</mat-icon></span>
   </div>
   <!-- <div class="user-info">
     <div class="user-details">

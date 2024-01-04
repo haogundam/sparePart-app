@@ -11,20 +11,12 @@
 
 <!-- Right Bar -->
 <div>
- <app-quotation-sidebar class="sidebar-history"></app-quotation-sidebar>
+ <app-quotation-sidebar class="sidebar"></app-quotation-sidebar>
 </div>
 
 <!-- Center -->
 <body>
 
-    <!-- search bar
-    <div class="searchCard">
-        <div class="searchBar">
-            <i class="fa fa-search"></i>
-            <input type="text" [(ngModel)]="searchQuery" [placeholder]="'Search for SKU...'"  class="skuSearch" (keyup.enter)="onSearch()">
-            <button type="click" (click)="onSearch()">Search</button>        
-        </div>
-    </div> -->
     <div class="searchCard">
         <div class="searchBar">
             <input type="text" tabindex="1" [(ngModel)]="searchQueryPart" placeholder="Search for product SKU...."
@@ -84,9 +76,9 @@
 
     <!-- Alternative Results similar to Search Results-->
     <div class="alternateText">
-        <!-- <h1 >Alternative Products Similar to {{productdetails[0].partName}}...</h1> -->
         <h1 >Alternative Products Similar to {{filteredproducts[0].sku}}     </h1>
     </div>
+
     <div class="alternateTable">
         <table>
             <span>
@@ -98,8 +90,8 @@
                     <th>Quantity Left</th>
                     <th>Price</th>
                     <th>Warehouse</th>
-                    <th><div></div></th>
-                    <th><div></div></th>
+                    <th>Quantity</th>
+                    <th>Override Price</th>
                     <th><div></div></th>
                 </tr>
                         </thead>
@@ -113,12 +105,6 @@
                     <td>{{product.totalQuantity}}</td>
                     <td>{{product.sellingPrice}}</td>
                     <td>{{product.warehouseName}}</td>
-                    <!-- <td>[SKU]</td>
-                <td>[partName]</td>
-                <td>[manufacturer]</td>
-                <td>[quantityLeft]</td>
-                <td>[Price]</td>
-                <td>[Warehouse]</td> -->
                     <td>
                         <input type="number" tabindex="4" [placeholder]="quantityPlaceholder" [max]="product.totalQuantity"
                             #quantityInput>
