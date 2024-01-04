@@ -105,7 +105,7 @@ quantityPlaceholder= 1;
   }
   quoteAddPart!: QuotePartAdd;
   //add part to quotation
-  addPartToQuotation(customerId: number, quoteNo: number, partId: number, quantity: number, unitPrice: number, partName: string, sellingPrice: number, warehouseName: string) {
+  addPartToQuotation(customerId: number, quoteNo: number, partId: number, quantity: number, unitPrice: number, partName: string, sellingPrice: number,buyingPrice:number, warehouseName: string) {
     console.log('Adding part to quotation:', quoteNo);
     if (quantity ==0 || quantity == null || quantity == undefined || Number.isNaN(quantity))
     {
@@ -134,6 +134,10 @@ quantityPlaceholder= 1;
     //   return;
     // } 
 
+    if (unitPrice < buyingPrice) {
+      alert(`Cannot add item to quotation. Entered price (${unitPrice}) is less than buying price (${buyingPrice}).`);
+      return;
+    }
     this.quoteAddPart = {
       partId: partId,
       warehouseName: warehouseName,
@@ -153,7 +157,7 @@ quantityPlaceholder= 1;
       },
       (error) => {
         console.error('Error adding part to quotation:', error);
-        alert(`This part (ID: ${partName}) has already been added to the quotation. Please remove it from the quotation before adding it again. OR Override Price is Lower than buying price`);
+        alert(`This part (ID: ${partName}) has already been added to the quotation. Please remove it from the quotation before adding it again.`);
 
       }
     )

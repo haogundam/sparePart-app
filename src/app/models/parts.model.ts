@@ -14,6 +14,7 @@ export interface partsResponse{
     sku: string;
     partName: string;
     sellingPrice: number;
+    buyingPrice: number;
     supplierName: string;
     totalQuantity: number;
     warehouseName:string;
