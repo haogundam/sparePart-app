@@ -34,6 +34,15 @@ export class ApiService {
       responseType: 'text' as 'json' 
     });
   }
+  refreshToken(email: string): Observable<string> {
+    const headers = { 'Content-Type': 'application/json' };
+    // const requestBody = email;  // Just the email as a string
+    
+    return this.http.post<string>(`${this.baseUrl}/refreshToken`, `"${email}"`, {
+      headers,
+      responseType: 'text' as 'json'
+    });
+  }
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
   isTokenValid(token: string): boolean {

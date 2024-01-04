@@ -10,8 +10,7 @@ import { Observable } from 'rxjs';
 export class TokenInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
-        console.log(req);
-        console.log('Noop interceptor called');
+        console.log('Header interceptor hit');
 
         if (req.url.includes('login') || req.url.includes('register')) {
             console.log('login called');
@@ -27,7 +26,6 @@ export class TokenInterceptor implements HttpInterceptor {
             }
 
         });
-        console.log(authReq);
         return next.handle(authReq);
 
 
